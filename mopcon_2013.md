@@ -31,3 +31,5 @@ Second, we need to decide on
   and we in effect need all devices to be both a client and a server.
 * The marshalling format of our remote procedural calls,
   with an emphasis on ease of implementability on different platforms.
+* How we react to dynamic, ad-hoc network changes, and how to ensure security.
+
