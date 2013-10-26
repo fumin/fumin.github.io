@@ -8,16 +8,16 @@ Taiwan, being so touched and psychologically bonded with each other,
 we want to share the photos and moments with people around us instantly to mark the moment.
 What technology should we employ to achieve this?
 
-Let's start with the requirements
+Let us start with the requirements
 * Cross platform
 * Secure and decentralized, remember we want to f*ck the government.
 
-Next, let's think about the high level implementation design.
+Next, let us think about the high level implementation design.
 First, we need to decide on the underlying communication technology. Options are:
 * Relay servers, but we need to deal with the issue of room management, in this case based on proximity.
-  As we scale, we'll also need to face the problem of inter-server communication.
+  As we scale, we willll also need to face the problem of inter-server communication.
   Obviously, servers are not a cost effective solution, an EC2 medium instance costs around $3,000NT a month.
-  Last but not least, it's hard to distill trust in our tech savy potential users with a centralized server.
+  Last but not least, it is hard to distill trust in our tech savy potential users with a centralized server.
 * Hybrid server appraoch, devices handle the discovery themselves,
   and use Interactive Connectivity Establishment (ICE) servers as pipes.
 * Bluetooth, designed only for short range, 5~7 size device groups.
@@ -30,7 +30,7 @@ Second, we need to decide on
 * The threading model, since the blocking time of network IO cannot be neglected in general,
   and we in effect need all devices to be both a client and a server.
 * The marshalling format of our remote procedural calls.
-  More generally, how to describe an object and it's methods across devices.
+  More generally, how to describe an object and it is methods across devices.
   Inspirations can be found in the four primary component types of Android, and COM in windows.
 * How we react to dynamic, ad-hoc network changes, and how to ensure security.
 
@@ -49,14 +49,14 @@ In a distributed environment, we need a way to differentiate between the same ob
 In other words, objects on each device need to have a globally unique well-known name say
 "com.cardinalblue.bulu.bob" and "com.cardinalblue.bulu.alice". Once a well-known name has been taken by some object,
 later requests to obtain name should be rejected by the system.
-In summary, while implementing an AllJoyn service, we'll need to come up with these three strings:
+In summary, while implementing an AllJoyn service, we will need to come up with these three strings:
 * Interface name
 * Object path
 * Well-known name. Unlike the other two, this is likely to generated at runtime.
 
 ## Limitations
-* Bluetooth doesn't work on iOS yet. On Android, Bluetooth works only rooted devices.
-  Moreover, since AllJoyn utilitizes the BlueZ stack by Qualcomm, it's uncertain what
+* Bluetooth does not work on iOS yet. On Android, Bluetooth works only rooted devices.
+  Moreover, since AllJoyn utilitizes the BlueZ stack by Qualcomm, it is uncertain what
   happens now since Android switched to the Bluedroid stack by Broadcom in Nov 2012.
 * For discovery and broadcast to work, port 9956 must be opened on the Wifi router.
 * Wifi broadcast has the peculiar property that the last packets a devices missed when it was offline
