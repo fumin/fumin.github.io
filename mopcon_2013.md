@@ -29,7 +29,27 @@ First, we need to decide on the underlying communication technology. Options are
 Second, we need to decide on
 * The threading model, since the blocking time of network IO cannot be neglected in general,
   and we in effect need all devices to be both a client and a server.
-* The marshalling format of our remote procedural calls,
-  with an emphasis on ease of implementability on different platforms.
+* The marshalling format of our remote procedural calls.
 * How we react to dynamic, ad-hoc network changes, and how to ensure security.
+
+
+
+Restrictions:
+* Bluetooth doesn't work on iOS yet. On Android, Bluetooth works only rooted devices.
+  Moreover, since AllJoyn utilitizes the BlueZ stack by Qualcomm, it's uncertain what
+  happens now since Android switched to the Bluedroid stack by Broadcom in Nov 2012.
+* For discovery and broadcast to work, port 9956 must be opened on the Wifi router.
+* Wifi broadcast has the peculiar property that the last packets a devices missed when it was offline
+  is sent sometimes duplicatively to it when it comes online.
+
+Elaborations:
+Going down the ledder of abstraction, Qualcomm introduced AllJoyn thin client which is a stripped down version
+especially for embedded hardware such as Light switches, fridges, toasters etc. The main difference lies
+in the fact that AllJoyn thin client does not include a daemon, and relies on other more powerful devices
+such as a smartphone to perform this function. A typical AJTC run in as little as 25 Kbytes of memory,
+whereas a bundled-daemon and C++ client or service combination may require ten times that amount,
+and a Java language version may require as much as 40 times that footprint.
+
+Going up the ledder of abstraction, AllJoyn has frameworks for Android that performs full fledged functionalities
+such as Audio streaming and control panels for embedded hardware.
 
