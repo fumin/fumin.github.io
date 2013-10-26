@@ -2,7 +2,7 @@ AllJoyn
 -------
 
 ## The problem, or an example of an application of AllJoyn
-<img src="f_ck_government.png"/>
+![f_ck the government](f_ck_government.png)
 
 Imagine we are at the "F*ck the government" demonstration in August.
 At the moment where we light up our phones for a better judicial system for
