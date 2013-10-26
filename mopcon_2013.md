@@ -30,11 +30,31 @@ Second, we need to decide on
 * The threading model, since the blocking time of network IO cannot be neglected in general,
   and we in effect need all devices to be both a client and a server.
 * The marshalling format of our remote procedural calls.
+  More generally, how to describe an object and it's methods across devices.
+  Inspirations can be found in the four primary component types of Android, and COM in windows.
 * How we react to dynamic, ad-hoc network changes, and how to ensure security.
 
+## AllJoyn's answer to the above requirements and problems
+For the underlying communication, AllJoyn re-implements the wire protocol set forth by the D-Bus specification,
+the interprocess communication system used by Qt and GNOME, and extends the D-Bus wire protocol to
+support distributed devices. For a graphical explanation about the AllJoyn bus,
+please see https://www.alljoyn.org/docs-and-downloads/documentation/introduction-alljoyn
 
+On the API side, AllJoyn espouses an object oriented design, with extensions to support an distributed environment.
+As an example, say we conceive of an interface, or a set of methods that is needed to support our application.
+Of course, this interface needs a name, lets name it "com.cardinalblue.bulu".
+In general, there may be multiple objects providing different implementations of this same interface,
+residing in different locations, say "/buluService", "/buluService/richContent", etc.
+In a distributed environment, we need a way to differentiate between the same objects residing in different devices.
+In other words, objects on each device need to have a globally unique well-known name say
+"com.cardinalblue.bulu.bob" and "com.cardinalblue.bulu.alice". Once a well-known name has been taken by some object,
+later requests to obtain name should be rejected by the system.
+In summary, while implementing an AllJoyn service, we'll need to come up with these three strings:
+* Interface name
+* Object path
+* Well-known name. Unlike the other two, this is likely to generated at runtime.
 
-Restrictions:
+## Limitations
 * Bluetooth doesn't work on iOS yet. On Android, Bluetooth works only rooted devices.
   Moreover, since AllJoyn utilitizes the BlueZ stack by Qualcomm, it's uncertain what
   happens now since Android switched to the Bluedroid stack by Broadcom in Nov 2012.
@@ -42,7 +62,7 @@ Restrictions:
 * Wifi broadcast has the peculiar property that the last packets a devices missed when it was offline
   is sent sometimes duplicatively to it when it comes online.
 
-Elaborations:
+## Elaborations
 Going down the ledder of abstraction, Qualcomm introduced AllJoyn thin client which is a stripped down version
 especially for embedded hardware such as Light switches, fridges, toasters etc. The main difference lies
 in the fact that AllJoyn thin client does not include a daemon, and relies on other more powerful devices
