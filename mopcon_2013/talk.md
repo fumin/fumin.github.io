@@ -17,7 +17,7 @@ Let us start with the requirements
 Next, let us think about the high level implementation design.
 First, we need to decide on the underlying communication technology. Options are:
 * Relay servers, but we need to deal with the issue of room management, in this case based on proximity.
-  As we scale, we willll also need to face the problem of inter-server communication.
+  As we scale, we will also need to face the problem of inter-server communication.
   Obviously, servers are not a cost effective solution, an EC2 medium instance costs around $3,000NT a month.
   Last but not least, it is hard to distill trust in our tech savy potential users with a centralized server.
 * Hybrid server appraoch, devices handle the discovery themselves,
