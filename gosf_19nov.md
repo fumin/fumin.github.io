@@ -23,3 +23,6 @@ GoSF Talk - 19 Nov
 ### Take aways
 * Follow the pipeline design guidelines
 * Whenever some piece of code becomes too entangled, chances are that some parts of the logic belong to a separate goroutine.
+
+### ps
+* multipart using io.MultiReader
