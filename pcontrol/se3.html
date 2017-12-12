@@ -1,0 +1,599 @@
+<body>
+  <h3 style="margin-top: 0; margin-bottom: 0;">SE3 metric</h3>
+  <p style="margin-top: 0; margin-bottom: 0;">Click canvas below to start control ⤵️ . Use mouse and w/s/a/d to move.</p>
+  <canvas id="glCanvas" style="width: 100%; height: 90%;"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix-min.js"></script>
+  <script>
+// const trajectory = [[[1.1102230246251565e-16, -1.0, 0.0, 1.0], [1.0, 1.1102230246251565e-16, 0.0, 0.9999999999999999], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.30901699437494745, -0.9510565162951535, 0.0, 0.9510565162951535], [0.9510565162951535, 0.30901699437494745, 0.0, 0.6909830056250525], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.5358267949789965, -0.8443279255020151, 0.0, 0.8443279255020151], [0.8443279255020151, 0.5358267949789965, 0.0, 0.46417320502100345], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.6936533058128049, -0.7203090248879069, 0.0, 0.7203090248879069], [0.7203090248879069, 0.6936533058128049, 0.0, 0.30634669418719507], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.800061755764639, -0.599917650151088, 0.0, 0.599917650151088], [0.599917650151088, 0.800061755764639, 0.0, 0.199938244235361], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.8704313165033989, -0.49228987725745466, 0.0, 0.49228987725745466], [0.49228987725745466, 0.8704313165033989, 0.0, 0.12956868349660114], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9164119140025802, -0.4002364349657933, 0.0, 0.4002364349657933], [0.4002364349657933, 0.9164119140025802, 0.0, 0.08358808599741989], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9462301727522294, -0.32349414240954344, 0.0, 0.32349414240954344], [0.32349414240954344, 0.9462301727522294, 0.0, 0.053769827247770595], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9654749296336343, -0.26049598893059545, 0.0, 0.26049598893059545], [0.26049598893059545, 0.9654749296336343, 0.0, 0.03452507036636567], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9778578252390075, -0.20927033621332594, 0.0, 0.2092703362133259], [0.20927033621332594, 0.9778578252390075, 0.0, 0.022142174760992485], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9858100875592306, -0.16786444312737045, 0.0, 0.16786444312737042], [0.16786444312737045, 0.9858100875592306, 0.0, 0.014189912440769425], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9909106993780518, -0.13452132120262672, 0.0, 0.1345213212026267], [0.13452132120262672, 0.9909106993780518, 0.0, 0.009089300621948262], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9941796686944756, -0.10773479639625617, 0.0, 0.10773479639625616], [0.10773479639625617, 0.9941796686944756, 0.0, 0.005820331305524404], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.996273685417275, -0.08624815212559915, 0.0, 0.08624815212559915], [0.08624815212559915, 0.996273685417275, 0.0, 0.0037263145827250055], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9976146250213588, -0.06902941361110942, 0.0, 0.06902941361110942], [0.06902941361110942, 0.9976146250213588, 0.0, 0.002385374978641245], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.998473141400309, -0.05523935102984606, 0.0, 0.055239351029846076], [0.05523935102984606, 0.998473141400309, 0.0, 0.0015268585996910861], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.999022720943754, -0.04419958187741324, 0.0, 0.04419958187741324], [0.04419958187741324, 0.999022720943754, 0.0, 0.0009772790562460286], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9993745047211166, -0.035363813615375744, 0.0, 0.035363813615375744], [0.035363813615375744, 0.9993745047211166, 0.0, 0.000625495278883451], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9995996679956264, -0.028293174848953925, 0.0, 0.028293174848953925], [0.028293174848953925, 0.9995996679956264, 0.0, 0.0004003320043736051], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9997437813624456, -0.022635627385135734, 0.0, 0.022635627385135734], [0.022635627385135734, 0.9997437813624456, 0.0, 0.00025621863755443666], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]], [[0.9998360175509377, -0.01810905872432718, 0.0, 0.01810905872432718], [0.01810905872432718, 0.9998360175509377, 0.0, 0.00016398244906237245], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]]];
+const trajectory = [[[2.220446049250313e-16, -1.1102230246251565e-16, 0.9999999999999999, 1.0], [0.9999999999999999, 2.220446049250313e-16, -1.1102230246251565e-16, 1.0000000000000002], [-1.1102230246251565e-16, 0.9999999999999999, 2.220446049250313e-16, 3.3306690738754696e-16], [0.0, 0.0, 0.0, 1.0]], [[0.26364769115489795, -0.20601132958329837, 0.9423636384284004, 0.916124989337233], [0.9423636384284004, 0.26364769115489795, -0.20601132958329837, 0.7101136597539348], [-0.20601132958329837, 0.9423636384284004, 0.26364769115489795, -0.026238649091167465], [0.0, 0.0, 0.0, 1.0]], [[0.4855672467404373, -0.30487966502137837, 0.819312418280941, 0.8013973611007733], [0.819312418280941, 0.4855672467404374, -0.3048796650213782, 0.49651769607939533], [-0.30487966502137837, 0.8193124182809409, 0.4855672467404374, -0.01791505718016778], [0.0, 0.0, 0.0, 1.0]], [[0.6520525290587947, -0.33312279285553337, 0.6810702637967385, 0.6793976855507573], [0.6810702637967385, 0.6520525290587948, -0.3331227928555332, 0.3462748926952244], [-0.33312279285553337, 0.6810702637967385, 0.6520525290587948, -0.001672578245981049], [0.0, 0.0, 0.0, 1.0]], [[0.7693697022085964, -0.3214199505603529, 0.5520502483517566, 0.5642233996373699], [0.5520502483517566, 0.7693697022085964, -0.3214199505603529, 0.24280344907701729], [-0.3214199505603529, 0.5520502483517566, 0.7693697022085964, 0.01217315128561336], [0.0, 0.0, 0.0, 1.0]], [[0.8490675838524147, -0.2903848141531167, 0.441317230300702, 0.4623540148179395], [0.441317230300702, 0.8490675838524147, -0.2903848141531167, 0.17196920066482307], [-0.2903848141531167, 0.441317230300702, 0.8490675838524147, 0.02103678451723759], [0.0, 0.0, 0.0, 1.0]], [[0.9020196697855343, -0.252307397748433, 0.35028772796289875, 0.375627708570444], [0.35028772796289875, 0.9020196697855343, -0.25230739774843297, 0.12332031082201114], [-0.252307397748433, 0.3502877279628987, 0.9020196697855343, 0.02533998060754525], [0.0, 0.0, 0.0, 1.0]], [[0.9367205746022684, -0.21387242781302662, 0.27715185321075814, 0.3034848936745949], [0.27715185321075814, 0.9367205746022685, -0.2138724278130266, 0.08961246586156846], [-0.21387242781302662, 0.2771518532107581, 0.9367205746022685, 0.026333040463836846], [0.0, 0.0, 0.0, 1.0]], [[0.9592654732566918, -0.1783537734904689, 0.2190883002337771, 0.244328797908082], [0.2190883002337771, 0.9592654732566918, -0.17835377349046883, 0.06597502441761327], [-0.1783537734904689, 0.21908830023377707, 0.9592654732566918, 0.02524049767430489], [0.0, 0.0, 0.0, 1.0]], [[0.9738329946078245, -0.14708350783910307, 0.1732505132312785, 0.19625649235679388], [0.17325051323127855, 0.9738329946078245, -0.147083507839103, 0.04917298451769092], [-0.147083507839103, 0.1732505132312785, 0.9738329946078245, 0.023005979125515316], [0.0, 0.0, 0.0, 1.0]], [[0.9832133262531644, -0.12035187443645415, 0.13713854818328977, 0.15741292913991461], [0.13713854818328977, 0.9832133262531644, -0.12035187443645415, 0.03706105470346054], [-0.12035187443645415, 0.13713854818328977, 0.9832133262531644, 0.020274380956624857], [0.0, 0.0, 0.0, 1.0]], [[0.9892402053152068, -0.09793014475685427, 0.10868993944164745, 0.12613959201283387], [0.10868993944164745, 0.9892402053152068, -0.09793014475685427, 0.028209447255979684], [-0.09793014475685427, 0.10868993944164745, 0.9892402053152068, 0.017449652571186455], [0.0, 0.0, 0.0, 1.0]], [[0.9931070386409532, -0.07936249632070208, 0.08625545767974893, 0.10101896915748365], [0.08625545767974893, 0.9931070386409532, -0.07936249632070208, 0.02165647283678161], [-0.07936249632070208, 0.08625545767974893, 0.9931070386409532, 0.014763511477734727], [0.0, 0.0, 0.0, 1.0]], [[0.9955857616282001, -0.06412254421214268, 0.0685367825839426, 0.0808701631912284], [0.0685367825839426, 0.9955857616282001, -0.06412254421214268, 0.016747618979085773], [-0.06412254421214268, 0.0685367825839426, 0.9955857616282001, 0.01233338060728583], [0.0, 0.0, 0.0, 1.0]], [[0.9971737634092527, -0.05169286894521069, 0.05451910553595797, 0.06472430156774953], [0.05451910553595797, 0.9971737634092527, -0.05169286894521069, 0.013031432622538912], [-0.05169286894521069, 0.05451910553595797, 0.9971737634092527, 0.010205196031791562], [0.0, 0.0, 0.0, 1.0]], [[0.9981907480579385, -0.041601807631650715, 0.04341105957371225, 0.05179387046100899], [0.04341105957371225, 0.9981907480579385, -0.041601807631650715, 0.010192062829358297], [-0.041601807631650715, 0.04341105957371225, 0.9981907480579385, 0.008382810887296735], [0.0, 0.0, 0.0, 1.0]], [[0.9988418900949548, -0.03343717633683412, 0.03459528624187925, 0.04144248597361486], [0.03459528624187925, 0.9988418900949548, -0.033437176336834115, 0.008005309636780788], [-0.03343717633683412, 0.03459528624187924, 0.9988418900949548, 0.006847199731735589], [0.0, 0.0, 0.0, 1.0]], [[0.9992587323765053, -0.026848027346130912, 0.027589294969625568, 0.03315777286315381], [0.027589294969625568, 0.9992587323765053, -0.0268480273461309, 0.006309745517022935], [-0.026848027346130912, 0.027589294969625557, 0.9992587323765053, 0.005568477893528222], [0.0, 0.0, 0.0, 1.0]], [[0.9995255570631629, -0.021540613932782567, 0.02201505686961964, 0.0265281559404554], [0.02201505686961964, 0.9995255570631629, -0.021540613932782563, 0.004987542007672854], [-0.021540613932782567, 0.022015056869619635, 0.9995255570631629, 0.004513099070835739], [0.0, 0.0, 0.0, 1.0]], [[0.9996963435528216, -0.017271928310234348, 0.01757558475741276, 0.02122351689427276], [0.01757558475741276, 0.9996963435528216, -0.01727192831023434, 0.003951588584038445], [-0.017271928310234348, 0.017575584757412752, 0.9996963435528216, 0.003647932136859983], [0.0, 0.0, 0.0, 1.0]], [[0.999805654562127, -0.013842594505128545, 0.014036939943001545, 0.01697932151342234], [0.014036939943001545, 0.999805654562127, -0.01384259450512854, 0.003136727008293809], [-0.013842594505128545, 0.01403693994300154, 0.999805654562127, 0.0029423815704208017], [0.0, 0.0, 0.0, 1.0]], [[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]]];
+
+function float32Concat(arrays) {
+  var totalLen = 0;
+  for (var i = 0; i < arrays.length; i++) {
+    totalLen += arrays[i].length;
+  }
+  var res = new Float32Array(totalLen);
+
+  var offset = 0
+  for (var i = 0; i < arrays.length; i++) {
+    var a = arrays[i];
+    res.set(a, offset);
+    offset += a.length;
+  }
+
+  return res;
+}
+
+function uint16Concat(arrays) {
+  var totalLen = 0;
+  for (var i = 0; i < arrays.length; i++) {
+    totalLen += arrays[i].length;
+  }
+  var res = new Uint16Array(totalLen);
+
+  var offset = 0
+  for (var i = 0; i < arrays.length; i++) {
+    var a = arrays[i];
+    res.set(a, offset);
+    offset += a.length;
+  }
+
+  return res;
+}
+
+function resize(gl) {
+  // Lookup the size the browser is displaying the canvas.
+  var displayWidth  = gl.canvas.clientWidth;
+  var displayHeight = gl.canvas.clientHeight;
+
+  // Check if the canvas is not the same size.
+  if (gl.canvas.width  != displayWidth ||
+      gl.canvas.height != displayHeight) {
+
+    // Make the canvas the same size
+    gl.canvas.width  = displayWidth;
+    gl.canvas.height = displayHeight;
+
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+  }
+}
+
+function loadShader(gl, type, source) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+
+  // See if it compiled successfully
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+    gl.deleteShader(shader);
+    return null;
+  }
+
+  return shader;
+}
+
+function initShaderProgram(gl, vsSource, fsSource) {
+  const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+  const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+  // Create the shader program
+  const shaderProgram = gl.createProgram();
+  gl.attachShader(shaderProgram, vertexShader);
+  gl.attachShader(shaderProgram, fragmentShader);
+  gl.linkProgram(shaderProgram);
+
+  // If creating the shader program failed, alert
+  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+    alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+    return null;
+  }
+
+  return shaderProgram;
+}
+
+function initProgram(gl) {
+  // Vertex shader program
+  const vsSource = `
+    attribute vec4 aVertexPosition;
+    attribute vec4 aVertexColor;
+    attribute vec3 aVertexNormal;
+
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+    uniform mat4 uNormalMatrix;
+
+    varying lowp vec4 vColor;
+    varying highp vec3 vLighting;
+
+    void main(void) {
+      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+      vColor = aVertexColor;
+
+      // Lighting.
+      highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
+      highp vec3 directionalLightColor = vec3(1, 1, 1);
+      highp vec3 directionalVector = normalize(vec3(0.0, 0.0, 1.0));
+
+      highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
+      highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
+      vLighting = ambientLight + (directionalLightColor * directional);
+    }
+  `;
+
+  // Fragment shader program
+  const fsSource = `
+    varying lowp vec4 vColor;
+    varying highp vec3 vLighting;
+    void main(void) {
+      gl_FragColor = vec4(vColor.rgb * vLighting, vColor.a);
+    }
+  `;
+
+  const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+  const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+      vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      vertexNormal: gl.getAttribLocation(shaderProgram, 'aVertexNormal'),
+    },
+    uniformLocations: {
+      projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+      modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+      normalMatrix: gl.getUniformLocation(shaderProgram, 'uNormalMatrix'),
+    },
+  };
+  return programInfo;
+}
+
+function initAxis(length, thickness) {
+  const positions = [
+    // Front face
+    -1.0, -1.0,  1.0,
+     1.0, -1.0,  1.0,
+     1.0,  1.0,  1.0,
+    -1.0,  1.0,  1.0,
+
+    // Back face
+    -1.0, -1.0, -1.0,
+    -1.0,  1.0, -1.0,
+     1.0,  1.0, -1.0,
+     1.0, -1.0, -1.0,
+
+    // Top face
+    -1.0,  1.0, -1.0,
+    -1.0,  1.0,  1.0,
+     1.0,  1.0,  1.0,
+     1.0,  1.0, -1.0,
+
+    // Bottom face
+    -1.0, -1.0, -1.0,
+     1.0, -1.0, -1.0,
+     1.0, -1.0,  1.0,
+    -1.0, -1.0,  1.0,
+
+    // Right face
+     1.0, -1.0, -1.0,
+     1.0,  1.0, -1.0,
+     1.0,  1.0,  1.0,
+     1.0, -1.0,  1.0,
+
+    // Left face
+    -1.0, -1.0, -1.0,
+    -1.0, -1.0,  1.0,
+    -1.0,  1.0,  1.0,
+    -1.0,  1.0, -1.0,
+  ];
+
+  for (var i = 0; i < positions.length; i++) {
+    if (i % 3 == 0) {
+      positions[i] *= length;
+    } else {
+      positions[i] *= thickness;
+    }
+  }
+
+  const vertexNormals = [
+    // Front
+     0.0,  0.0,  1.0,
+     0.0,  0.0,  1.0,
+     0.0,  0.0,  1.0,
+     0.0,  0.0,  1.0,
+
+    // Back
+     0.0,  0.0, -1.0,
+     0.0,  0.0, -1.0,
+     0.0,  0.0, -1.0,
+     0.0,  0.0, -1.0,
+
+    // Top
+     0.0,  1.0,  0.0,
+     0.0,  1.0,  0.0,
+     0.0,  1.0,  0.0,
+     0.0,  1.0,  0.0,
+
+    // Bottom
+     0.0, -1.0,  0.0,
+     0.0, -1.0,  0.0,
+     0.0, -1.0,  0.0,
+     0.0, -1.0,  0.0,
+
+    // Right
+     1.0,  0.0,  0.0,
+     1.0,  0.0,  0.0,
+     1.0,  0.0,  0.0,
+     1.0,  0.0,  0.0,
+
+    // Left
+    -1.0,  0.0,  0.0,
+    -1.0,  0.0,  0.0,
+    -1.0,  0.0,  0.0,
+    -1.0,  0.0,  0.0
+  ];
+
+  return {
+    positions: new Float32Array(positions),
+    normals: new Float32Array(vertexNormals),
+  };
+}
+
+function mergeModels(models) {
+  var vertices = [];
+  var normals = [];
+  var colors = [];
+  var indices = [];
+  for (var i = 0; i < models.length; i++) {
+    const m = models[i];
+    const numElem = vertices.length / 3;
+
+    vertices = vertices.concat(Array.prototype.slice.call(m.vertices));
+    normals = normals.concat(Array.prototype.slice.call(m.normals));
+    colors = colors.concat(Array.prototype.slice.call(m.colors));
+    for (var j = 0; j < m.indices.length; j++) {
+      indices.push(numElem + m.indices[j]);
+    }
+  }
+  return {
+    vertices: new Float32Array(vertices),
+    normals: new Float32Array(normals),
+    colors: new Float32Array(colors),
+    indices: new Uint16Array(indices),
+  };
+}
+
+// initCoordModel creates a model of a coordinate frame.
+// It creates three lines:
+// ((0, 0, 0), (length, 0, 0))
+// ((0, 0, 0), (0, length, 0))
+// ((0, 0, 0), (0, 0, length))
+function initCoordModel() {
+  const length = 0.1;
+  const thickness = 0.01;
+  const axis = initAxis(length, thickness);
+  var xAxis = axis.positions;
+  var m = mat4.fromTranslation(mat4.create(), vec3.fromValues(length, 0, 0));
+  vec3.forEach(xAxis, 0, 0, 0, vec3.transformMat4, m);
+  var xAxisNormal = axis.normals;
+  var xAxisColor = [];
+  for (var i = 0; i < xAxis.length / 3; i++) {
+    xAxisColor = xAxisColor.concat([1.0, 0.0, 0.0, 1.0]);
+  }
+  xAxisColor = new Float32Array(xAxisColor);
+  const xAxisIndices = new Uint16Array([
+    0,  1,  2,      0,  2,  3,    // front
+    4,  5,  6,      4,  6,  7,    // back
+    8,  9,  10,     8,  10, 11,   // top
+    12, 13, 14,     12, 14, 15,   // bottom
+    16, 17, 18,     16, 18, 19,   // right
+    20, 21, 22,     20, 22, 23,   // left
+  ]);
+
+  var yAxis = new Float32Array(xAxis);
+  m = mat4.fromZRotation(mat4.create(), glMatrix.toRadian(90));
+  vec3.forEach(yAxis, 0, 0, 0, vec3.transformMat4, m);
+  var yAxisNormal = new Float32Array(xAxisNormal);
+  vec3.forEach(yAxisNormal, 0, 0, 0, vec3.transformMat4, m);
+  var yAxisColor = [];
+  for (var i = 0; i < yAxis.length / 3; i++) {
+    yAxisColor = yAxisColor.concat([0.0, 1.0, 0.0, 1.0]);
+  }
+  yAxisColor = new Float32Array(yAxisColor);
+  var yAxisIndices = new Uint16Array(xAxisIndices);
+
+  var zAxis = new Float32Array(xAxis);
+  m = mat4.fromYRotation(mat4.create(), glMatrix.toRadian(-90));
+  vec3.forEach(zAxis, 0, 0, 0, vec3.transformMat4, m);
+  var zAxisNormal = new Float32Array(xAxisNormal);
+  vec3.forEach(zAxisNormal, 0, 0, 0, vec3.transformMat4, m);
+  var zAxisColor = [];
+  for (var i = 0; i < zAxis.length / 3; i++) {
+    zAxisColor = zAxisColor.concat([0.0, 0.0, 1.0, 1.0]);
+  }
+  zAxisColor = new Float32Array(zAxisColor);
+  var zAxisIndices = new Uint16Array(xAxisIndices);
+
+  const xModel = {vertices: xAxis, normals: xAxisNormal, colors: xAxisColor, indices: xAxisIndices};
+  const yModel = {vertices: yAxis, normals: yAxisNormal, colors: yAxisColor, indices: yAxisIndices};
+  const zModel = {vertices: zAxis, normals: zAxisNormal, colors: zAxisColor, indices: zAxisIndices};
+  const res = mergeModels([xModel, yModel, zModel]);
+  return res
+}
+
+function initModel() {
+
+  var models = [];
+  for (var i = 0; i < trajectory.length; i++) {
+    const wp = trajectory[i];
+    const se3 = mat4.create();
+    for (var j = 0; j < 4; j++) {
+      for (var k = 0; k < 4; k++) {
+        // OpenGL memory layout is column major.
+        se3[k*4+j] = wp[j][k];
+      }
+    }
+
+    var m = initCoordModel();
+    vec3.forEach(m.vertices, 0, 0, 0, vec3.transformMat4, se3);
+    vec3.forEach(m.normals, 0, 0, 0, vec3.transformMat4, se3);
+    models.push(m);
+  }
+
+  const model = mergeModels(models);
+  return model;
+}
+
+function initBuffers(gl) {
+  const model = initModel();
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, model.vertices, gl.STATIC_DRAW);
+
+  const normalBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, model.normals, gl.STATIC_DRAW);
+
+  const colorBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, model.colors, gl.STATIC_DRAW);
+
+  const indexBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, model.indices, gl.STATIC_DRAW);
+
+  return {
+    model: model,
+    position: positionBuffer,
+    normal: normalBuffer,
+    color: colorBuffer,
+    indices: indexBuffer,
+  };
+}
+
+function initVAO(gl, programInfo, buffers) {
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+
+  // Tell WebGL how to pull out the positions from the position
+  // buffer into the vertexPosition attribute
+  {
+    const numComponents = 3;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+    gl.vertexAttribPointer(
+        programInfo.attribLocations.vertexPosition,
+        numComponents,
+        type,
+        normalize,
+        stride,
+        offset);
+    gl.enableVertexAttribArray(
+        programInfo.attribLocations.vertexPosition);
+  }
+
+  // Upload the normalBuffer.
+  {
+    const numComponents = 3;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
+    gl.vertexAttribPointer(
+        programInfo.attribLocations.vertexNormal,
+        numComponents,
+        type,
+        normalize,
+        stride,
+        offset);
+    gl.enableVertexAttribArray(
+        programInfo.attribLocations.vertexNormal);
+  }
+
+  // Tell WebGL how to pull out the colors from the color buffer
+  // into the vertexColor attribute.
+  {
+    const numComponents = 4;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+    gl.vertexAttribPointer(
+        programInfo.attribLocations.vertexColor,
+        numComponents,
+        type,
+        normalize,
+        stride,
+        offset);
+    gl.enableVertexAttribArray(
+        programInfo.attribLocations.vertexColor);
+  }
+
+  // Tell WebGL which indices to use to index the vertices
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
+
+  // Unbind everything to avoid accidentally touching our VAO.
+  gl.bindVertexArray(null);
+  gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+
+  return vao;
+}
+
+function drawScene(gl, programInfo, buffers, vao, modelViewMatrix) {
+  resize(gl);
+
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
+  gl.clearDepth(1.0);                 // Clear everything
+  gl.enable(gl.DEPTH_TEST);           // Enable depth testing
+  gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
+
+  // Clear the canvas before we start drawing on it.
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  // Create a perspective matrix, a special matrix that is
+  // used to simulate the distortion of perspective in a camera.
+  // Our field of view is 45 degrees, with a width/height
+  // ratio that matches the display size of the canvas
+  // and we only want to see objects between 0.1 units
+  // and 100 units away from the camera.
+  const fieldOfView = 45 * Math.PI / 180;   // in radians
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const zNear = 0.1;
+  const zFar = 100.0;
+  const projectionMatrix = mat4.create();
+  mat4.perspective(projectionMatrix,
+                   fieldOfView,
+                   aspect,
+                   zNear,
+                   zFar);
+
+  // Tell WebGL to use our program when drawing
+  gl.useProgram(programInfo.program);
+  // Set the attributes of the program.
+  gl.bindVertexArray(vao);
+
+  // Set the shader uniforms
+  gl.uniformMatrix4fv(
+      programInfo.uniformLocations.projectionMatrix,
+      false,
+      projectionMatrix);
+  gl.uniformMatrix4fv(
+      programInfo.uniformLocations.modelViewMatrix,
+      false,
+      modelViewMatrix);
+  const normalMatrix = mat4.create();
+  mat4.invert(normalMatrix, modelViewMatrix);
+  mat4.transpose(normalMatrix, normalMatrix);
+  gl.uniformMatrix4fv(
+      programInfo.uniformLocations.normalMatrix,
+      false,
+      normalMatrix);
+
+  {
+    const vertexCount = buffers.model.indices.length;
+    const type = gl.UNSIGNED_SHORT;
+    const offset = 0;
+    gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
+  }
+}
+
+function main() {
+  const canvas = document.querySelector("#glCanvas");
+  const gl = canvas.getContext("webgl2");
+  if (!gl) {
+    alert("Your browser does not support WebGL 2. Please use the latest version of Chrome or Firefox!");
+  }
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+  const programInfo = initProgram(gl);
+  const buffers = initBuffers(gl);
+  const vao = initVAO(gl, programInfo, buffers);
+
+  // Initial model view matrix.
+  const modelViewMatrix = mat4.create();
+  mat4.translate(modelViewMatrix, modelViewMatrix, [-0.5, -0.5, -1.5]);
+  mat4.rotateY(modelViewMatrix, modelViewMatrix, glMatrix.toRadian(25));
+  // This is the best view to show that Euler angles are the best!
+  //modelViewMatrix.set([-0.04991300776600838, 0.08397287130355835, -0.9952211976051331, 0, 0.016302023082971573, 0.9963986277580261, 0.08325471729040146, 0, 0.9986246228218079, -0.012068508192896843, -0.05110231786966324, 0, -0.20712490379810333, -0.4772666394710541, -1.2589389085769653, 1], 0)
+
+  // Draw the scene repeatedly
+  var then = 0;
+  function render(now) {
+    now *= 0.001;  // convert to seconds
+    const deltaTime = now - then;
+    then = now;
+
+    drawScene(gl, programInfo, buffers, vao, modelViewMatrix);
+
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+
+  function mousemoveListener(e){
+    var axis = vec3.fromValues(e.movementY, e.movementX, 0);
+    var axisLen = vec3.length(axis);
+    if (axisLen < 1e-3) {
+      return;
+    }
+
+    vec3.scale(axis, axis, 1.0 / axisLen);
+    var smallWH = canvas.width;
+    if (canvas.height < smallWH) {
+      smallWH = canvas.height
+    }
+    const rad = glMatrix.toRadian(axisLen / smallWH * 90);
+
+    var rotm = mat4.fromRotation(mat4.create(), rad, axis);
+    mat4.multiply(modelViewMatrix, rotm, modelViewMatrix);
+  }
+  function keydownListener(e) {
+    var update = function(x, y, z) {
+      var v = vec3.fromValues(x, y, z);
+      var mq = quat.create();
+      mat4.getRotation(mq, modelViewMatrix);
+      quat.conjugate(mq, mq);
+      vec3.transformQuat(v, v, mq);
+      vec3.scale(v, v, 0.025);
+      mat4.translate(modelViewMatrix, modelViewMatrix, v);
+    }
+    if (e.keyCode == 38 || e.keyCode == 87) {
+      // up or w
+      update(0, 0, 1);
+    } else if (e.keyCode == 37 || e.keyCode == 65) {
+      // left or a
+      update(1, 0, 0);
+    } else if (e.keyCode == 40 || e.keyCode == 83) {
+      // down or s
+      update(0, 0, -1);
+    } else if (e.keyCode == 39 || e.keyCode == 68) {
+      // right or d
+      update(-1, 0, 0);
+    }
+  }
+  function pointerlockchangeListener(e) {
+    if (document.pointerLockElement == canvas) {
+      document.addEventListener("mousemove", mousemoveListener);
+      document.addEventListener("keydown", keydownListener);
+    } else {
+      document.removeEventListener("mousemove", mousemoveListener);
+      document.removeEventListener("keydown", keydownListener);
+    }
+  }
+  document.addEventListener('pointerlockchange', pointerlockchangeListener, false);
+  function pointerlockerrorListener(e) {
+    alert('Error setting pointer lock!');
+  }
+  document.addEventListener('pointerlockerror', pointerlockerrorListener, false);
+  canvas.addEventListener("click", function(e){
+    e.target.requestPointerLock();
+  });
+}
+main();
+  </script>
+</body>
