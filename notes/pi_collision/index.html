@@ -1,0 +1,194 @@
+<html>
+  <head>
+     <meta charset="utf-8"/>
+     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body style="background-color: black; color: white;">
+    <div id="container" style="text-align: center;">
+      <h1>\(\pi\) from collisions</h1>
+      <video id="vid" style="width: 100%;" autoplay muted controls>
+        <source type="video/webm" src="/notes/pi_collision/pi_collision.webm">
+        The “video” tag is not supported by your browser.
+      </video>
+
+      <h2>Answer: </h2>
+      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
+        <thead>
+          <tr style="font-weight: bold;"><td>Mass</td><td># collisions</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>3</td></tr>
+          <tr><td>100</td><td>31</td></tr>
+          <tr><td>10000</td><td>314</td></tr>
+          <tr><td>1000000</td><td>3141</td></tr>
+          <tr><td>100000000</td><td>31415</td></tr>
+          <tr><td>10000000000</td><td>314159</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Proof: </h2>
+      <div id="math" style="">
+      </div>
+
+      <div id="tex" data="
+Let \(n\) be the number of collisions, \(v_{n}\), \(u_{n}\) be the velocity of \(M\), \(m\) respectively after \(n\) collisions.
+For fully elastic collisions,
+$$
+\begin{bmatrix}
+v_{n}\\ 
+u_{n}
+\end{bmatrix}=A^{\tfrac{n}{2}}\begin{bmatrix}
+v_{0}\\ 
+0
+\end{bmatrix}
+
+,\space where\space
+
+A=
+\begin{bmatrix}
+\tfrac{M-m}{M+m} & \tfrac{2m}{M+m}\\ 
+\tfrac{-2M}{M+m} & \tfrac{M-m}{M+m} 
+\end{bmatrix}
+$$
+
+\(A\) can be decomposed as
+$$
+\begin{bmatrix}
+i\sqrt{\tfrac{m}{M}} & -i\sqrt{\tfrac{m}{M}}\\ 
+1 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+e^{i\phi} & 0\\ 
+0 & e^{-i\phi} 
+\end{bmatrix}
+\begin{bmatrix}
+-i\sqrt{\tfrac{M}{m}} & 1\\ 
+i\sqrt{\tfrac{M}{m}} & 1 
+\end{bmatrix}
+,\space where\space \cos {\phi} = \tfrac{M-m}{M+m}
+$$
+
+Therefore
+$$
+%displaylines is to circumvent a MathJax bug
+%https://github.com/mathjax/MathJax/issues/2312
+\displaylines{
+
+\begin{bmatrix}
+v_{n}\\ 
+u_{n}
+\end{bmatrix}
+=\begin{bmatrix}
+i\sqrt{\tfrac{m}{M}} & -i\sqrt{\tfrac{m}{M}}\\ 
+1 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+e^{i\tfrac{n}{2}\phi} & 0\\ 
+0 & e^{-i\tfrac{n}{2}\phi} 
+\end{bmatrix}
+\begin{bmatrix}
+-i\sqrt{\tfrac{M}{m}} & 1\\ 
+i\sqrt{\tfrac{M}{m}} & 1 
+\end{bmatrix}
+\begin{bmatrix}
+v_{0}\\ 
+0
+\end{bmatrix}
+
+\\
+\begin{bmatrix}
+v_{n}\\ 
+u_{n}
+\end{bmatrix}=\begin{bmatrix}
+v_{0}cos(\tfrac{n}{2}\phi)\\ 
+-\sqrt{\tfrac{M}{m}}v_{0}sin(\tfrac{n}{2}\phi)
+\end{bmatrix}
+
+} % End of \displaylines
+$$
+
+We want to find \(n\) where \(v_{n} > u_{n}\), which means
+$$
+\displaylines{
+
+v_{0}cos(\tfrac{n}{2}\phi) > -\sqrt{\tfrac{M}{m}}v_{0}sin(\tfrac{n}{2}\phi)\space,\space where\space v_{0} < 0\space and\space \tfrac{\pi}{2} < \tfrac{n}{2}\phi < \pi 
+
+\\
+\Rightarrow n > \tfrac{2(\pi+\arctan(-\sqrt{\tfrac{m}{M}}))}{\arctan(\tfrac{2\sqrt{Mm}}{M-m})}
+
+} % End of \displaylines
+$$
+
+Let \(M = Nm\), then
+$$
+n > \tfrac{2(\pi+\arctan(-\tfrac{1}{\sqrt{N}}))}{\arctan(\tfrac{2\sqrt{N}}{N-1})}
+$$
+
+Set \(x = \tfrac{1}{\sqrt{N}}\), then
+$$
+n >  \tfrac{2(\pi+\arctan(-x))}{\arctan(\tfrac{2x}{1-x^{2}})} = \tfrac{\pi}{x} - 1 + \tfrac{\pi}{3}x = \pi\sqrt{N} - 1 + \tfrac{\pi}{3\sqrt{N}}
+$$
+$$
+\Rightarrow \pi\sqrt{N} - 1 < n < \pi\sqrt{N}
+$$
+$$
+\Rightarrow n = floor(\pi\sqrt{N})
+$$
+      "></div>
+    </div>
+    
+    <script>
+      function tex2chtml(el, s) {
+        var tmp = document.createElement("div");
+        tmp.textContent = s;
+
+        MathJax.texReset();
+        MathJax.typesetClear();
+        MathJax.typeset();
+
+        el.innerHTML = tmp.innerHTML;
+        tmp.remove();
+      }
+
+      function onWindowResize() {
+        var vidEl = document.querySelector("#vid");
+        vidEl.addEventListener("loadedmetadata", function(e){
+          var ref = document.body;
+          var mTop = parseInt(window.getComputedStyle(ref).marginTop, 10);
+          var mBottom = parseInt(window.getComputedStyle(ref).marginBottom, 10);
+          var mLeft = parseInt(window.getComputedStyle(ref).marginLeft, 10);
+          var mRight = parseInt(window.getComputedStyle(ref).marginRight, 10);
+
+          var oriW = vidEl.videoWidth;
+          var oriH = vidEl.videoHeight;
+          var maxW = ref.clientWidth-mLeft-mRight;
+          var maxH = 0.5 * (ref.clientHeight-mTop-mBottom);
+          if (oriW > maxW) {
+            vidEl.style.width = maxW;
+            vidEl.style.height = oriH / oriW * maxW;
+          }
+          var vidH = parseInt(vidEl.style.height, 10);
+          if (vidH > maxH) {
+            vidEl.style.height = maxH;
+            vidEl.style.width = oriW / oriH * maxH;
+          }
+        });
+      }
+
+      function renderMath() {
+        var texDiv = document.querySelector("#tex");
+        var mtex = texDiv.attributes.data.value;
+        var mathDiv = document.querySelector("#math");
+        tex2chtml(mathDiv, mtex);
+      }
+
+      function main() {
+        onWindowResize();
+        window.addEventListener("resize", onWindowResize);
+        renderMath();
+      }
+
+      main();
+    </script>
+  </body>
+</html>
