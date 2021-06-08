@@ -1,0 +1,14 @@
+<html>
+  <head>
+     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <body>
+    <div id="math">
+    </div>
+    <script>
+      var mathDiv = document.querySelector("#math");
+      let html = MathJax.tex2chtml('\\sqrt{x^2+1}', {em: 12, ex: 6, display: false});
+      mathDiv.appendChild(html);
+    </script>
+  </body>
+</html>
