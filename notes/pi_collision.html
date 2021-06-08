@@ -5,9 +5,20 @@
   <body>
     <div id="math">
     </div>
+    
+    <div id="tex" style="display: none">
+      
+    </div>
+    
     <script>
+      var mtex = '\\sqrt{x^2+1}';
+      
+      var texDiv = document.querySelector("#tex");
+      //mtex = texDiv.innerHTML;
+      
+      let html = MathJax.tex2chtml(mtex, {em: 36, ex: 6, display: false});
+      
       var mathDiv = document.querySelector("#math");
-      let html = MathJax.tex2chtml('\\sqrt{x^2+1}', {em: 12, ex: 6, display: false});
       mathDiv.appendChild(html);
     </script>
   </body>
