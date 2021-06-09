@@ -4,15 +4,15 @@
      <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </head>
   <body style="background-color: black; color: white;">
-    <div id="container" style="text-align: center;">
+    <div id="container" style="text-align: center; font-size: xx-large;">
       <h1>\(\pi\) from collisions</h1>
       <video id="vid" style="width: 100%;" autoplay muted controls>
-        <source type="video/webm" src="/notes/pi_collision/pi_collision.webm">
+        <source type="video/webm" src="pi_collision.webm">
         The “video” tag is not supported by your browser.
       </video>
 
       <h2>Answer: </h2>
-      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
+      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
         <thead>
           <tr style="font-weight: bold;"><td>Mass</td><td># collisions</td></tr>
         </thead>
@@ -27,7 +27,7 @@
       </table>
 
       <h2>Proof: </h2>
-      <div id="math" style="">
+      <div id="math" style="text-align: left; margin-left: auto; margin-right: auto;">
       </div>
 
       <div id="tex" data="
@@ -96,7 +96,7 @@ v_{0}\\
 \end{bmatrix}
 
 \\
-\begin{bmatrix}
+\Rightarrow \begin{bmatrix}
 v_{n}\\ 
 u_{n}
 \end{bmatrix}=\begin{bmatrix}
@@ -150,29 +150,55 @@ $$
         tmp.remove();
       }
 
-      function onWindowResize() {
-        var vidEl = document.querySelector("#vid");
-        vidEl.addEventListener("loadedmetadata", function(e){
-          var ref = document.body;
-          var mTop = parseInt(window.getComputedStyle(ref).marginTop, 10);
-          var mBottom = parseInt(window.getComputedStyle(ref).marginBottom, 10);
-          var mLeft = parseInt(window.getComputedStyle(ref).marginLeft, 10);
-          var mRight = parseInt(window.getComputedStyle(ref).marginRight, 10);
+      function onWindowResizeVideo() {
+        var ref = document.body;
+        var mTop = parseInt(window.getComputedStyle(ref).marginTop, 10);
+        var mBottom = parseInt(window.getComputedStyle(ref).marginBottom, 10);
+        var mLeft = parseInt(window.getComputedStyle(ref).marginLeft, 10);
+        var mRight = parseInt(window.getComputedStyle(ref).marginRight, 10);
+        var maxW = ref.clientWidth-mLeft-mRight;
+        var maxH = 0.5 * (ref.clientHeight-mTop-mBottom);
 
-          var oriW = vidEl.videoWidth;
-          var oriH = vidEl.videoHeight;
-          var maxW = ref.clientWidth-mLeft-mRight;
-          var maxH = 0.5 * (ref.clientHeight-mTop-mBottom);
-          if (oriW > maxW) {
-            vidEl.style.width = maxW;
-            vidEl.style.height = oriH / oriW * maxW;
-          }
-          var vidH = parseInt(vidEl.style.height, 10);
-          if (vidH > maxH) {
-            vidEl.style.height = maxH;
-            vidEl.style.width = oriW / oriH * maxH;
-          }
-        });
+        var vidEl = document.querySelector("#vid");
+        var w = vidEl.videoWidth;
+        var h = vidEl.videoHeight;
+        var wdh = w / h;
+        if (w > maxW) {
+          w = maxW;
+          h = (1/wdh) * maxW;
+        }
+        if (h > maxH) {
+          h = maxH;
+          w = wdh * maxH;
+        }
+        
+        vidEl.style.width = w;
+        vidEl.style.height = h;
+      }
+
+      function onWindowResizeProof() {
+        var sentence = "Let n be the number of collisions, vn, un be the velocity of M, m respectively after n collisions. For fully elastic collisions,    ";
+
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        var mathEl = document.querySelector("#math");
+        var mathElStyle = window.getComputedStyle(mathEl);
+        context.fontFamily = mathElStyle.fontFamily;
+        context.fontStyle = mathElStyle.fontStyle;
+        context.fontSize = mathElStyle.fontSize;
+        var fontStr = mathElStyle.fontStyle + " " + mathElStyle.fontSize + " " + mathElStyle.fontFamily;
+        context.font = fontStr;
+        var sentenceW = context.measureText(sentence).width;
+        var maxW = Math.ceil(sentenceW / 10) * 10;
+
+        if (mathEl.clientWidth > maxW) {
+          mathEl.style.width = maxW;
+        }
+      }
+
+      function onWindowResize() {
+        onWindowResizeVideo();
+        onWindowResizeProof();
       }
 
       function renderMath() {
@@ -183,8 +209,12 @@ $$
       }
 
       function main() {
-        onWindowResize();
-        window.addEventListener("resize", onWindowResize);
+        var vidEl = document.querySelector("#vid");
+        vidEl.addEventListener("loadedmetadata", function(e){
+          onWindowResize();
+          window.addEventListener("resize", onWindowResize);
+        });
+        
         renderMath();
       }
 
