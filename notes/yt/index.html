@@ -1,0 +1,157 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+  <body style="">
+    <div id="yt" style="background-color: #FFAAAA; text-align: center;">Youtube字幕</div>
+
+    <script>
+function parseTime(s) {
+  var dotSplit = s.split(".");
+  if (dotSplit.length != 2) {
+    return [-1, `cannot split dot`];
+  }
+  var milliseconds = parseInt(dotSplit[1], 10);
+
+  var colonSplit = dotSplit[0].split(":");
+  if (colonSplit.length != 3) {
+    return [-1, `cannot split colon`];
+  }
+  var hours = parseInt(colonSplit[0], 10);
+  var minutes = parseInt(colonSplit[1], 10);
+  var seconds = parseInt(colonSplit[2], 10);
+  return [((hours*60+minutes)*60+seconds)*1000+milliseconds, null];
+}
+
+function parseStartEnd(line) {
+  var splitted = line.split(",");
+  if (splitted.length != 2) {
+    return [null, `no start end "${line}"`];
+  }
+
+  var res = {};
+  var startErr = parseTime(splitted[0]);
+  res.start = startErr[0];
+  var err = startErr[1];
+  if (err != null) {
+    return [null, `cannot parse start ${line} ${err}`];
+  }
+  var endErr = parseTime(splitted[1]);
+  res.end = endErr[0];
+  err = endErr[1];
+  if (err != null) {
+    return [null, `cannot parse end ${line} ${err}`];
+  }
+  return [res, null];
+}
+
+function parseSBV(s) {
+  var lines = s.split(/\r?\n/);
+
+  var curP = {};
+  var ps = [];
+  for (let i = 0; i < lines.length; i++) {
+    var line = lines[i];
+
+    if (line == "") {
+      ps.push(JSON.parse(JSON.stringify(curP)));
+      curP = {};
+    } else if (curP.t == null) {
+      var seErr = parseStartEnd(line);
+      var se = seErr[0];
+      var err = seErr[1];
+      if (err != null) {
+        return [null, `line ${i}: ${err}`];
+      }
+      curP.t = se.start;
+      curP.d = se.end - se.start;
+    } else {
+      curP.body = line;
+    }
+  }
+
+  return [ps, null];
+}
+
+function sbv2ytt(str) {
+  var sbvErr = parseSBV(str);
+  var sbv = sbvErr[0];
+  var err = sbvErr[1];
+  if (err != null) {
+    return [null, err]
+  }
+
+  var ytt = `<timedtext format="3">
+<head>
+<pen id="1" fc="#FFFFFF" bo="0" ec="#000000" et="4" sz="600"/>
+</head>
+<body>
+`;
+
+  for (let i = 0; i < sbv.length; i++) {
+    var s = sbv[i];
+    var p = `<p t="${s.t}" d="${s.d}" p="1">${s.body}</p>`;
+    ytt += p;
+    ytt += "\n";
+  }
+
+  ytt += `</body>
+</timedtext>`;
+  return [ytt, null];
+}
+
+function downloadToFile(content, filename, contentType) {
+  const a = document.createElement('a');
+  const file = new Blob([content], {type: contentType});
+  
+  a.href= URL.createObjectURL(file);
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+};
+
+var yt = document.querySelector("#yt");
+function styleYt() {
+  yt.style["font-size"] = "x-large";
+}
+styleYt();
+yt.addEventListener("dragenter", function(e){
+  yt.style["font-size"] = "xx-large";
+});
+yt.addEventListener("dragleave", function(e){
+  styleYt();
+});
+yt.addEventListener("dragover", function(e){
+  e.preventDefault();
+});
+yt.addEventListener("drop", function(e){
+  e.preventDefault();
+  var items = e.dataTransfer.items;
+  var file = null;
+  for (let i = 0; i < items.length; i++) {
+    var item = items[i];
+    if (item.kind == "file") {
+      file = item.getAsFile();
+      break;
+    }
+  }
+
+  var reader = new FileReader();
+  reader.addEventListener("load", function(e){
+    styleYt();
+    var content = e.target.result;
+    var yttErr = sbv2ytt(content);
+    var ytt = yttErr[0];
+    var err = yttErr[1];
+    if (err != null) {
+      alert(err);
+      return;
+    }
+    downloadToFile(ytt, "captions.ytt", "text/plain");
+  });
+  reader.readAsText(file);
+});
+    </script>
+  </body>
+</html>
