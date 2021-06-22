@@ -1,0 +1,142 @@
+<html>
+  <head>
+     <meta charset="utf-8"/>
+     <script src="https://unpkg.com/vtk.js"></script>
+     <link rel="stylesheet" href="SceneExplorer.module.css">
+  </head>
+  <body>
+<script type="module">
+//import macro from 'vtk.js/Sources/macro';
+//import DataAccessHelper from 'vtk.js/Sources/IO/Core/DataAccessHelper';
+//import HttpDataAccessHelper from 'vtk.js/Sources/IO/Core/DataAccessHelper/HttpDataAccessHelper';
+//import vtkFullScreenRenderWindow from 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow';
+//import vtkHttpSceneLoader from 'vtk.js/Sources/IO/Core/HttpSceneLoader';
+
+import controlWidget from './SceneExplorerWidget.js';
+// import style from './SceneExplorer.module.css';
+var style = {progress: "progress", fullScreen: "fullScreen"};
+
+const iOS = /iPad|iPhone|iPod/.test(window.navigator.platform);
+let autoInit = true;
+let widgetCreated = false;
+
+// Add class to body if iOS device --------------------------------------------
+
+if (iOS) {
+  document.querySelector('body').classList.add('is-ios-device');
+}
+
+function emptyContainer(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+export function load(container, options) {
+  autoInit = false;
+  emptyContainer(container);
+
+  const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
+    background: [1, 1, 1],
+    rootContainer: container,
+    containerStyle: { height: '100%', width: '100%', position: 'absolute' },
+  });
+  const renderer = fullScreenRenderer.getRenderer();
+  const renderWindow = fullScreenRenderer.getRenderWindow();
+  // global.renderWindow = renderWindow;
+
+  function onReady(sceneImporter) {
+    sceneImporter.onReady(() => {
+      renderWindow.render();
+
+      // Add UI to dynamically change rendering settings
+      if (!widgetCreated) {
+        widgetCreated = true;
+        controlWidget(
+          document.querySelector('body'),
+          sceneImporter.getScene(),
+          renderWindow.render
+        );
+      }
+    });
+
+    window.addEventListener('dblclick', () => {
+      sceneImporter.resetScene();
+      renderWindow.render();
+    });
+  }
+
+  if (options.url) {
+    const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({ renderer });
+    sceneImporter.setUrl(options.url);
+    onReady(sceneImporter);
+  } else if (options.fileURL) {
+    const progressContainer = document.createElement('div');
+    progressContainer.setAttribute('class', style.progress);
+    container.appendChild(progressContainer);
+
+    const progressCallback = (progressEvent) => {
+      if (progressEvent.lengthComputable) {
+        const percent = Math.floor(
+          (100 * progressEvent.loaded) / progressEvent.total
+        );
+        progressContainer.innerHTML = `Loading ${percent}%`;
+      } else {
+        progressContainer.innerHTML = vtk.macro.formatBytesToProperUnit(
+          progressEvent.loaded
+        );
+      }
+    };
+
+    // HttpDataAccessHelper.
+    vtk.IO.Core.DataAccessHelper.get("http").fetchBinary(options.fileURL, {
+      progressCallback,
+    }).then((zipContent) => {
+      container.removeChild(progressContainer);
+      const dataAccessHelper = vtk.IO.Core.DataAccessHelper.get('zip', {
+        zipContent,
+        callback: (zip) => {
+          const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({
+            renderer,
+            dataAccessHelper,
+          });
+          sceneImporter.setUrl('index.json');
+          onReady(sceneImporter);
+        },
+      });
+    });
+  } else if (options.file) {
+    const dataAccessHelper = vtk.IO.Core.DataAccessHelper.get('zip', {
+      zipContent: options.file,
+      callback: (zip) => {
+        const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({
+          renderer,
+          dataAccessHelper,
+        });
+        sceneImporter.setUrl('index.json');
+        onReady(sceneImporter);
+      },
+    });
+  }
+}
+
+export function main() {
+  const rootBody = document.querySelector('body');
+  const myContainer = rootBody;
+
+  myContainer.classList.add(style.fullScreen);
+  rootBody.style.margin = '0';
+  rootBody.style.padding = '0';
+
+  const options = {fileURL: "standard_mesh.vtkjs"};
+  load(myContainer, options);
+}
+main();
+</script>
+  </body>
+</html>
