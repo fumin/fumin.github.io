@@ -12,30 +12,30 @@
         The left car's spoiler is an ordinary rectangle, whereas the right spoiler has receding concavities at its bottom left and right corners.
       </p>
       <h3>Which design is better?</h3>
-      <div>
+      <div id="standard-mesh">
         <iframe src="standard_mesh.html"></iframe>
         <div>Standard design</div>
       </div>
-      <div style="margin-top: 1em;">
+      <div id="curved-mesh" style="margin-bottom: 2em;">
         <iframe src="curved_mesh.html"></iframe>
         <div>Curved design with receding concavities</div>
       </div>
 
       <h2>Answer</h2>
-      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
-          <thead>
-            <tr style="font-weight: bold;"><td>Force [\(kg\cdot m/s^{2}\)]</td><td>standard</td><td>curved</td></tr>
-          </thead>
-          <tbody>
-            <tr><td>Drag</td><td>34.984</td><td>31.308</td></tr>
-            <tr><td>Down-force</td><td>21.635</td><td>20.257</td></tr>
-          </tbody>
-        </table>
+      <p>The curved design is on the whole better.</p>
       <p>
-        The table above shows that the curved design lessens the drag considerably at the expense of only a slight decrease in down-force.
+        The table below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in down-force.
         This suggests that the curved design is better than the standard one.
       </p>
-
+      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
+        <thead>
+          <tr style="font-weight: bold;"><td>Force [\(kg\cdot m/s^{2}\)]</td><td>standard</td><td>curved</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>Drag</td><td>34.984</td><td>31.308</td></tr>
+          <tr><td>Down-force</td><td>21.635</td><td>20.257</td></tr>
+        </tbody>
+      </table>
       <p>
         The diagrams below show the Computational Fluid Dynamics results.
         Plots on the surface of the spoilers show the pressure.
@@ -45,11 +45,11 @@
         Plots along the drag direction show the turbulent kinetic energy.
         We see that the curved design results in less turbulent flow, reaffirming its superiority over the standard design in terms of both speed and stability.
       </p>
-      <div>
+      <div style="position: relative;">
         <iframe id="standard" src="standard.html" style=""></iframe>
         <div>Standard design. This is a 3D interactive graph. Use <i>Shift+Mouse</i> to pan; <i>Mouse</i> to rotate, and <i>scroll</i> to zoom.</div>
       </div>
-      <div style="margin-top: 1.5em;">
+      <div style="position: relative; margin-top: 1.5em;">
         <iframe id="curved" src="curved.html" style=""></iframe>
         <div>Curved design. This is a 3D interactive graph.</div>
       </div>
@@ -92,6 +92,32 @@ function onWindowResizeImg() {
   el.style.height = h;
 }
 
+function fullscreenIFrame(el, div){
+  if (!div.fullscreen) {
+    div.fullscreen = true;
+    div.oriPosition = el.style.position;
+    el.style.position = "fixed";
+    div.oriTop = el.style.top;
+    el.style.top = 0;
+    div.oriLeft = el.style.left;
+    el.style.left = 0;
+    div.oriWidth = el.style.width;
+    el.style.width = "100vw";
+    div.oriHeight = el.style.height;
+    el.style.height = "100vh";
+    div.oriZindex = el.style["z-index"];
+    el.style["z-index"] = 999;
+  } else {
+    div.fullscreen = null;
+    el.style.position = div.oriPosition;
+    el.style.top = div.oriTop;
+    el.style.left = div.oriLeft;
+    el.style.width = div.oriWidth;
+    el.style.height = div.oriHeight;
+    el.style["z-index"] = div.oriZindex;
+  }
+}
+
 function onWindowResizeCFD(selector) {
   const el = document.querySelector(selector);
   const w = el.parentElement.clientWidth;
@@ -100,14 +126,67 @@ function onWindowResizeCFD(selector) {
   el.style["height"] = h;
 }
 
+function onWindowResizeMesh() {
+  var standardMesh = document.querySelector("#standard-mesh");
+  var curvedMesh = document.querySelector("#curved-mesh");
+  const docW = window.innerWidth;
+  const docH = window.innerHeight;
+  if (docW/docH > 1024/768) {
+    standardMesh.style.width = "50%";
+    standardMesh.style.float = "left";
+
+    const standardIFrame = standardMesh.querySelector("iframe");
+    var w = standardMesh.clientWidth * 0.9;
+    if (w > standardIFrame.clientWidth) {
+      const h = standardIFrame.clientHeight / standardIFrame.clientWidth * w;
+      standardIFrame.style.width = w;
+      standardIFrame.style.height = h;
+    }
+
+    curvedMesh.style.width = "50%";
+    curvedMesh.style.float = "left";
+    curvedMesh.style["margin-top"] = "0";
+
+    const curvedIFrame = curvedMesh.querySelector("iframe");
+    w = curvedMesh.clientWidth * 0.9;
+    if (w > curvedIFrame.clientWidth) {
+      const h = curvedIFrame.clientHeight / curvedIFrame.clientWidth * w;
+      curvedIFrame.style.width = w;
+      curvedIFrame.style.height = h;
+    }
+  } else {
+    standardMesh.style.width = "";
+    standardMesh.style.float = "";
+    curvedMesh.style.width = "";
+    curvedMesh.style.float = "";
+    curvedMesh.style["margin-top"] = "1em";
+  }
+}
+
+function handleWindowMsg() {
+  window.addEventListener("message", function(e){
+    const splitted = e.source.location.pathname.split("/");
+    const base = splitted[splitted.length-1];
+    if (base == "standard.html") {
+      const standard = document.querySelector("#standard");
+      fullscreenIFrame(standard, standard);
+    } else if (base == "curved.html") {
+      const curved = document.querySelector("#curved");
+      fullscreenIFrame(curved, curved);
+    }
+  });
+}
+
 function main() {
   onWindowResizeContainer();
   var imgEl = document.querySelector("#img");
   imgEl.addEventListener("load", function(e){
     onWindowResizeImg();
   });
+  onWindowResizeMesh();
   onWindowResizeCFD("#standard");
   onWindowResizeCFD("#curved");
+  handleWindowMsg();
 }
 main();
     </script>

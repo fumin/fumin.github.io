@@ -1,26 +1,18 @@
 <html>
   <head>
      <meta charset="utf-8"/>
+     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
      <script src="https://unpkg.com/vtk.js"></script>
      <link rel="stylesheet" href="SceneExplorer.module.css">
   </head>
   <body>
 <script type="module">
-//import macro from 'vtk.js/Sources/macro';
-//import DataAccessHelper from 'vtk.js/Sources/IO/Core/DataAccessHelper';
-//import HttpDataAccessHelper from 'vtk.js/Sources/IO/Core/DataAccessHelper/HttpDataAccessHelper';
-//import vtkFullScreenRenderWindow from 'vtk.js/Sources/Rendering/Misc/FullScreenRenderWindow';
-//import vtkHttpSceneLoader from 'vtk.js/Sources/IO/Core/HttpSceneLoader';
-
 import controlWidget from './SceneExplorerWidget.js';
-// import style from './SceneExplorer.module.css';
 var style = {progress: "progress", fullScreen: "fullScreen"};
 
 const iOS = /iPad|iPhone|iPod/.test(window.navigator.platform);
 let autoInit = true;
 let widgetCreated = false;
-
-// Add class to body if iOS device --------------------------------------------
 
 if (iOS) {
   document.querySelector('body').classList.add('is-ios-device');
@@ -37,6 +29,14 @@ function preventDefaults(e) {
   e.stopPropagation();
 }
 
+function setTopRightCont(topRightContID) {
+  var controller = document.querySelector(`#${topRightContID}`);
+  var fullscreenBtn = controller.querySelector(".fullscreen-btn");
+  fullscreenBtn.addEventListener("click", function(e){
+    window.parent.postMessage({fullscreen: true}, "*");
+  });
+}
+
 export function load(container, options) {
   autoInit = false;
   emptyContainer(container);
@@ -48,7 +48,13 @@ export function load(container, options) {
   });
   const renderer = fullScreenRenderer.getRenderer();
   const renderWindow = fullScreenRenderer.getRenderWindow();
-  // global.renderWindow = renderWindow;
+
+  var topRightContID = "top-right-controller";
+  const topRightContHTML = `<div id="${topRightContID}">
+    <div class="fullscreen-btn">Fullscreen</div>
+  </div>`;
+  fullScreenRenderer.addController(topRightContHTML);
+  setTopRightCont(topRightContID);
 
   function onReady(sceneImporter) {
     sceneImporter.onReady(() => {
@@ -125,7 +131,20 @@ export function load(container, options) {
   }
 }
 
-export function main() {
+import *  as legend from './legend.js';
+
+function onWindowResize(fontSize, paletteHeight) {
+  const pressureLegend = document.querySelector("#pressure-legend");
+  pressureLegend.style.left = -document.documentElement.clientWidth*0.47;
+  pressureLegend.style.top = -(paletteHeight+fontSize)/2;
+
+  const tkeLegend = document.querySelector("#tke-legend");
+  const tkeW = fontSize + tkeLegend.querySelector("svg").clientWidth;
+  tkeLegend.style.left = document.documentElement.clientWidth*0.47 - tkeW;
+  tkeLegend.style.top = -(paletteHeight+fontSize)/2;
+}
+
+function main() {
   const rootBody = document.querySelector('body');
   const myContainer = rootBody;
 
@@ -135,8 +154,35 @@ export function main() {
 
   const options = {fileURL: "curved.vtkjs"};
   load(myContainer, options);
+
+  const docW = document.documentElement.clientWidth;
+
+  var titleStr = "Pressure \\([Pa]\\)";
+  var titleClean = "Pressure Pa";
+  const presetName = "rainbow";
+  var annotations = [-275, -200, -100, 0, 70];
+  var decimalPlaces = 0;
+  const fontSize = Math.max(Math.round(docW * 0.0156), 20);
+  const paletteWidth = Math.round(docW * 0.0195);
+  const paletteHeight = paletteWidth * 10; 
+  const pressureLegend = legend.New(titleStr, titleClean, presetName, annotations, decimalPlaces, fontSize, paletteWidth, paletteHeight);
+  pressureLegend.id = "pressure-legend";
+
+  titleStr = "Turbulent kinetic energy \\([m^{2}/s^{2}]\\)";
+  titleClean = "Turbulent kinetic energy m/s"
+  annotations = [0, 5, 10, 15, 17.5];
+  decimalPlaces = 1;
+  const tkeLegend = legend.New(titleStr, titleClean, presetName, annotations, decimalPlaces, fontSize, paletteWidth, paletteHeight);
+  const tkeW = fontSize + tkeLegend.querySelector("svg").clientWidth;
+  tkeLegend.id = "tke-legend";
+
+  onWindowResize(fontSize, paletteHeight);
+  window.addEventListener("resize", function(e){
+    onWindowResize(fontSize, paletteHeight);
+  });
 }
 main();
+
 </script>
   </body>
 </html>
