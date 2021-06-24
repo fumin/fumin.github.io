@@ -58,12 +58,12 @@ export default function addWidget(container, sceneItems, render) {
     const itemIdx = Number(e.target.name);
     const value = e.target.value;
     if (sceneItems[itemIdx][value]) {
-      vtk.IO.Core.HttpSceneLoader.applySettings(
+      vtk.IO.Core.vtkHttpSceneLoader.applySettings(
         sceneItems[itemIdx],
         sceneItems[itemIdx][value]
       );
     } else if (SETTINGS_OPTIONS[value]) {
-      vtkHttpSceneLoader.applySettings(
+      vtk.IO.Core.vtkHttpSceneLoader.applySettings(
         sceneItems[itemIdx],
         SETTINGS_OPTIONS[value]
       );
