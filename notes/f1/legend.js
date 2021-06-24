@@ -112,7 +112,7 @@ function newTitle(titleWidth, titleHeight, legendHeight, title) {
   div.style.left = -titleWidth/2 + titleHeight/2;
   div.style.top = legendHeight/2 - titleHeight/2;
   div.style["background-color"] = "white";
-  div.style.rotate = "-90deg";
+  div.style.transform = "rotate(-90deg)";
   div.style["padding-left"] = titleHeight / 4;
   return div;
 }
