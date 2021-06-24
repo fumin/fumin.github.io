@@ -2,6 +2,21 @@
   <head>
     <meta charset="utf-8"/>
     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+a {
+  color: gray;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:focus {
+  text-decoration: underline;
+}
+a:active {
+  color: yellow;
+}
+    </style>
   </head>
   <body style="background-color: black; color: white; font-size: xx-large;">
     <div id="container" style="margin-left:auto; margin-right:auto; text-align: center;">
@@ -24,7 +39,7 @@
       <h2>Answer</h2>
       <p>The curved design is on the whole better.</p>
       <p>
-        The table below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in down-force.
+        The table<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in down-force.
         This suggests that the curved design is better than the standard one.
       </p>
       <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
@@ -36,6 +51,7 @@
           <tr><td>Down-force</td><td>21.635</td><td>20.257</td></tr>
         </tbody>
       </table>
+
       <p>
         The diagrams below show the Computational Fluid Dynamics results.
         Plots on the surface of the spoilers show the pressure.
@@ -54,6 +70,15 @@
         <div>Curved design. This is a 3D interactive graph.</div>
       </div>
 
+      <h2>Reference</h2>
+      <ol style="text-align: left;">
+        <li id="cite_note-1">
+          <b><a href="#cite_ref-1">^</a></b> Note that from the table above, we can also infer how much engine power is spent on countering the drag induced by the spoilers.
+          The calculations were done under a speed of \(10m/s\), which for the standard spoiler implies the power consumption is \((34.984N)\cdot (10m/s)/(735.5hp/W) = 0.476hp\).
+          Assuming F1 cars race at \(200km/hr\), the power consumption at such speeds is \((0.476hp)\cdot ((200km/hr)/((10m/s)*3.6))^{3} = 81.619hp\).
+          Typical F1 engines produce roughly 1000 horsepower, therefore we conclude about \(81.619/1000 = 8\%\) of the power produced is spent on combating the drag induced by spoilers.
+        </li>
+      </ol>
     </div>
 
     <script>
