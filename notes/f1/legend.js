@@ -108,7 +108,6 @@ function newTitle(titleWidth, titleHeight, legendHeight, title) {
   div.appendChild(document.createTextNode(title));
   div.style.position = "absolute";
   div.style.width = titleWidth;
-  div.style.rotate = "-90deg";
   div.style.left = -titleWidth/2 + titleHeight/2;
   div.style.top = legendHeight/2 - titleHeight/2;
   div.style["background-color"] = "white";

@@ -39,7 +39,7 @@ a:active {
       <h2>Answer</h2>
       <p>The curved design is on the whole better.</p>
       <p>
-        The table<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in down-force.
+        The table<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in downforce.
         This suggests that the curved design is better than the standard one.
       </p>
       <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
@@ -48,14 +48,20 @@ a:active {
         </thead>
         <tbody>
           <tr><td>Drag</td><td>34.984</td><td>31.308</td></tr>
-          <tr><td>Down-force</td><td>21.635</td><td>20.257</td></tr>
+          <tr>
+            <td>
+              Downforce
+              <sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup>
+            </td>
+            <td>21.635</td><td>20.257</td>
+          </tr>
         </tbody>
       </table>
 
       <p>
         The diagrams below show the Computational Fluid Dynamics results.
         Plots on the surface of the spoilers show the pressure.
-        We see that the pressures on top of both spoilers are larger than their bottom counterparts, confirming the intuition about the spoilers providing additional down-force that help stabilize the vehicle.
+        We see that the pressures on top of both spoilers are larger than their bottom counterparts, confirming the intuition about the spoilers providing additional downforce that help stabilize the vehicle.
       </p>
       <p>
         Plots along the drag direction show the turbulent kinetic energy.
@@ -73,10 +79,25 @@ a:active {
       <h2>Reference</h2>
       <ol style="text-align: left;">
         <li id="cite_note-1">
-          <b><a href="#cite_ref-1">^</a></b> Note that from the table above, we can also infer how much engine power is spent on countering the drag induced by the spoilers.
-          The calculations were done under a speed of \(10m/s\), which for the standard spoiler implies the power consumption is \((34.984N)\cdot (10m/s)/(735.5hp/W) = 0.476hp\).
-          Assuming F1 cars race at \(200km/hr\), the power consumption at such speeds is \((0.476hp)\cdot ((200km/hr)/((10m/s)*3.6))^{3} = 81.619hp\).
-          Typical F1 engines produce roughly 1000 horsepower, therefore we conclude about \(81.619/1000 = 8\%\) of the power produced is spent on combating the drag induced by spoilers.
+          <b><a href="#cite_ref-1">^</a></b>
+          Note that from the table above, we can also infer how much engine power is spent on countering the drag induced by the spoilers.
+          The calculations were done under a speed of \(10m/s\), which for the standard spoiler implies the power consumption is \(P_{table} = F\cdot v = (34.984N)\cdot (10m/s)/(735.5hp/W) = 0.476hp\).
+          F1 cars can reach top speeds of over \(300km/hr\), for these speeds the power consumption is \(P_{table}\cdot (\frac{v_{F1}}{v_{table}})^{3} = (0.476hp)\cdot ((300km/hr)/((10m/s)*3.6))^{3} = 275hp\).
+          Typical F1 engines produce roughly 1000 horsepower, therefore we conclude about \(275/1000 = 27.5\%\) of the power produced is spent on combating the drag induced by spoilers.
+          <br><br>
+          Using this data, we can further deduce the total drag under further assumptions about the dimensions of a real F1 chassis.
+          Under the latest specifications, F1 chassis typically have width \(2m\) and height \(0.95m\).
+          On the other hand, the area of the spoiler is \(1m^{2}\), and since the spoiler is at a \(45deg\) angle, the cross section is \(1m^{2}\cdot cos(45deg) = 0.707m^{2}\).
+          Therefore, the total drag is \(D_{spoiler}\cdot \frac{A_{chassis}}{A_{spoiler}} = (27.5\%)\cdot \frac{2m\cdot 0.95m}{0.707m^{2}} = 73.9\%\) of the engine's power production.
+          In other words, under top F1 speeds, aerodynamics should be a car designer's most important concern.
+        </li>
+        <li id="cite_note-2" style="margin-top: 1em;">
+          <b><a href="#cite_ref-2">^</a></b>
+          We can calculate the downforce in a real F1 race from the data here, assuming a top speed of \(300km/hr\).
+          Since the data here is done under a speed of \(10m/s\), the downforce in a real race is \(F_{F1} = F_{table}\cdot (\frac{v_{F1}}{v_{table}})^{2} = (21.635N)\cdot (300/(10*3.6))^{2} = 1502N\).
+          A typical F1 chassis weighs \(740kg\), thus the spoiler adds \((1502N/9.8)/(740kg) = 20.7\%\) to the car's grip.
+          Moreover, a typical F1 chassis has length \(5.5m\) and width \(2m\), therefore the downforce of the entire chassis is \(20.7\%\cdot (5.5m\cdot 2m) / (0.707m^{2}) = 322\%\).
+          We conclude that the downforce of a F1 car is substantially larger than its own weight, implying that they could theoretically drive upside down in a tunnel.
         </li>
       </ol>
     </div>
