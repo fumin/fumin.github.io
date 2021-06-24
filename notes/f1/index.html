@@ -173,6 +173,12 @@ function handleWindowMsg() {
     } else if (base == "curved.html") {
       const curved = document.querySelector("#curved");
       fullscreenIFrame(curved, curved);
+    } else if (base == "standard_mesh.html") {
+      const standard_mesh = document.querySelector("#standard-mesh iframe");
+      fullscreenIFrame(standard_mesh, standard_mesh);
+    } else if (base == "curved_mesh.html") {
+      const curved_mesh = document.querySelector("#curved-mesh iframe");
+      fullscreenIFrame(curved_mesh, curved_mesh);
     }
   });
 }
