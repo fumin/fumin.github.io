@@ -20,11 +20,11 @@ a:active {
   </head>
   <body style="background-color: black; color: white; font-size: xx-large;">
     <div id="container" style="margin-left:auto; margin-right:auto; text-align: center;">
-      <h1>F1 car spoilers</h1>
+      <h1>F1 car wings</h1>
       <img id="img" src="f1.jpg" style="">
       <p>
-        The spoilers on the two cars above have different shapes.
-        The left car's spoiler is an ordinary rectangle, whereas the right spoiler has receding concavities at its bottom left and right corners.
+        The wings on the two cars above have different shapes.
+        The left car's wing is an ordinary rectangle, whereas the right wing has receding concavities at its bottom left and right corners.
       </p>
       <h3>Which design is better?</h3>
       <div id="standard-mesh">
@@ -60,8 +60,8 @@ a:active {
 
       <p>
         The diagrams below show the Computational Fluid Dynamics results.
-        Plots on the surface of the spoilers show the pressure.
-        We see that the pressures on top of both spoilers are larger than their bottom counterparts, confirming the intuition about the spoilers providing additional downforce that help stabilize the vehicle.
+        Plots on the surface of the wings show the pressure.
+        We see that the pressures on top of both wings are larger than their bottom counterparts, confirming the intuition about the wings providing additional downforce that help stabilize the vehicle.
       </p>
       <p>
         Plots along the drag direction show the turbulent kinetic energy.
@@ -76,28 +76,51 @@ a:active {
         <div>Curved design. This is a 3D interactive graph.</div>
       </div>
 
+      <p>
+        The reason why the curved wing retains much of its downforce despite having a lower drag is because it has a stronger circulation due to its closer resemblance to a perfect ellipse<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup>.
+        The below animations show streamlines for both designs, and we can see that the vortices created by the curved wing are more prominent.
+      </p>
+      <div style="position: relative;">
+        <iframe id="standard-stream" src="standard_stream.html" style=""></iframe>
+        <div>Standard design. This is a 3D interactive graph. Use <i>Shift+Mouse</i> to pan; <i>Mouse</i> to rotate, and <i>scroll</i> to zoom.</div>
+      </div>
+      <div style="position: relative; margin-top: 1.5em;">
+        <iframe id="curved-stream" src="curved_stream.html" style=""></iframe>
+        <div>Curved design.</div>
+      </div>
+
       <h2>Reference</h2>
       <ol style="text-align: left;">
         <li id="cite_note-1">
           <b><a href="#cite_ref-1">^</a></b>
-          Note that from the table above, we can also infer how much engine power is spent on countering the drag induced by the spoilers.
-          The calculations were done under a speed of \(10m/s\), which for the standard spoiler implies the power consumption is \(P_{table} = F\cdot v = (34.984N)\cdot (10m/s)/(735.5hp/W) = 0.476hp\).
+          Note that from the table above, we can also infer how much engine power is spent on countering the drag induced by the wings.
+          The calculations were done under a speed of \(10m/s\), which for the standard wing implies the power consumption is \(P_{table} = F\cdot v = (34.984N)\cdot (10m/s)/(735.5hp/W) = 0.476hp\).
           F1 cars can reach top speeds of over \(300km/hr\), for these speeds the power consumption is \(P_{table}\cdot (\frac{v_{F1}}{v_{table}})^{3} = (0.476hp)\cdot ((300km/hr)/((10m/s)*3.6))^{3} = 275hp\).
-          Typical F1 engines produce roughly 1000 horsepower, therefore we conclude about \(275/1000 = 27.5\%\) of the power produced is spent on combating the drag induced by spoilers.
+          Typical F1 engines produce roughly 1000 horsepower, therefore we conclude about \(275/1000 = 27.5\%\) of the power produced is spent on combating the drag induced by wings.
           <br><br>
           Using this data, we can further deduce the total drag under further assumptions about the dimensions of a real F1 chassis.
           Under the latest specifications, F1 chassis typically have width \(2m\) and height \(0.95m\).
-          On the other hand, the area of the spoiler is \(1m^{2}\), and since the spoiler is at a \(45deg\) angle, the cross section is \(1m^{2}\cdot cos(45deg) = 0.707m^{2}\).
-          Therefore, the total drag is \(D_{spoiler}\cdot \frac{A_{chassis}}{A_{spoiler}} = (27.5\%)\cdot \frac{2m\cdot 0.95m}{0.707m^{2}} = 73.9\%\) of the engine's power production.
+          On the other hand, the area of the wing is \(1m^{2}\), and since the wing is at a \(45deg\) angle, the cross section is \(1m^{2}\cdot cos(45deg) = 0.707m^{2}\).
+          Therefore, the total drag is \(D_{wing}\cdot \frac{A_{chassis}}{A_{wing}} = (27.5\%)\cdot \frac{2m\cdot 0.95m}{0.707m^{2}} = 73.9\%\) of the engine's power production.
           In other words, under top F1 speeds, aerodynamics should be a car designer's most important concern.
         </li>
         <li id="cite_note-2" style="margin-top: 1em;">
           <b><a href="#cite_ref-2">^</a></b>
           We can calculate the downforce in a real F1 race from the data here, assuming a top speed of \(300km/hr\).
           Since the data here is done under a speed of \(10m/s\), the downforce in a real race is \(F_{F1} = F_{table}\cdot (\frac{v_{F1}}{v_{table}})^{2} = (21.635N)\cdot (300/(10*3.6))^{2} = 1502N\).
-          A typical F1 chassis weighs \(740kg\), thus the spoiler adds \((1502N/9.8)/(740kg) = 20.7\%\) to the car's grip.
+          A typical F1 chassis weighs \(740kg\), thus the wing adds \((1502N/9.8)/(740kg) = 20.7\%\) to the car's grip.
           Moreover, a typical F1 chassis has length \(5.5m\) and width \(2m\), therefore the downforce of the entire chassis is \(20.7\%\cdot (5.5m\cdot 2m) / (0.707m^{2}) = 322\%\).
           We conclude that the downforce of a F1 car is substantially larger than its own weight, implying that they could theoretically drive upside down in a tunnel.
+        </li>
+        <li id="cite_note-3" style="margin-top: 1em;">
+          <b><a href="#cite_ref-3">^</a></b>
+          The lift coefficient is
+          $$
+          C_{L} = \frac{b}{Sv}\cdot \Gamma
+          $$
+          where \(b\) is the wing span, \(S\) is the planform wing area, \(v\) is the velocity, and \(\Gamma\) is the circulation.
+          <br>
+          
         </li>
       </ol>
     </div>
@@ -225,6 +248,12 @@ function handleWindowMsg() {
     } else if (base == "curved_mesh.html") {
       const curved_mesh = document.querySelector("#curved-mesh iframe");
       fullscreenIFrame(curved_mesh, curved_mesh);
+    } else if (base == "standard_stream.html") {
+      const standard_stream = document.querySelector("#standard-stream");
+      fullscreenIFrame(standard_stream, standard_stream);
+    } else if (base == "curved_stream.html") {
+      const curved_stream = document.querySelector("#curved-stream");
+      fullscreenIFrame(curved_stream, curved_stream);
     }
   });
 }
@@ -238,6 +267,8 @@ function main() {
   onWindowResizeMesh();
   onWindowResizeCFD("#standard");
   onWindowResizeCFD("#curved");
+  onWindowResizeCFD("#standard-stream");
+  onWindowResizeCFD("#curved-stream");
   handleWindowMsg();
 }
 main();

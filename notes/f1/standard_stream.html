@@ -1,33 +1,14 @@
 <html>
-  <head>
-     <meta charset="utf-8"/>
-     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-     <script src="https://unpkg.com/vtk.js"></script>
-     <link rel="stylesheet" href="SceneExplorer.module.css">
-  </head>
-  <body>
-<script type="module">
-import controlWidget from './SceneExplorerWidget.js';
-var style = {progress: "progress", fullScreen: "fullScreen"};
-
-const iOS = /iPad|iPhone|iPod/.test(window.navigator.platform);
-let autoInit = true;
-let widgetCreated = false;
-
-if (iOS) {
-  document.querySelector('body').classList.add('is-ios-device');
-}
-
-function emptyContainer(container) {
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-}
-
-function preventDefaults(e) {
-  e.preventDefault();
-  e.stopPropagation();
-}
+<head>
+  <meta charset="utf-8"/>
+  <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="https://unpkg.com/vtk.js"></script>
+  <link rel="stylesheet" href="SceneExplorer.module.css">
+</head>
+<body>
+  <script type="module">
+import *  as legend from './legend.js';
+import *  as streamPlayer from './stream_player.js';
 
 const controlIconSize = 32;
 const fullscreenIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="${controlIconSize}" height="${controlIconSize}" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
@@ -57,19 +38,19 @@ function setTopRightCont(topRightContID) {
   container.style["border-radius"] = "";
 }
 
+const streamSceneIdx = 0;
+
 function setDisplay(sceneLoader) {
-  const scenes = sceneLoader.getScene();
-  scenes[1].actor.getProperty().setAmbient(0.5);
-  scenes[2].actor.getProperty().setAmbient(0.5);
-  scenes[3].actor.getProperty().setAmbient(0.5);
-  scenes[4].actor.getProperty().setAmbient(0.5);
-  scenes[5].actor.getProperty().setAmbient(0.5);
+  const cam = sceneLoader.getRenderer().getActiveCamera();
+  cam.setParallelProjection(true);
+  cam.setParallelScale(2.25);
+
+  const streamTracerScene = sceneLoader.getScene()[streamSceneIdx];
+  // To fix stream lines too dark.
+  streamTracerScene.actor.getProperty().setAmbient(1);
 }
 
 function load(container, options) {
-  autoInit = false;
-  emptyContainer(container);
-
   const fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
     background: [1, 1, 1],
     rootContainer: container,
@@ -85,80 +66,54 @@ function load(container, options) {
   fullScreenRenderer.addController(topRightContHTML);
   setTopRightCont(topRightContID);
 
-  function onReady(sceneImporter) {
-    sceneImporter.onReady(() => {
-      setDisplay(sceneImporter);
+  function onReady(sceneLoader) {
+    sceneLoader.onReady(() => {
+      streamPlayer.New(sceneLoader, container, streamSceneIdx);
+      setDisplay(sceneLoader);
       renderWindow.render();
-
-      // Add UI to dynamically change rendering settings
-      if (!widgetCreated) {
-        widgetCreated = true;
-        controlWidget(
-          document.querySelector('body'),
-          sceneImporter.getScene(),
-          renderWindow.render
-        );
-      }
     });
 
     window.addEventListener('dblclick', () => {
-      sceneImporter.resetScene();
+      sceneLoader.resetScene();
+      setDisplay(sceneLoader);
       renderWindow.render();
     });
   }
 
-  if (options.url) {
-    const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({ renderer });
-    sceneImporter.setUrl(options.url);
-    onReady(sceneImporter);
-  } else if (options.fileURL) {
-    const progressContainer = document.createElement('div');
-    progressContainer.setAttribute('class', style.progress);
-    container.appendChild(progressContainer);
+  const progressContainer = document.createElement('div');
+  progressContainer.setAttribute('class', "progress");
+  container.appendChild(progressContainer);
 
-    const progressCallback = (progressEvent) => {
-      if (progressEvent.lengthComputable) {
-        const percent = Math.floor(
-          (100 * progressEvent.loaded) / progressEvent.total
-        );
-        progressContainer.innerHTML = `Loading ${percent}%`;
-      } else {
-        progressContainer.innerHTML = vtk.macro.formatBytesToProperUnit(
-          progressEvent.loaded
-        );
-      }
-    };
+  const progressCallback = (progressEvent) => {
+    if (progressEvent.lengthComputable) {
+      const percent = Math.floor(
+        (100 * progressEvent.loaded) / progressEvent.total
+      );
+      progressContainer.innerHTML = `Loading ${percent}%`;
+    } else {
+      progressContainer.innerHTML = vtk.macro.formatBytesToProperUnit(
+        progressEvent.loaded
+      );
+    }
+  };
 
-    // HttpDataAccessHelper.
-    vtk.IO.Core.DataAccessHelper.get("http").fetchBinary(options.fileURL, {
-      progressCallback,
-    }).then((zipContent) => {
-      container.removeChild(progressContainer);
-      const dataAccessHelper = vtk.IO.Core.DataAccessHelper.get('zip', {
-        zipContent,
-        callback: (zip) => {
-          const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({
-            renderer,
-            dataAccessHelper,
-          });
-          sceneImporter.setUrl('index.json');
-          onReady(sceneImporter);
-        },
-      });
-    });
-  } else if (options.file) {
+  // HttpDataAccessHelper.
+  vtk.IO.Core.DataAccessHelper.get("http").fetchBinary(options.fileURL, {
+    progressCallback,
+  }).then((zipContent) => {
+    container.removeChild(progressContainer);
     const dataAccessHelper = vtk.IO.Core.DataAccessHelper.get('zip', {
-      zipContent: options.file,
+      zipContent,
       callback: (zip) => {
-        const sceneImporter = vtk.IO.Core.vtkHttpSceneLoader.newInstance({
+        const sceneLoader = vtk.IO.Core.vtkHttpSceneLoader.newInstance({
           renderer,
           dataAccessHelper,
         });
-        sceneImporter.setUrl('index.json');
-        onReady(sceneImporter);
+        sceneLoader.setUrl('index.json');
+        onReady(sceneLoader);
       },
     });
-  }
+  });
 }
 
 function onWindowResize(fontSize, paletteHeight) {
@@ -172,18 +127,11 @@ function onWindowResize(fontSize, paletteHeight) {
   tkeLegend.style.top = -(paletteHeight+fontSize)/2;
 }
 
-import *  as legend from './legend.js';
-
-export function main() {
-  const rootBody = document.querySelector('body');
-  const myContainer = rootBody;
-
-  myContainer.classList.add(style.fullScreen);
-  rootBody.style.margin = '0';
-  rootBody.style.padding = '0';
-
-  const options = {fileURL: "standard.vtkjs"};
-  load(myContainer, options);
+function main() {
+  const root = document.querySelector('body');
+  root.classList.add("fullScreen");
+  const options = {fileURL: "standard_stream.vtkjs"};
+  load(root, options);
 
   const docW = document.documentElement.clientWidth;
 
@@ -198,9 +146,9 @@ export function main() {
   const pressureLegend = legend.New(titleStr, titleClean, presetName, annotations, decimalPlaces, fontSize, paletteWidth, paletteHeight);
   pressureLegend.id = "pressure-legend";
 
-  titleStr = "Turbulent kinetic energy \\([m^{2}/s^{2}]\\)";
-  titleClean = "Turbulent kinetic energy m/s"
-  annotations = [0, 5, 10, 15, 17.5];
+  titleStr = "Velocity \\([m/s]\\)";
+  titleClean = "Velocity [m/s]"
+  annotations = [0, 5, 10, 13.1];
   decimalPlaces = 1;
   const tkeLegend = legend.New(titleStr, titleClean, presetName, annotations, decimalPlaces, fontSize, paletteWidth, paletteHeight);
 window.hhh = tkeLegend;
@@ -213,6 +161,6 @@ window.hhh = tkeLegend;
   });
 }
 main();
-</script>
-  </body>
+  </script>
+</body>
 </html>

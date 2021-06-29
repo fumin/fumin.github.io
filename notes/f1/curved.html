@@ -57,6 +57,16 @@ function setTopRightCont(topRightContID) {
   container.style["border-radius"] = "";
 }
 
+function setDisplay(sceneLoader) {
+  const scenes = sceneLoader.getScene();
+  scenes[1].actor.getProperty().setAmbient(0.5);
+  scenes[2].actor.getProperty().setAmbient(0.5);
+  scenes[3].actor.getProperty().setAmbient(0.5);
+  scenes[4].actor.getProperty().setAmbient(0.5);
+  scenes[5].actor.getProperty().setAmbient(0.5);
+  scenes[6].actor.getProperty().setAmbient(0.5);
+}
+
 export function load(container, options) {
   autoInit = false;
   emptyContainer(container);
@@ -78,6 +88,7 @@ export function load(container, options) {
 
   function onReady(sceneImporter) {
     sceneImporter.onReady(() => {
+      setDisplay(sceneImporter);
       renderWindow.render();
 
       // Add UI to dynamically change rendering settings
