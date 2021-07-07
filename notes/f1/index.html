@@ -39,33 +39,41 @@ a:active {
       <h2>Answer</h2>
       <p>The curved design is on the whole better.</p>
       <p>
-        The table<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in downforce.
-        This suggests that the curved design is better than the standard one.
+        The table below shows that the curved design reduces the drag considerably at the expense of only a slight decrease in downforce.
+        This suggests that the curved design is aerodynamically more efficient than the standard one, as measured by the lift-to-drag ratio.
       </p>
       <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
         <thead>
           <tr style="font-weight: bold;"><td>Force [\(kg\cdot m/s^{2}\)]</td><td>standard</td><td>curved</td></tr>
         </thead>
         <tbody>
-          <tr><td>Drag</td><td>34.984</td><td>31.308</td></tr>
+          <tr>
+            <td>
+              Drag
+              <sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup>
+            </td>
+            <td>34.912</td><td>31.227</td>
+          </tr>
           <tr>
             <td>
               Downforce
               <sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup>
             </td>
-            <td>21.635</td><td>20.257</td>
+            <td>21.679</td><td>20.314</td>
           </tr>
         </tbody>
       </table>
 
       <p>
-        The diagrams below show the Computational Fluid Dynamics results.
-        Plots on the surface of the wings show the pressure.
+        The plots below show the Computational Fluid Dynamics results.
+        Colors on the surface of the wings show the pressure.
         We see that the pressures on top of both wings are larger than their bottom counterparts, confirming the intuition about the wings providing additional downforce that help stabilize the vehicle.
       </p>
       <p>
-        Plots along the drag direction show the turbulent kinetic energy.
-        We see that the curved design results in less turbulent flow, reaffirming its superiority over the standard design in terms of both speed and stability.
+        Colors on the slice of the air flow show the turbulent kinetic energy.
+        We see that the curved design results in less turbulent flow and thus more retained energy in the region behind the wing.
+        More energy leads to higher dynamic pressure, which translates into less pressure difference between the front and back parts of the wing.
+        Less pressure difference implies a smaller drag.
       </p>
       <div style="position: relative;">
         <iframe id="standard" src="standard.html" style=""></iframe>
@@ -75,10 +83,17 @@ a:active {
         <iframe id="curved" src="curved.html" style=""></iframe>
         <div>Curved design. This is a 3D interactive graph.</div>
       </div>
+      <div style="position: relative; margin-top: 1.5em;">
+        <img src="force.svg" style="border-style: solid;">
+        <div>Pressure components for the front/back and top/bottom surfaces<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup>.</div>
+      </div>
 
       <p>
-        The reason why the curved wing retains much of its downforce despite having a lower drag is because it has a stronger circulation due to its closer resemblance to a perfect ellipse<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup>.
-        The below animations show streamlines for both designs, and we can see that the vortices created by the curved wing are more prominent.
+        Besides turbulence, downforce can also be lost when air flows sideways at the tip of the wing instead of hitting straight onto the front of the wing.
+        Such sideways leakage results in rotational air movement behind the wing.
+        Reducing these wingtip vortices would recover the lost downforce, and thus improve aerodynamic efficiency.
+        The below animations show streamlines of air particle trajectories for both wing designs.
+        We can see strong vortices being created whose elimination should the objective of future design optimizations.
       </p>
       <div style="position: relative;">
         <iframe id="standard-stream" src="standard_stream.html" style=""></iframe>
@@ -114,13 +129,34 @@ a:active {
         </li>
         <li id="cite_note-3" style="margin-top: 1em;">
           <b><a href="#cite_ref-3">^</a></b>
-          The lift coefficient is
-          $$
-          C_{L} = \frac{b}{Sv}\cdot \Gamma
-          $$
-          where \(b\) is the wing span, \(S\) is the planform wing area, \(v\) is the velocity, and \(\Gamma\) is the circulation.
-          <br>
-          
+          The below tables show the pressure forces on each face of both designs.
+          <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
+            <caption>Standard</caption>
+            <thead style="font-weight: bold;">
+              <tr><td>Face</td><td>Lift \((N)\)</td><td>Drag \((N)\)</td><td>Area \((m^{2})\)</td></tr>
+            </thead>
+            <tbody style="text-align: right;">
+              <tr><td style="text-align: left;">Front</td><td>-11.0647</td><td>11.0694</td><td>0.5001</td></tr>
+              <tr><td style="text-align: left;">Back</td><td>-17.3586</td><td>17.0596</td><td>0.5001</td></tr>
+              <tr><td style="text-align: left;">Bottom</td><td>-1.3114</td><td>-1.2667</td><td>0.0989</td></tr>
+              <tr><td style="text-align: left;">Top</td><td>8.0567</td><td>8.0494</td><td>0.0999</td></tr>
+              <tr><td style="text-align: left;">Right</td><td>-0.0012</td><td>0.0004</td><td>0.0499</td></tr>
+            </tbody>
+          </table>
+
+          <table style="margin-left: auto; margin-right: auto; margin-top: 1em; border-spacing: 1em 0; font-size: xx-large;">
+            <caption>Curved</caption>
+            <thead style="font-weight: bold;">
+              <tr><td>Face</td><td>Lift \((N)\)</td><td>Drag \((N)\)</td><td>Area \((m^{2})\)</td></tr>
+            </thead>
+            <tbody style="text-align: right;">
+              <tr><td style="text-align: left;">Front</td><td>-10.5092</td><td>10.5122</td><td>0.4992</td></tr>
+              <tr><td style="text-align: left;">Back</td><td>-15.2332</td><td>15.2903</td><td>0.5002</td></tr>
+              <tr><td style="text-align: left;">Bottom</td><td>-0.3371</td><td>-0.3338</td><td>0.1036</td></tr>
+              <tr><td style="text-align: left;">Top</td><td>5.7584</td><td>5.7577</td><td>0.0989</td></tr>
+              <tr><td style="text-align: left;">Right</td><td>0.0075</td><td>0.0003</td><td>0.0400</td></tr>
+            </tbody>
+          </table>
         </li>
       </ol>
     </div>

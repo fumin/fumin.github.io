@@ -64,6 +64,11 @@ function setDisplay(sceneLoader) {
   scenes[3].actor.getProperty().setAmbient(0.5);
   scenes[4].actor.getProperty().setAmbient(0.5);
   scenes[5].actor.getProperty().setAmbient(0.5);
+
+  const cam = sceneLoader.getRenderer().getActiveCamera();
+  cam.setDistance(5.62);
+  cam.setFocalPoint(2, 0.19, 2.35);
+  cam.setPosition(-3.6, 0.19, 2.35);
 }
 
 function load(container, options) {

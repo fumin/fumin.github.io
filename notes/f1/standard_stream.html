@@ -47,7 +47,9 @@ function setDisplay(sceneLoader) {
 
   const streamTracerScene = sceneLoader.getScene()[streamSceneIdx];
   // To fix stream lines too dark.
-  streamTracerScene.actor.getProperty().setAmbient(1);
+  const property = streamTracerScene.actor.getProperty();
+  property.setAmbient(0.75);
+  property.setLineWidth(3);
 }
 
 function load(container, options) {
