@@ -1,0 +1,302 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+a {
+  color: gray;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:focus {
+  text-decoration: underline;
+}
+a:active {
+  color: yellow;
+}
+#calcination-experiment {
+  border: 1px solid white;
+}
+#calcination-experiment th {
+  border: 1px solid white;
+}
+#calcination-experiment td {
+  border: 1px solid white;
+  padding-right: 0.5em;
+}
+    </style>
+  </head>
+  <body style="background-color: black; color: white; font-size: xx-large;">
+    <div id="container" style="margin-left:auto; margin-right:auto;">
+      <h1>Thermodynamics</h1>
+      <h2>Temperature</h2>
+      <p>
+      Given a collection of particles, we are interested in their positions and momentum. 
+      In particular, we want to know the number of configurations for this collection of particles in terms of their positions and momentum.
+      For a given state, the larger the number of configurations, the more likely we are going to observe the particles in this state.
+      The state of a collection of particles is defined by the number of particles \(N\), the volume they are occupying \(V\), and their total energy \(U\).
+      </p>
+      <p>
+      For a single particle, the number of different locations it can reside in is \(V\). Thus for the entire collection of particles, the number of configurations in terms of position is \(V^{N}\).
+      </p>
+      <p>
+      The momentum of the collection of particles must satisfy
+      $$\displaylines{
+      \begin{aligned}
+      & p_{0x}^{2} + p_{0x}^{2} + p_{0x}^{2} \\
+      +\space & p_{1x}^{2} + p_{1x}^{2} + p_{1x}^{2} \\
+      +\space & ... \\
+      +\space & p_{Nx}^{2} + p_{Nx}^{2} + p_{Nx}^{2} = 2Um \\
+      \end{aligned}
+      }$$
+      where \(p_{ix}\) is the momentum in the \(x\) direction of the \(i\)'th particle, and \(m\) is the particle's mass.
+      </p>
+      <p>
+      In other words, the number of configurations in terms of momentum is the surface area of a \(3N\) dimensional hypersphere, which is given by \(\frac{\pi^{\frac{3N}{2}}}{\left(\frac{3N}{2}\right)!}\sqrt{2mU}^{3N-1} \approx \frac{\left(2\pi mU\right)^{\frac{3N}{2}}}{\frac{3N}{2e}^{\frac{3N}{2}}} \approx \left(\frac{4\pi mU}{3N}\right)^{\frac{3N}{2}}e^{\frac{3N}{2}} \)
+      </p>
+      <p>The number of configurations in terms of both position and momentum is \(V^{N}\left(\frac{4\pi mU}{3N}\right)^{\frac{3N}{2}}\frac{1}{h^{3N}}\), where h is the unit of positional and momentum counting \(\Delta x\Delta p = h\). However, this is only for the case where the particles are distinguishable. For the realisitc case where the particles are identical, we must divide by \(N!\).
+      Thus, the actual number of configurations for indistinguishable particles is \(W = \frac{V^{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3N}{2}}e^{\frac{3N}{2}}}{N!} \approx \left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)^{N}e^{\frac{5N}{2}}\)
+      </p>
+      <p>Given two boxes of particles A and B, which are allowed to exchange energy freely, we want to know whether energy will flow from A to B or B to A.
+      <br>
+      Let, \(W\) and \(W'\) be the number of configurations before and after energy change, \(dU\) be the amount of energy flown from A to B, the ratio between the total number of configurations after and before energy exchange is
+      $$\displaylines{
+      \begin{aligned}
+      \frac{W'_{total}}{W_{total}} =\space & \frac{W'_{A}W'_{B}}{W_{A}W_{B}} = \left(\frac{W_{A} + \frac{dW_{A}}{dU}\cdot(-dU)}{W_{A}}\right)\left(\frac{W_{B} + \frac{dW_{B}}{dU}dU}{W_{B}}\right) \\
+      =\space & \left(1 + \frac{\frac{dW_{A}}{W_{A}}}{dU}\cdot(-dU)\right)\left(1 + \frac{\frac{dW_{B}}{W_{B}}}{dU}dU\right) \\
+      =\space & \left(1 + \frac{d(logW_{A})}{dU}\cdot(-dU)\right)\left(1 + \frac{d(logW_{B})}{dU}dU\right) \\
+      =\space & 1 + \left(-\frac{d(logW_{A})}{dU} + \frac{d(logW_{B})}{dU}\right)dU 
+      \end{aligned}
+      }$$
+      In order for us to observe the phenomenon of energy flowing from A to B with high probability, \(\frac{W'_{total}}{W_{total}}\) must be larger than 1, which implies \(\frac{dU}{d(logW_{A})} > \frac{dU}{d(logW_{B})}\).
+      </p>
+      <p>
+      Since the above statement captures our intuition for the concept of temperature, we take the quantity \(\frac{dU}{d(logW)}\) as our definition for it.
+      Considering the fact that the number of configurations \(W\) is a dimensionless quantity, we deduce that the units for temperature are the same as that for energy.
+      By convention, temperature is measured in units of "kelvins" \(K\), instead of "joules" as is common for energy, a constant \(k_{B}\) is needed to convert between them.
+      We therefore arrive at the following definition for temperature:
+      $$
+      T\space[K] = \frac{1}{k_{B}}\cdot\frac{dU\space[kg\cdot m^{2}\cdot s^{-2}]}{d(logW)}
+      $$
+      </p>
+      <h2>Entropy</h2>
+      <p>With the definition of entropy
+      </p><p id="eq-1">
+      $$
+      S \equiv k_{B}log(W) \tag{1}
+      $$
+      </p><p>we can simplify our definition of temperature to \(T = \frac{dU}{dS}\).
+      This implies we have an experimentally feasible way of recording changes in the number of configurations via entropy, through measurements of energy exchange with the environment and the instantaneous temperature.
+      </p><p>
+      On the contrary, observing a change in entropy does not necessarily imply an energy exchange with the environment, as volume change can be a driver of entropy change, too.
+      For example, a way of increasing entropy without an exchange of energy is the Joule expansion. Similarly, a way of decreasing entropy without an exchange of energy is to attach the system with an environment consisting of particles with the same energy but with a smaller volume, along with a frictional piston.
+      <img src="entropy_decrease.svg">
+      In the above image, the change in system entropy is \(\Delta S = log\left(0.5V U^{\frac{3}{2}}\right) - log\left(\alpha V U^{\frac{3}{2}}\right) = log\left(\frac{0.5}{\alpha}\right) < 0\), but the internal energy remains the same \(\Delta U = 0\).
+      </p><p>
+      Since \(W = \left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)^{N}e^{\frac{5N}{2}}\), we get \(S = k_{B}N\left(log\left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right)\).
+      Using the definition of \(T = \frac{dU}{dS}\), we find
+      $$\begin{aligned}
+      T =\space & \frac{d\left(\frac{3Nh^{2}}{4\pi m}\left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}}\right)}{dS} \\
+      =\space & \frac{3Nh^{2}}{4\pi m} \cdot \frac{2}{3}x^{\frac{2}{3}-1} \cdot \frac{x}{k_{B}N},\space where\space x = \left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}} \\
+      =\space & \left(\frac{3Nh^{2}}{4\pi m}x^{\frac{2}{3}}\right)\cdot\frac{2}{3}\frac{1}{k_{B}N} \\
+      =\space & U\cdot\frac{2}{3}\frac{1}{k_{B}N}
+      \end{aligned}$$
+      Therefore, \(U = \frac{3}{2}Nk_{B}T\), and
+      </p><p id="eq-2">
+      $$
+      S = k_{B}N\left(log\left(\frac{VT^{\frac{3}{2}}}{N}\left(\frac{2\pi mk_{B}}{h^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right) \tag{2}
+      $$
+      </p><p>
+      At the same time, we also know that when the energy of the collection of particles is transformed into mechanical work, the decrease in energy is \(dU = -PdV\).
+      </p>
+      <p>Since</p><p id="eq-3">
+      $$
+      T \equiv \left(\frac{\partial U}{\partial S}\right)_{V, N} \tag{3}
+      $$
+      </p><p id="eq-4">
+      $$
+      P \equiv -\left(\frac{\partial U}{\partial V}\right)_{S, N} \tag{4}
+      $$
+      </p>
+      <p>
+      we deduce
+      $$
+      dU = TdS - PdV
+      $$
+      In other words, the change in internal energy is the difference between the thermal energy supplied and the mechanical work performed.
+      </p>
+      <h2>Carnot Engine</h2>
+      <p>
+      An engine is a device that performs work while changing its state in cycles. The state is defined by \(T\) and \(S\), where the state's dependance on \(U\) is captured in \(T\), and dependance on \(V\) in \(S\).
+      Given the constraints where the volume of the engine is restricted between \(V_{min}\) and \(V_{max}\), and being operated between two heat reservoirs of temperatures \(T_{1}\) and \(T_{2}\), we ask what is the best engine design in terms of energy efficiency?
+      </p>
+      <img src="carnot.svg">
+      <p>The cycle on the left hand side of the above image depicts an arbitrary engine, whereas the right hand side describes a particular design called the Carnot engine.
+      During the expansion phase where volume increases \(V\)⤴, the area under the curve \(TdS\) is the thermal energy supplied \(Q_{in}\). Likewise, \(Q_{out}\) is the thermal energy given away during the volume compression phase. The difference between the two is the net work performed \(Q_{out}-Q_{in}=W\).
+      Since
+      $$\begin{aligned}
+      W_{Carnot} > W & \Rightarrow 1 + \frac{Q_{out}}{W_{Carnot}} < 1 + \frac{Q_{out}}{W} \\
+      & \Rightarrow \frac{W_{Carnot}}{Q_{out}+W_{Carnot}} > \frac{W}{Q_{out}+W} \\
+      & \Rightarrow \frac{W_{Carnot}}{Q_{in,\space Carnot}} > \frac{W}{Q_{in}}
+      \end{aligned}$$
+      the Carnot engine has a higher energy efficiency \(\frac{W}{Q_{in}}\) than all other designs.
+      <img src="unlikely_engine.svg">
+      Of all Carnot-like designs that alternate between isothermal and adiabatic processes, we further ask what is the maximum attainable efficiency?
+      One such proposed design is shown on the left hand side of the above image with efficiency \(\frac{Q_{in}-Q_{out}}{Q_{in}} = \frac{T\Delta S - T_{1}\Delta S}{T\Delta S} = \frac{T-T_{1}}{T}\).
+      However, this design has a low probability of working, since it asks for an energy transfer from a heat reservoir of temperature \(T_{2}\) to the engine at temperature \(T\), where \(T_{2} < T\).
+      Therefore, we conclude from a probabilitic perspective, the maximum attainable efficiency is \(\frac{T_{2}-T_{1}}{T_{2}}\).
+      </p>
+
+      <h2>Calcination</h2>
+      <p>The calcination reaction
+      $$\begin{aligned}
+      CaCO_{3}(s) \rightleftharpoons CaO(s) + CO_{2}(g)
+      \end{aligned}$$
+      can be decomposed into reactions that form each substance from its constituent elements.
+      $$\begin{aligned}
+      & Ca(s) + \frac{1}{2}O_{2}(g) \rightleftharpoons CaO(s) \\
+      +\space\space\space\space\space\space\space\space & C(s, graphite) + O_{2}(g) \rightleftharpoons CO_{2}(g) \\
+      -\space\space\space\space\space\space\space\space & Ca(s) + C(s, graphite) + \frac{3}{2}O_{2}(g) \rightleftharpoons CaCO_{3}(s)
+      \end{aligned}$$
+      In general, the entropy change of any reaction \(aA + bB \rightleftharpoons cC + dD\) is the sum of all of its formation reactions
+      $$\begin{aligned}
+      \Delta S_{total} & = c\Delta S_{C,total} + d\Delta S_{D,total} - a\Delta S_{A,total} - b\Delta S_{B,total} \\
+      & = c\left(\Delta S_{C, env} + \Delta S_{C, sys}\right) + d\left(\Delta S_{D, env} + \Delta S_{D, sys}\right) - a\left(\Delta S_{A, env} + \Delta S_{A, sys}\right) - b\left(\Delta S_{B, env} + \Delta S_{B, sys}\right) \\
+      & = c\left(-\frac{H_{C}}{T} + \Delta S_{C, sys}\right) + d\left(-\frac{H_{D}}{T} + \Delta S_{D, sys}\right) - a\left(-\frac{H_{A}}{T} + \Delta S_{A, sys}\right) - b\left(-\frac{H_{B}}{T} + \Delta S_{B, sys}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}\Delta S_{i} \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}\left(S_{i} - S_{i,\space constituent\space elements}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i} - \sum n_{i}S_{i,\space constituent\space elements} \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i} \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P_{i}}\right) + C_{i}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\frac{P^{\circ}}{P_{i}}\right) + C_{i}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum\left(n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\right) + C_{i}\right) + n_{i}R\cdot log\left(\frac{P^{\circ}}{P_{i}}\right)\right)\\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} + \sum R\cdot log\left(\left(\frac{P^{\circ}}{P_{i}}\right)^{n_{i}}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(\frac{\left(\frac{P_{c}}{P^{\circ}}\right)^{c}\left(\frac{P_{d}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a}}{P^{\circ}}\right)^{a}\left(\frac{P_{b}}{P^{\circ}}\right)^{b}}\right) \\
+      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(Q_{c}\right)
+      \end{aligned}$$
+      where \(P^{\circ}\) is the standard pressure at \(10^{5}Pa\), \(H_{i}\) is the heat energy transfer per mole, \(S_{i,P^{\circ}}\) the entropy per mole at standard pressure, \(R\) the gas constant, and \(Q_{c}\) the reaction quotient.
+      In equilibrium, \(\Delta S_{total} = 0\) and thus we have for the equilibrium constant \(K^{\ominus}\)
+      </p><p id="eq-5">
+      $$
+      K^{\ominus} \equiv \left(\frac{\left(\frac{P_{c,eq}}{P^{\circ}}\right)^{c}\left(\frac{P_{d,eq}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a,eq}}{P^{\circ}}\right)^{a}\left(\frac{P_{b,eq}}{P^{\circ}}\right)^{b}}\right) = e^{\left(\frac{1}{R}\left(-\frac{H}{T} + S_{P^{\circ}}\right)\right)} \tag{5}
+      $$
+      </p><p>
+      Since the equilibrium constant depends only on the heat transfer and entropy, it stays the same regardless of initial concentrations for a given temperature.
+      For example, experiments on the dinitrogen tetroxide reaction at \(25^{\circ}C\) gives
+      $$N_{2}O_{4}(g) \rightleftharpoons 2NO_{2}(g)$$
+      <div style="text-align: center;">
+        <img src="equilibrium_constant.jpg">
+      </div>
+      </p><p>
+      Taking the approximation of constant heat capacity, the formulas for heat transfer and entropy are
+      $$\displaylines{
+      H(T) = H(T_{0}) + \int_{T_{0}}^{T} c(T)dT \approx H(T_{0}) + c(T_{0})\left(T - T_{0}\right) \\
+      S_{P^{\circ}}(T) = \int_{0}^{T}\frac{c(T)}{T}dT = S_{P^{\circ}}(T_{0}) + \int_{T_{0}}^{T}\frac{c(T)}{T}dT \approx S_{P^{\circ}}(T_{0}) + c(T_{0})log\left(\frac{T}{T_{0}}\right)
+      }$$
+      </p><p>
+      The below table summarizes the data for the calcination process at temperature 775K:
+      <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0; font-size: xx-large;">
+        <thead>
+          <tr style="font-weight: bold;"><td>Property</td><td>\(CaCO_{3}\)</td><td>\(CaO\)</td><td>\(CO_{2}\)</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>\(H_{T}-H_{298}^{\circ}\space [Jmol^{-1}K^{-1}]\)</td><td>50065<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>24620</td><td>22810</td></tr>
+          <tr><td>\(S\space [Jmol^{-1}K^{-1}]\)</td><td>189.3<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>85.86</td><td>257.5</td></tr>
+          <tr><td>\(c [Jmol^{-1}K^{-1}]\)</td><td>121.1<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>52.37</td><td>51.44</td></tr>
+        </tbody>
+      </table>
+      Since the standard enthalpy for the calcination reaction is 177.8kJ at temperature 298K, the enthalpy at temperature 775K is \(177800-50065+24620+22810 = 175165Jmol^{-1}\). Similarly, the entropy at temperature 775K is \(-189.3+85.86+257.5 = 154.06Jmol^{-1}K^{-1}\), and the heat capacity is \(-121.1+52.37+51.44 = -17.29Jmol^{-1}K^{-1}\).
+      </p><p>
+      Since \(CaCO_{3}\) and \(CaO\) are solids, thus \(P_{CaCO_{3}} = P^{\circ}\) and \(P_{CaO} = P^{\circ}\). Therefore, \(K^{\ominus} = \frac{\frac{P_{CaO}}{P^{\circ}}\frac{P_{CO_{2}}}{P^{\circ}}}{\frac{P_{CaCO_{3}}}{P^{\circ}}} = \frac{P_{CO_{2}}}{P^{\circ}}\), and
+      $$
+      P_{CO_{2}} = P^{\circ}K^{\ominus} = 10^{5}\cdot e^{\frac{1}{R}\left(-\frac{175165+(-17.29)\cdot(T - 775)}{T}+\left(154.06+(-17.29)\cdot log\left(\frac{T}{775}\right)\right)\right)}
+      $$
+      </p>
+      The below table shows the true values of \(P_{CO_{2}}\) from experiments<sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup>:
+      <table id="calcination-experiment" style="margin-left: auto; margin-right: auto; font-size: xx-large;">
+        <tbody>
+        <tr>
+        <th><i>T</i> (°C)
+        </th>
+        <td>550</td>
+        <td>587</td>
+        <td>605</td>
+        <td>680</td>
+        <td>727</td>
+        <td>748</td>
+        <td>777</td>
+        <td>800</td>
+        <td>830</td>
+        <td>852</td>
+        <td>871</td>
+        <td>881</td>
+        <td>891</td>
+        <td>898</td>
+        <td>937</td>
+        <td>1082</td>
+        <td>1241
+        </td></tr>
+        <tr>
+        <th><i>P</i> (kPa)
+        </th>
+        <td>0.055</td>
+        <td>0.13</td>
+        <td>0.31</td>
+        <td>1.80</td>
+        <td>5.9</td>
+        <td>9.3</td>
+        <td>14</td>
+        <td>24</td>
+        <td>34</td>
+        <td>51</td>
+        <td>72</td>
+        <td>80</td>
+        <td>91</td>
+        <td>101</td>
+        <td>179</td>
+        <td>901</td>
+        <td>3961
+        </td></tr>
+        </tbody>
+      </table>
+      <p>
+      The below graph compares the theoretical calculations with the experimental values:
+      <div style="text-align: center;"><img src="calcination_pressure.png"></div>
+      We see that they are in pretty good agreement. Moreover, our calculations indicate that only above temperature \(864^{\circ}C\) do we see \(P_{CO_{2}}\) exceeding the atmospheric pressure.
+      Thus, in order to be economically viable, kilns in industrial applications demand that they be run above this temperature.
+      </p>
+
+      <h2>Autoionization of Water</h2>
+
+      <h2>Reference</h2>
+      <ol style="text-align: left;">
+        <li id="cite_note-1">
+          <b><a href="#cite_ref-1">^</a></b>
+          Jacobs, G. K., Kerrick, D. M., & Krupka, K. M. (1981). The high-temperature heat capacity of natural calcite (CaCO3). Physics and Chemistry of Minerals, 7(2), 55–59.
+        </li>
+        <li id="cite_note-2">
+          <b><a href="#cite_ref-2">^</a></b>
+          Wikipedia <a href="https://en.wikipedia.org/wiki/Calcium_carbonate#Calcination_equilibrium">article</a> on Calcination.
+        </li>
+      </ol>
+    </div>
+
+    <script>
+function onWindowResizeContainer() {
+  const container = document.querySelector("#container");
+  if (document.body.clientWidth/document.body.clientHeight > 1024/768) {
+    container.style.width = "70%";
+  } else {
+    container.style.width = "100%";
+  }
+}
+
+function main() {
+  onWindowResizeContainer();
+}
+main();
+    </script>
+  </body>
+</html>
