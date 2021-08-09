@@ -313,7 +313,7 @@ a:active {
       As the solution approaches infinite dilution, \(\gamma_{i}\) approaches 1.
       Therefore, for the ionization of water under equilibrium
       $$\begin{align}
-      log\left(K_{water}\right) = log\left(\frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\right) = -\frac{\Delta H_{water}}{R}\cdot\frac{1}{T} + \frac{S_{water}^{\circ}}{R}
+      \cssId{eq-8}{log\left(K_{water}\right) = log\left(\frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\right) = -\frac{\Delta H_{water}}{R}\cdot\frac{1}{T} + \frac{S_{water}^{\circ}}{R} \tag{8}}
       \end{align}$$
       The heat per mole of water's ionization \(\Delta H_{water}\) can be directly measured from the heat released from the neutralization of strong acids and bases such as
       $$\begin{aligned}
@@ -358,14 +358,15 @@ a:active {
       $$
       Here, the net reaction remains the same \(\frac{1}{2}H_{2}(g) + AgCl(s) \rightleftharpoons Ag(s) + H^{+}(aq) + Cl^{-}(aq)\), but we control \(m_{H^{+}}\) through \(m_{KOH}\) and \(m_{Cl^{-}}\) through \(m_{KCl}\).
       The reason why \(m_{H^{+}}\) can be controlled by \(m_{KOH}\) is because without \(HCl\), \(m_{H^{+}}\) is entirely determined by the ionization of water \(H_{2}O \rightleftharpoons H^{+} + OH^{-}\), whose equilibrium is controlled by the \(m_{OH^{-}}\) in \(KOH\).
-      In this case, we can rewrite <a href="#eq-8">eq. 8</a> in terms of \(K_{water} = \frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\)
+      In this case, we can rewrite <a href="#eq-9">eq. 9</a> in terms of \(K_{water} = \frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\)
       $$
       \mathcal{E} - \mathcal{E}^{\circ} + \frac{RT}{nF}log\left(\frac{m_{KCL}}{m_{KOH}}\right) = -\frac{RT}{nF}log\left(K_{water}\right) -\frac{RT}{nF}log\left(\frac{\gamma_{Cl}\gamma_{H_{2}O}m_{H_{2}O}}{\gamma_{OH}}\right)
       $$
       Since the second term on the right hand side of the above equation approaches 0 as the ionic strength \(I = m_{KOH} + m_{KCl}\) approaches 0, the left hand side would converge to \(-\frac{RT}{nF}log\left(K_{water}\right)\).
       <div style="text-align: center;"><img src="kw.png"></div>
       As we can see from the graph<sup id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup> above, this is indeed the case.
-      By repeating the experiment for different temperatures, we can gather the following data<sup id="cite_ref-7"><a href="#cite_note-7">[7]</a></sup><sup id="cite_ref-7"><a href="#cite_note-8">[8]</a></sup> for \(K_{water}\).
+      Moreover, the converged value is the same regardless of the type of salt used be it \(Li^{+}\) or \(K^{+}\), confirming our theory that \(K_{water}\) is determined solely by thermodynamics alone (<a href="#eq-8">eq. 8</a>).
+      By repeating the experiment for different temperatures, we can gather the following data<sup id="cite_ref-7a"><a href="#cite_note-7">[7]</a></sup><sup id="cite_ref-8"><a href="#cite_note-8">[8]</a></sup> for \(K_{water}\).
       <table id="k-water">
         <thead>
           <tr><td>\(t [^{\circ}C]\)</td><td>\(K_{water} [10^{-14}]\)</td></tr>
@@ -389,7 +390,32 @@ a:active {
       If we plot the logarithm of the above data against \(\frac{1}{T}\), we get the following graph
       <div style="text-align: center;"><img src="kw_plot.png"></div>
       as we can see, the slope is 6717 accoding to potentiometry, which tallies incredibly well with the figure of 6718 from calorimetric measurements!
-      Moreover, since \(K_{water}\) increases as temperature rises, we can infer that the conductivity of water improves along with temperature, a fact which is also proven by experiments.
+      <p></p>
+      Moreover, since \(K_{water}\) increases as temperature rises, we can infer that the conductivity of water improves along with temperature, too.
+      The conductivity of an electrolyte is proportional to the number of charge carrying ions in the solution, as well as the speed of those ions.
+      In the case of water,
+      $$
+      \kappa = c_{H}\lambda_{H} + c_{OH}\lambda_{OH}
+      $$
+      where \(\kappa\) is the conductivity in units \(S\cdot cm^{-1}\) (S for <a href="https://en.wikipedia.org/wiki/Siemens_(unit)">Siemens</a>), \(c\) is the concentration in \(mol\cdot cm^{-3}\), and \(\lambda\) is the ion mobility in \(S\cdot cm^{2}\cdot mol^{-1}\).
+      Since \(K_{w} = m_{H}m_{OH}\), where \(m_{H}\) and \(m_{H}\) are in \(mol\cdot kg^{-1}\), thus
+      $$
+      \kappa = 10^{-3}d\sqrt{K_{w}}\left(\lambda_{H} + \lambda_{OH}\right)
+      $$
+      where \(d\) is the density of water in \(g\cdot cm^{-3}\).
+      Since we know \(\Delta H^{\circ}\) from calorimetry and \(K_{w}\) from potentiometry, we can fit both the entropy\(\Delta S^{\circ}\) and the heat capacity \(C_{p}\) from the curve \(R\cdot log(K) = -\frac{H^{\circ}+C_{p}\left(T - T^{\circ}\right)}{T} + S^{\circ} + C_{p}log\left(\frac{T}{T^{\circ}}\right)\).
+      Hepler et al.<sup id="cite_ref-7b"><a href="#cite_note-7">[7]</a></sup> gives \(\Delta S^{\circ} = -19.31cal\cdot K^{-1}mol^{-1}\) and \(C_{p} = -53.5cal\cdot K^{-1}mol^{-1}\).
+      On the other hand, the temperature dependence of the \(H^{+}\) and \(OH^{-}\) ion mobilities are given by Kohlrausch<sup id="cite_ref-9"><a href="#cite_note-9">[9]</a></sup> and Heydweiller<sup id="cite_ref-10"><a href="#cite_note-10">[10]</a></sup> to be of the form \(\lambda_{H} = 224.3+5.23t [S\cdot cm^{2}\cdot mol^{-1}]\) and \(\lambda_{OH} = 118.5+3.06t [S\cdot cm^{2}\cdot mol^{-1}]\), where t is in \(^{\circ}C\).
+      </p><p>
+      Converting from Calories to Joules, \(H = 13.35kcal\cdot mol^{-1} = 55856J\cdot mol^{-1}\), \(S = -19.31cal\cdot K^{-1}mol^{-1} = -80.79J\cdot K^{-1}mol^{-1}\), \(C_{p} = -53.5cal\cdot K^{-1}mol^{-1} = -223.84J\cdot K^{-1}mol^{-1}\), and putting everything together, we get
+      $$
+      \kappa\space [\mu S\cdot cm^{-1}] = 10^{-3}d\cdot e^{6\cdot log(10)+\left(\frac{1}{2\times 8.3145}\left(-\frac{55856-223.84(t-25)}{t+273}-80.79-223.84log\left(\frac{t+273}{298}\right)\right)\right)}\cdot\left(342.8+8.29t\right)
+      $$
+      where \(t\) is in \(^{\circ}C\), and \(d\space [g\cdot cm^{-3}]\) the density of water for different temperatures which can be found on Wikipedia<sup id="cite_ref-11"><a href="#cite_note-11">[11]</a></sup>.
+      Comparing the values computed with the above formula with experimental data<sup id="cite_ref-12"><a href="#cite_note-12">[12]</a></sup> gives the following plot
+      <div style="text-align: center;"><img src="conductivity.svg"></div>
+      from which we see that theory and experiment agree very well.
+      Moreover, we see that water's conductivity rises much faster than a linear relationship would dictate, a phenomenon that is mainly due to the thermodynamics of the ionization constant of water.
       </p>
 
       <h2>Reference</h2>
@@ -419,12 +445,29 @@ a:active {
           R. A. Robinson and R. H. Stokes, "<a href="robinson_stokes_electrolyte_solutions.pdf">Electrolyte Solutions</a>," 2nd ed., Butterworths, London (1965), page 364.
         </li>
         <li id="cite_note-7">
-          <b><a href="#cite_ref-7">^</a></b>
-          Hepler, L. G., and Woolley, E. M. (1973). In "Water, A Comprehensive Treatise" (F. Franks, ed.), Vol. 3 "<a href="hepler_woolley_water.pdf">Aqueous Solutions of Simple Electrolytes</a>", page 146. Plenum, New York.
+          ^ <b><a href="#cite_ref-7a">a</a></b> <b><a href="#cite_ref-7b">b</a></b>
+          Hepler, L. G., and Woolley, E. M. (1973). In "Water, A Comprehensive Treatise" (F. Franks, ed.), Vol. 3 "<a href="hepler_woolley_water.pdf">Aqueous Solutions of Simple Electrolytes</a>", Plenum, New York. Reference a: page 146, b: pager 153.
         </li>
         <li id="cite_note-8">
           <b><a href="#cite_ref-8">^</a></b>
           Harned, H. S., & Hamer, W. J. (1933). The Ionization Constant of Water and the Dissociation of Water in Potassium Chloride Solutions from Electromotive Forces of Cells without Liquid Junction1. Journal of the American Chemical Society, 55(6), 2194–2206. <a href="https://sci-hub.se/https://doi.org/10.1021/ja01333a002">doi:10.1021/ja01333a002</a>
+        </li>
+        <li id="cite_note-9">
+          <b><a href="#cite_ref-9">^</a></b>
+          Friedrich Kohlrausch (1901). Über den Temperatureinfluss auf das elektrische Leitvermögen von Lösungen, insbesondere auf die Beweglichkeit der einzelnen Ionen im Wasser. Sitzungsberichte der Königlich Preussischen Akademie der Wissenschaften zu Berlin, <a href="https://archive.org/details/sitzungsberichte1901deut/page/1026/mode/2up">page 1026</a>.
+          A transcript can be found <a href="kohlrausch/de.txt">here</a>, along with its <a href="kohlrausch/en.txt">translation</a>.
+        </li>
+        <li id="cite_note-10">
+          <b><a href="#cite_ref-10">^</a></b>
+          Heydweiller, A. (1909). Über Ionisationswärme und Ionisationskonstante des Wassers. Annalen Der Physik, 333(3), 503–512. <a href="https://sci-hub.se/https://doi.org/10.1002/andp.19093330304">doi:10.1002/andp.19093330304</a>
+        </li>
+        <li id="cite_note-11">
+          <b><a href="#cite_ref-11">^</a></b>
+        Wikipedia <a href="https://en.wikipedia.org/wiki/Water_(data_page)#Liquid_physical_properties">article</a> containing data on water.
+        </li>
+        <li id="cite_note-12">
+          <b><a href="#cite_ref-12">^</a></b>
+          Melnik, L. A., & Krysenko, D. A. (2019). Ultrapure Water: Properties, Production, and Use. Journal of Water Chemistry and Technology, 41(3), 143–150. <a href="https://sci-hub.se/https://doi.org/10.3103/S1063455X19030020">doi:10.3103/s1063455x19030020</a> 
         </li>
       </ol>
     </div>

@@ -1,0 +1,50 @@
+About the influence of temperature on the electrical conductivity of solutions, especially on the mobility of the individual ions in water.
+
+Von Friedrich Kohlrausch
+
+  The temperature coefficients of the ionic friction in water are fundamental quantities for electrolysis. The setup for this group of numbers is attempted here, largely on the basis of the careful measurements carried out by Mr. Deguisne on "the temperature coefficients of the conductivity of very dilute aqueous solutions".
+  At the same time, interesting mutual relations between the majority of these coefficients are found, which allow the above task to be attacked to a wider extent than had been foreseen, and which furthermore require the clarity of the whole area to a considerable extent. 
+
+1. Setup for the first and second temperature coefficients of infinitely dilute aqueous solutions.
+  Mr. Deguisne has this experssion
+kt = k18[1 + alpha(t-18) + beta(t-18)^2]
+which very closely reflects the conductivity k at the temperature t, for solutions of 0.0001, 0.001, 0.01 and mostly 0.05 gram/Liters, by means of observations at 2, 10, 18, 26, and 34 degrees, determined the coefficients a and b. From this we first have to derive limit values for infinite dilution for our task.
+  This task seems to be countered by a difficulty in Deguisne's figures themselves. Unexpectedly, the values change noticeably at the transition from 0.001 to 0.0001, even in bodies as strongly dissociated as the chlorides or nitrates of alkalis, so that the extrapolation to zero seems to remain doubtful. For observation errors, these averages are in a certain sense, namely as increasingly emerging differences, too large.
+  One will, however, have to take into account the fact that in the strongest dilutions the loosening "water" already contributes a very noticeable fraction, namely about a tenth of the conductivity, and that the temperature coefficient of the "water" itself is greater than that of the dissolved body. On the basis of my own observations on the water and the statements made by Deguisne about the water he used, I have therefore made a correction to the figures. As a result, the average amount of the difference, which was 0.00025 in the main coefficient alpha, drops to 0.00001, that is, to a value not worth considering, and the above-mentioned concern is eliminated, since its cause undoubtedly turns out to be a secondary phenomenon.
+  From Deguisne's observations I derive the following limit values for infinite dilution, ordered according to the magnitude of alpha, adding the fluorides of potassium and sodium, as well as strontium sulfide, sodium acetate and lead nitrate after occasional observation.
+About the calculated values of beta, please see section 2.
+
+3. The temperature coefficients of the individual ion mobilities in the water.
+  In order to get from all the electrolytes to the ions, it would be sufficient if, in addition to the mobility of the ions at a certain temperature, the temperature change in Hittorf's transfer ratio in dilute solution was also known precisely for one of the electrolytes. There are now transfer experiments at different temperatures by Lob and Nernst, and especially by W. Bein, on AgNO3, KCl, HCl, but their comparison shows that the individual results of the difficult measurements must be fraught with uncertainties which are too great for our purposes.
+  I have therefore applied a compensation procedure. In doing so, the probable assumption was used that the second temperature coefficient beta of the ions follows the relationship to the first, which has been demonstrated for the entire electrolyte and represented by the formula on page 1028. There is, however, a source of uncertainty, namely that the higher of the two temperatures between which the change in transfer has been determined lies in part far outside the range in which the quadratic formula for the conductivity was tested.
+  In addition to the ion mobilities l18 at 18 degrees used for the derivation, Table 3 contains the coefficients alpha and beta of the quadratic temperature formula for the individual ions, which were established here for the first time, and are arranged according to their size.
+   For the ions Li, Zn, Cu, Pb, ClO3 and JO3, which did not appear above, the coefficients are formed according to our own determinations on hundred normal salt solutions between 18 and 26 degrees; they will be closely accurate. The coefficients beta are not controllable with them.
+   The certainty of these underlying numbers l18 (Table 3) is unequal. I consider K, Na, Li, Cl, also probably Mg, to be well known; Zn, Cu, probably also SO4, and of course CO3, for the least sure. The figures are taken from earlier publications by me, in some cases slightly modified in view of these reports, 1900, p.1008. Pb is derived from PbN2O; it should be left open whether the strikingly large value is influenced by hydrolysis.
+  Table 3.
+  The individual ions
+
+4. Examination of table 3 on the basis of experience.
+   In place of the derivation of the numbers, which goes too far here, the test is to take place, which arises from the fact that one derives from them the numbers known from experience on which they are based, namely the temperature coefficients, which from them firstly for the leading capacity and secondly for the transfer ratio of an electrolyte composed of two of the ions.
+   Table 4 gives the first and second temperature coefficients, known to me, of the conductivity of dilute electrolytes, and also the differences delta, which must be added to the last decimals in order to obtain the coefficients which can be calculated from Table 3 in a known manner. The agreement is surprisingly good; Larger differences only affect bodies that are suspect based on the observation material or the state of dissociation.
+  It is ruled out from the outset that the further test and the distribution of the effect of temperature on the anions and the cations in the excess numbers is similarly correct. The larger differences between calculation and observation in Table 5 are probably due essentially to the uncertainty of the latter, and also partly to the fact that the transfer was determined in insufficiently diluted solutions and at temperatures outside our area. Table 5 can therefore essentially only show how the existing imperfect material, with the help of the individual determination of the estimated weight, was used in a compensatory manner.
+ Footnote 1: Only this distribution is determined by the transfer figures. In its application to whole electrolytes, Table 3 is independent of the conversion.
+  Table 4
+  Temperature coefficients of electrolytes.
+  These numbers, overlaid with alpha18, differ in part by small amounts from the alpha in Table 1. I have in fact preferred to calculate the coefficients of the individual ions not the alpha given by Deguine, but rather the alpha compiled by him in a special table, directly from the observations to use derived values a18 = k18 for 10 and 26 degrees, of course, because of the water, corrected as indicated in the introduction.
+  From our own observations, RbCl, which removes the fluorides, are mostly derived from 0.01 normal solutions. BaSO4 is of course only included as an example that one can carry out approximate determinations even on such dilute solutions.
+  Since the ions Rb, Cu, CO3 and OH each occur only once, observation and calculation for a are correct.
+  Table 5.
+  Invoice.
+  Transfer ratio n of the anion at temperature t
+  Increase from n to +1
+  Observation.
+  grams per liter
+  Increase from n to +1
+  Weight
+
+5. The relationship between the mobility of the ions and their temperature coefficients.
+   In table 3, the ions were arranged in ascending order of alpha. By and large, they arrange themselves according to decreasing mobility, of course, also except for the uncertain CO3 and Pb, with gross deviations, which particularly affect the negative ions.
+   It is worth noting here the excellent regularity of the order in the case of all monovalent positive ions H, Rb, K, NH4, Ag, which in the graphical representation of l and alpha lie on a very regular curve. To show this, calculate alpha according to the formula alpha-0.0065 = 0.0683
+  Cl and OH also come closer together, the other anions and the polyvalent metals, of course, usually deviate considerably more than the uncertainty of the determination.
+  It is improbable that the above agreement within the error limits, which is shown in all the bodies of a certain simple genus, is based on a coincidence. If one accepts them, the simple result for these ions is that their electrolytic mobility in water is due to a single constant, namely their mobility at a certain temperature, e.g. 18 degrees is given. Because the first coefficient of the temperature influence is determined by this constant, and as shown in FIG. 2, the second coefficient can be derived from the first.
+  If one also observes that the latter type of connection according to p.1028 leads to the assumption that the mobility of all ions ceases at almost the same lower temperature, then the whole thing arises from the considerations which exist here, even if as a first attempt Area of ion mobility in water in an empirical context, which makes the overview much easier.
