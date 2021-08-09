@@ -26,6 +26,21 @@ a:active {
   border: 1px solid white;
   padding-right: 0.5em;
 }
+#k-water {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: xx-large;
+  border: 1px solid white;
+  text-align: center;
+}
+#k-water th {
+  border: 1px solid white;
+  font-weight: bold;
+}
+#k-water td {
+  border: 1px solid white;
+  padding-right: 0.5em;
+}
     </style>
   </head>
   <body style="background-color: black; color: white; font-size: xx-large;">
@@ -57,9 +72,11 @@ a:active {
       In other words, the number of configurations in terms of momentum is the surface area of a \(3N\) dimensional hypersphere, which is given by \(\frac{\pi^{\frac{3N}{2}}}{\left(\frac{3N}{2}\right)!}\sqrt{2mU}^{3N-1} \approx \frac{\left(2\pi mU\right)^{\frac{3N}{2}}}{\frac{3N}{2e}^{\frac{3N}{2}}} \approx \left(\frac{4\pi mU}{3N}\right)^{\frac{3N}{2}}e^{\frac{3N}{2}} \)
       </p>
       <p>The number of configurations in terms of both position and momentum is \(V^{N}\left(\frac{4\pi mU}{3N}\right)^{\frac{3N}{2}}\frac{1}{h^{3N}}\), where h is the unit of positional and momentum counting \(\Delta x\Delta p = h\). However, this is only for the case where the particles are distinguishable. For the realisitc case where the particles are identical, we must divide by \(N!\).
-      Thus, the actual number of configurations for indistinguishable particles is \(W = \frac{V^{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3N}{2}}e^{\frac{3N}{2}}}{N!} \approx \left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)^{N}e^{\frac{5N}{2}}\)
-      </p>
-      <p>Given two boxes of particles A and B, which are allowed to exchange energy freely, we want to know whether energy will flow from A to B or B to A.
+      Thus, the actual number of configurations for indistinguishable particles is
+      $$
+      \cssId{eq-1}{W = \frac{V^{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3N}{2}}e^{\frac{3N}{2}}}{N!} \approx \left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)^{N}e^{\frac{5N}{2}} \tag{1}}
+      $$
+      Given two boxes of particles A and B, which are allowed to exchange energy freely, we want to know whether energy will flow from A to B or B to A.
       <br>
       Let, \(W\) and \(W'\) be the number of configurations before and after energy change, \(dU\) be the amount of energy flown from A to B, the ratio between the total number of configurations after and before energy exchange is
       $$\displaylines{
@@ -75,7 +92,7 @@ a:active {
       <p>
       Since the above statement captures our intuition for the concept of temperature, we take the quantity \(\frac{dU}{d(logW)}\) as our definition for it.
       Considering the fact that the number of configurations \(W\) is a dimensionless quantity, we deduce that the units for temperature are the same as that for energy.
-      By convention, temperature is measured in units of "kelvins" \(K\), instead of "joules" as is common for energy, a constant \(k_{B}\) is needed to convert between them.
+      However, because by convention temperature is measured in units of "kelvins" \(K\), instead of "joules" as is common for energy, a constant \(k_{B}\) is needed to convert between them.
       We therefore arrive at the following definition for temperature:
       $$
       T\space[K] = \frac{1}{k_{B}}\cdot\frac{dU\space[kg\cdot m^{2}\cdot s^{-2}]}{d(logW)}
@@ -83,50 +100,39 @@ a:active {
       </p>
       <h2>Entropy</h2>
       <p>With the definition of entropy
-      </p><p id="eq-1">
       $$
-      S \equiv k_{B}log(W) \tag{1}
+      \cssId{eq-2}{S \equiv k_{B}log(W) \tag{2}}
       $$
-      </p><p>we can simplify our definition of temperature to \(T = \frac{dU}{dS}\).
-      This implies we have an experimentally feasible way of recording changes in the number of configurations via entropy, through measurements of energy exchange with the environment and the instantaneous temperature.
-      </p><p>
-      On the contrary, observing a change in entropy does not necessarily imply an energy exchange with the environment, as volume change can be a driver of entropy change, too.
-      For example, a way of increasing entropy without an exchange of energy is the Joule expansion. Similarly, a way of decreasing entropy without an exchange of energy is to attach the system with an environment consisting of particles with the same energy but with a smaller volume, along with a frictional piston.
-      <img src="entropy_decrease.svg">
-      In the above image, the change in system entropy is \(\Delta S = log\left(0.5V U^{\frac{3}{2}}\right) - log\left(\alpha V U^{\frac{3}{2}}\right) = log\left(\frac{0.5}{\alpha}\right) < 0\), but the internal energy remains the same \(\Delta U = 0\).
-      </p><p>
-      Since \(W = \left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)^{N}e^{\frac{5N}{2}}\), we get \(S = k_{B}N\left(log\left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right)\).
-      Using the definition of \(T = \frac{dU}{dS}\), we find
-      $$\begin{aligned}
-      T =\space & \frac{d\left(\frac{3Nh^{2}}{4\pi m}\left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}}\right)}{dS} \\
-      =\space & \frac{3Nh^{2}}{4\pi m} \cdot \frac{2}{3}x^{\frac{2}{3}-1} \cdot \frac{x}{k_{B}N},\space where\space x = \left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}} \\
-      =\space & \left(\frac{3Nh^{2}}{4\pi m}x^{\frac{2}{3}}\right)\cdot\frac{2}{3}\frac{1}{k_{B}N} \\
-      =\space & U\cdot\frac{2}{3}\frac{1}{k_{B}N}
-      \end{aligned}$$
+      we can simplify our definition of temperature to \(T = \frac{dU}{dS}\).
+      In addition, we also know that when the internal energy of the collection of particles is transformed into mechanical work, the decrease in internal energy is \(dU = -PdV\), where \(P\) is pressure.
+      Therefore, we give the following definitions:
+      $$\begin{alignat}{1}
+      \text{Temperature,}\space\space\space\space & T \equiv & \cssId{eq-3}{\left(\frac{\partial U}{\partial S}\right)_{V,\space N}} \tag{3} \\
+      \text{Pressure,}\space\space\space\space & P \equiv - & \cssId{eq-4}{\left(\frac{\partial U}{\partial V}\right)_{S,\space N}} \tag{4} \\
+      \end{alignat}$$
+      Using these definitions along with <a href="#eq-1">eq. 1</a>, we get \(S = k_{B}N\left(log\left(\frac{V}{N}\left(\frac{4\pi mU}{3Nh^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right)\), and thus
+      $$\begin{align}
+      T & \equiv \left(\frac{\partial U}{\partial S}\right)_{V,\space N} \\
+      & =\space \frac{\partial\left(\frac{3Nh^{2}}{4\pi m}\left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}}\right)}{\partial S} \\
+      & =\space \frac{3Nh^{2}}{4\pi m} \cdot \frac{2}{3}x^{\frac{2}{3}-1} \cdot \frac{x}{k_{B}N},\space where\space x = \left(\frac{Ne^{\frac{S}{k_{B}N}-\frac{5}{2}}}{V}\right)^{\frac{2}{3}} \\
+      & =\space \left(\frac{3Nh^{2}}{4\pi m}x^{\frac{2}{3}}\right)\cdot\frac{2}{3}\frac{1}{k_{B}N} \\
+      & =\space U\cdot\frac{2}{3}\frac{1}{k_{B}N}
+      \end{align}$$
       Therefore, \(U = \frac{3}{2}Nk_{B}T\), and
-      </p><p id="eq-2">
       $$
-      S = k_{B}N\left(log\left(\frac{VT^{\frac{3}{2}}}{N}\left(\frac{2\pi mk_{B}}{h^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right) \tag{2}
+      \cssId{eq-5}{S = k_{B}N\left(log\left(\frac{VT^{\frac{3}{2}}}{N}\left(\frac{2\pi mk_{B}}{h^{2}}\right)^{\frac{3}{2}}\right)+\frac{5}{2}\right) \tag{5}}
       $$
-      </p><p>
-      At the same time, we also know that when the energy of the collection of particles is transformed into mechanical work, the decrease in energy is \(dU = -PdV\).
+      With a good understanding of the definition of entropy, we next discuss the ways of measuring it in experiments.
+      With respect to the environment, we assume that the only way our system can interact with it is through exchange of energy. Therefore, the change in entropy of the environment is \(\Delta S_{environment} = -\frac{Q}{T}\), where \(Q\) is the energy drawn from the environment.
+      Suppose in addition to mechanical work, we also have electrical work defined by \(\mathcal{E}\Delta q\), where \(\mathcal{E}\) is the electromotive force, and \(\Delta q\) the amount of electric charge passing through.
+      In this case \(Q = \Delta U + P\Delta V + \mathcal{E}\Delta q\), and thus
+      $$
+      \cssId{eq-6}{\Delta S_{environment} = -\frac{\Delta U + P\Delta V + \mathcal{E}\Delta q}{T} \tag{6}}
+      $$
+      On the other hand, \(\Delta S_{system}\) in general may have additional factors contributing, such as changes in particle numbers due to chemical reactions.
+      Nonetheless, when those factors are absent, \(\Delta S_{system} = \frac{Q}{T}\) is a correct formula, and is routinely employed in the measurements of <a href="https://en.wikipedia.org/wiki/Standard_molar_entropy">standard molar entropies</a>.
       </p>
-      <p>Since</p><p id="eq-3">
-      $$
-      T \equiv \left(\frac{\partial U}{\partial S}\right)_{V, N} \tag{3}
-      $$
-      </p><p id="eq-4">
-      $$
-      P \equiv -\left(\frac{\partial U}{\partial V}\right)_{S, N} \tag{4}
-      $$
-      </p>
-      <p>
-      we deduce
-      $$
-      dU = TdS - PdV
-      $$
-      In other words, the change in internal energy is the difference between the thermal energy supplied and the mechanical work performed.
-      </p>
+
       <h2>Carnot Engine</h2>
       <p>
       An engine is a device that performs work while changing its state in cycles. The state is defined by \(T\) and \(S\), where the state's dependance on \(U\) is captured in \(T\), and dependance on \(V\) in \(S\).
@@ -134,7 +140,10 @@ a:active {
       </p>
       <img src="carnot.svg">
       <p>The cycle on the left hand side of the above image depicts an arbitrary engine, whereas the right hand side describes a particular design called the Carnot engine.
-      During the expansion phase where volume increases \(V\)⤴, the area under the curve \(TdS\) is the thermal energy supplied \(Q_{in}\). Likewise, \(Q_{out}\) is the thermal energy given away during the volume compression phase. The difference between the two is the net work performed \(Q_{out}-Q_{in}=W\).
+      Here we assume a conventional engine design without chemical reactions, thus from <a href="#eq-6">eq. 6</a> \(TdS = -TdS_{environment} = Q\) is the energy exchange with the environment.
+      During the expansion phase where volume increases \(V\)⤴, the area under the curve \(TdS\) is the energy supplied by the environment \(Q_{in}\).
+      Likewise, the area under the curve during the compression phase is the energy given away \(Q_{out}\).
+      The difference between the two is the net work performed \(Q_{out}-Q_{in}=W\).
       Since
       $$\begin{aligned}
       W_{Carnot} > W & \Rightarrow 1 + \frac{Q_{out}}{W_{Carnot}} < 1 + \frac{Q_{out}}{W} \\
@@ -160,29 +169,37 @@ a:active {
       +\space\space\space\space\space\space\space\space & C(s, graphite) + O_{2}(g) \rightleftharpoons CO_{2}(g) \\
       -\space\space\space\space\space\space\space\space & Ca(s) + C(s, graphite) + \frac{3}{2}O_{2}(g) \rightleftharpoons CaCO_{3}(s)
       \end{aligned}$$
-      In general, the entropy change of any reaction \(aA + bB \rightleftharpoons cC + dD\) is the sum of all of its formation reactions
+      For a given reaction \(aA + bB \rightleftharpoons cC + dD\), we start by writing down the formation reactions for each of its participating substances \(A\), \(B\), \(C\) and \(D\), like what we did above for calcination.
+      The total entropy change of the reaction taking place is
       $$\begin{aligned}
-      \Delta S_{total} & = c\Delta S_{C,total} + d\Delta S_{D,total} - a\Delta S_{A,total} - b\Delta S_{B,total} \\
-      & = c\left(\Delta S_{C, env} + \Delta S_{C, sys}\right) + d\left(\Delta S_{D, env} + \Delta S_{D, sys}\right) - a\left(\Delta S_{A, env} + \Delta S_{A, sys}\right) - b\left(\Delta S_{B, env} + \Delta S_{B, sys}\right) \\
-      & = c\left(-\frac{H_{C}}{T} + \Delta S_{C, sys}\right) + d\left(-\frac{H_{D}}{T} + \Delta S_{D, sys}\right) - a\left(-\frac{H_{A}}{T} + \Delta S_{A, sys}\right) - b\left(-\frac{H_{B}}{T} + \Delta S_{B, sys}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}\Delta S_{i} \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}\left(S_{i} - S_{i,\space constituent\space elements}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i} - \sum n_{i}S_{i,\space constituent\space elements} \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i} \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P_{i}}\right) + C_{i}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\frac{P^{\circ}}{P_{i}}\right) + C_{i}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum\left(n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\right) + C_{i}\right) + n_{i}R\cdot log\left(\frac{P^{\circ}}{P_{i}}\right)\right)\\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} + \sum R\cdot log\left(\left(\frac{P^{\circ}}{P_{i}}\right)^{n_{i}}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(\frac{\left(\frac{P_{c}}{P^{\circ}}\right)^{c}\left(\frac{P_{d}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a}}{P^{\circ}}\right)^{a}\left(\frac{P_{b}}{P^{\circ}}\right)^{b}}\right) \\
-      & = -\frac{\sum n_{i}H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(Q_{c}\right)
+      \Delta S_{total} & = \Delta S_{environment} + \Delta S_{reaction} \\
+      & = \frac{-\Delta H_{reaction}}{T} + \Delta S_{reaction} \\
       \end{aligned}$$
-      where \(P^{\circ}\) is the standard pressure at \(10^{5}Pa\), \(H_{i}\) is the heat energy transfer per mole, \(S_{i,P^{\circ}}\) the entropy per mole at standard pressure, \(R\) the gas constant, and \(Q_{c}\) the reaction quotient.
-      In equilibrium, \(\Delta S_{total} = 0\) and thus we have for the equilibrium constant \(K^{\ominus}\)
-      </p><p id="eq-5">
-      $$
-      K^{\ominus} \equiv \left(\frac{\left(\frac{P_{c,eq}}{P^{\circ}}\right)^{c}\left(\frac{P_{d,eq}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a,eq}}{P^{\circ}}\right)^{a}\left(\frac{P_{b,eq}}{P^{\circ}}\right)^{b}}\right) = e^{\left(\frac{1}{R}\left(-\frac{H}{T} + S_{P^{\circ}}\right)\right)} \tag{5}
-      $$
+      where \(\Delta H = \Delta U + P\Delta V\) is the net change in energy of the reaction which is given the name enthalpy.
+      Both the enthalpy and entropy change of the reaction is the sum of all of its formation reactions
+      $$\begin{aligned}
+      \Delta S_{total} & = -\frac{c\Delta H_{C} +d\Delta H_{D} - a\Delta H_{A} - b\Delta H_{B}}{T} + c\Delta S_{C} + d\Delta S_{D} - a\Delta S_{A} - b\Delta S_{B} \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}\Delta S_{i} \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}\left(S_{i} - S_{i,\space constituent\space elements}\right) \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}S_{i} - \sum n_{i}S_{i,\space constituent\space elements} \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}S_{i}
+      \end{aligned}$$
+      since for a balanced reaction, \(\sum n_{i}S_{i,\space constituent\space elements}\) cancel themselves.
       </p><p>
+      Setting \(PV = NRT\), where \(R = 8.3145J\cdot mol^{-1}\cdot K^{-1}\) into <a href="#eq-5">eq. 5</a>, we get the following formula for \(n\) mole of particles \(S = nR\left(log\left(\frac{T^{\frac{5}{2}}}{P}\right)+C\right)\), where C is a constant. Therefore
+      $$\begin{aligned}
+      \Delta S_{total} & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P_{i}}\right) + C_{i}\right) \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\frac{P^{\circ}}{P_{i}}\right) + C_{i}\right) \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum\left(n_{i}R\left(log\left(\frac{T^{\frac{5}{2}}}{P^{\circ}}\right) + C_{i}\right) + n_{i}R\cdot log\left(\frac{P^{\circ}}{P_{i}}\right)\right)\\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} + \sum R\cdot log\left(\left(\frac{P^{\circ}}{P_{i}}\right)^{n_{i}}\right) \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(\frac{\left(\frac{P_{c}}{P^{\circ}}\right)^{c}\left(\frac{P_{d}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a}}{P^{\circ}}\right)^{a}\left(\frac{P_{b}}{P^{\circ}}\right)^{b}}\right) \\
+      & = -\frac{\sum n_{i}\Delta H_{i}}{T} + \sum n_{i}S_{i, P^{\circ}} - R\cdot log\left(Q_{c}\right)
+      \end{aligned}$$
+      where \(P^{\circ}\) is the standard pressure at \(10^{5}Pa\), \(H_{i}\) is the heat energy transfer per mole, \(S_{i,P^{\circ}}\) the entropy per mole at standard pressure, and \(Q_{c}\) the reaction quotient.
+      In equilibrium, \(\Delta S_{total} = 0\) and thus we have for the equilibrium constant \(K^{\ominus}\)
+      $$
+      \cssId{eq-7}{K^{\ominus} \equiv \left(\frac{\left(\frac{P_{c,eq}}{P^{\circ}}\right)^{c}\left(\frac{P_{d,eq}}{P^{\circ}}\right)^{d}}{\left(\frac{P_{a,eq}}{P^{\circ}}\right)^{a}\left(\frac{P_{b,eq}}{P^{\circ}}\right)^{b}}\right) = e^{\left(\frac{1}{R}\left(-\frac{H}{T} + S_{P^{\circ}}\right)\right)} \tag{7}}
+      $$
       Since the equilibrium constant depends only on the heat transfer and entropy, it stays the same regardless of initial concentrations for a given temperature.
       For example, experiments on the dinitrogen tetroxide reaction at \(25^{\circ}C\) gives
       $$N_{2}O_{4}(g) \rightleftharpoons 2NO_{2}(g)$$
@@ -202,16 +219,17 @@ a:active {
           <tr style="font-weight: bold;"><td>Property</td><td>\(CaCO_{3}\)</td><td>\(CaO\)</td><td>\(CO_{2}\)</td></tr>
         </thead>
         <tbody>
-          <tr><td>\(H_{T}-H_{298}^{\circ}\space [Jmol^{-1}K^{-1}]\)</td><td>50065<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>24620</td><td>22810</td></tr>
+          <tr><td>\(H_{T}-H_{298}\space [Jmol^{-1}K^{-1}]\)</td><td>50065<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>24620</td><td>22810</td></tr>
           <tr><td>\(S\space [Jmol^{-1}K^{-1}]\)</td><td>189.3<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>85.86</td><td>257.5</td></tr>
           <tr><td>\(c [Jmol^{-1}K^{-1}]\)</td><td>121.1<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup></td><td>52.37</td><td>51.44</td></tr>
         </tbody>
       </table>
-      Since the standard enthalpy for the calcination reaction is 177.8kJ at temperature 298K, the enthalpy at temperature 775K is \(177800-50065+24620+22810 = 175165Jmol^{-1}\). Similarly, the entropy at temperature 775K is \(-189.3+85.86+257.5 = 154.06Jmol^{-1}K^{-1}\), and the heat capacity is \(-121.1+52.37+51.44 = -17.29Jmol^{-1}K^{-1}\).
+      Taking \(T_{0} = 775K\), since the standard enthalpy for calcination at temperature 298K \(H_{298}\) is 177.8kJ, the enthalpy at temperature 775K is \(H(T_{0}) = 177800-50065+24620+22810 = 175165Jmol^{-1}\).
+      Similarly, the entropy at temperature 775K is \(S_{P^{\circ}}(T_{0}) = -189.3+85.86+257.5 = 154.06Jmol^{-1}K^{-1}\), and the heat capacity is \(c(T_{0}) = -121.1+52.37+51.44 = -17.29Jmol^{-1}K^{-1}\).
       </p><p>
       Since \(CaCO_{3}\) and \(CaO\) are solids, thus \(P_{CaCO_{3}} = P^{\circ}\) and \(P_{CaO} = P^{\circ}\). Therefore, \(K^{\ominus} = \frac{\frac{P_{CaO}}{P^{\circ}}\frac{P_{CO_{2}}}{P^{\circ}}}{\frac{P_{CaCO_{3}}}{P^{\circ}}} = \frac{P_{CO_{2}}}{P^{\circ}}\), and
       $$
-      P_{CO_{2}} = P^{\circ}K^{\ominus} = 10^{5}\cdot e^{\frac{1}{R}\left(-\frac{175165+(-17.29)\cdot(T - 775)}{T}+\left(154.06+(-17.29)\cdot log\left(\frac{T}{775}\right)\right)\right)}
+      P_{CO_{2}} = P^{\circ}K^{\ominus} = 10^{5}\cdot e^{\frac{1}{8.315}\left(-\frac{175165+(-17.29)\cdot(T - 775)}{T}+\left(154.06+(-17.29)\cdot log\left(\frac{T}{775}\right)\right)\right)}
       $$
       </p>
       The below table shows the true values of \(P_{CO_{2}}\) from experiments<sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup>:
@@ -264,21 +282,149 @@ a:active {
       <p>
       The below graph compares the theoretical calculations with the experimental values:
       <div style="text-align: center;"><img src="calcination_pressure.png"></div>
-      We see that they are in pretty good agreement. Moreover, our calculations indicate that only above temperature \(864^{\circ}C\) do we see \(P_{CO_{2}}\) exceeding the atmospheric pressure.
+      We see that they are in pretty good agreement. Moreover, our calculations indicate that only above temperature \(864^{\circ}C\) do we see \(P_{CO_{2}}\) exceeding the atmospheric pressure of \(100kPa\).
       Thus, in order to be economically viable, kilns in industrial applications demand that they be run above this temperature.
       </p>
 
-      <h2>Autoionization of Water</h2>
+      <h2>Ionization of Water</h2>
+      <p>
+      Water dissolves itself into ions, giving rise to phenomena such as electric conductivity and a certain acidity pH value
+      $$
+      H_{2}O \rightleftharpoons H^{+} + OH^{-}
+      $$
+      For ionice solutions, we derive something similar to <a href="#eq-7">eq. 7</a>, but with concentrations instead of pressures as the unit of measurements.
+      $$\begin{align}
+      \Delta S_{total} & = -\frac{\Delta H}{T} + \sum n_{i}R\left(log\left(\frac{VT^{\frac{5}{2}}}{n_{i}}\right) + C_{i}\right) \\
+      & = -\frac{\Delta H}{T} + \sum n_{i}R\left(log\left(\frac{VT^{\frac{5}{2}}}{n^{\circ}}\frac{n^{\circ}}{n_{i}}\right) + C_{i}\right) \\
+      \end{align}$$
+      where \(n^{\circ}\) is chosen so that \(\frac{n^{\circ}}{V}\) is of concentration \(1mol\cdot kg^{-1}\).
+      Thus,
+      $$\begin{align}
+      \Delta S_{total} & = -\frac{\Delta H}{T} + \sum\left(n_{i}R\left(log\left(\frac{VT^{\frac{5}{2}}}{n^{\circ}}\right) + C_{i}\right) - n_{i}R\cdot log\left(\frac{n_{i}}{n^{\circ}}\right)\right) \\
+      & = -\frac{\Delta H}{T} + \sum\left(n_{i}S_{i}^{\circ} - n_{i}R\cdot log\left(\frac{\frac{n_{i}}{1kg}}{\frac{n^{\circ}}{1kg}}\right)\right) \\
+      \end{align}$$
+      where \(S^{\circ}\) is the entropy per mole at standard concentration \(1mol\cdot kg^{-1}\). Thus, 
+      $$\begin{align}
+      \Delta S_{total} & = -\frac{\Delta H}{T} + \sum\left(n_{i}S_{i}^{\circ} - n_{i}R\cdot log\left(\frac{\frac{n_{i}}{1kg}}{1mol\cdot kg^{-1}}\right)\right) \\
+      & = -\frac{\Delta H}{T} + \sum n_{i}S_{i}^{\circ} - R\cdot log\left(\prod m_{i}^{n_{i}}\right) \\
+      \end{align}$$
+      where \(m_{i}\) is the concentration in molalities.
+      In practice, \(m_{i}\) should be replaced with \(\gamma_{i} m_{i}\), where \(\gamma_{i}\) is the activity coefficient to correct for the effects of ion electromagnetic interactions.
+      As the solution approaches infinite dilution, \(\gamma_{i}\) approaches 1.
+      Therefore, for the ionization of water under equilibrium
+      $$\begin{align}
+      log\left(K_{water}\right) = log\left(\frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\right) = -\frac{\Delta H_{water}}{R}\cdot\frac{1}{T} + \frac{S_{water}^{\circ}}{R}
+      \end{align}$$
+      The heat per mole of water's ionization \(\Delta H_{water}\) can be directly measured from the heat released from the neutralization of strong acids and bases such as
+      $$\begin{aligned}
+      HCl + NaOH & \rightleftharpoons NaCl + H_{2}O \\
+      HClO_{4} + NaOH & \rightleftharpoons NaClO_{4} + H_{2}O
+      \end{aligned}$$
+      since the net reaction is simply the reverse of the ionization of water \(H^{+} + OH^{-} \rightleftharpoons H_{2}O\), after removing the effects of the other ions present in the solution such as \(Na^{+}\), \(Cl^{-}\) etc.
+      Calorimetric experiments by Hale et al.<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup> and Pitzer<sup id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup> give \(\Delta H_{water} = 13.35kcal\cdot mol^{-1}\) at temperature \(25^{\circ}C\).
+      In other words, calorimetry predicts that the slope of the \(log\left(K_{water}\right)\) over \(\frac{1}{T}\) curve would be \(\frac{13.35\frac{kcal}{mol}\cdot 4184\frac{J}{kcal}}{8.3145} = 6718\).
+      </p><p>
+      At the same time, the equilibrium constant \(log(K)\) can be measured directly by potentiometric experiments, too.
+      For example, in the Harned cell below
+      <div style="text-align: center;"><img src="harned.png"></div>
+      where the electrodes are soaked in a prepared \(HCl\) solution of concentration \(m\space[mol\cdot kg^{-1}]\).
+      the reaction taking place is
+      $$
+      \frac{1}{2}H_{2}(g) + AgCl(s) \rightleftharpoons Ag(s) + H^{+}(aq) + Cl^{-}(aq)
+      $$
+      The total entropy of this reaction is
+      $$
+      \Delta S_{total} = -\frac{\Delta H_{harned} + \mathcal{E}q}{T} + S_{harned}^{\circ} - R\cdot log\left(\gamma_{H}m_{H}\cdot\gamma_{Cl}m_{Cl}\right)
+      $$
+      where \(\mathcal{E}\) is the electromotive force, and \(q\) the charge passing through.
+      Since almost no current is passing through the voltmeter, the \(AgCl(s)\) coating on the electrode receives no electrons, and thus the concentrations of the \(H^{+}\) and \(Cl^{-}\) ions are equal to the prepared concentration of the \(HCl(aq)\).
+      Moreover, since there is no current, the reaction does not favor either direction and is in equilibrium \(\Delta S_{total} = 0\). Thus
+      $$
+      \mathcal{E}q = -\Delta H_{harned} + T\Delta S_{harned}^{\circ} -RT\cdot log\left(\gamma_{H}m_{H,eq}\cdot\gamma_{Cl}m_{Cl,eq}\right)
+      $$
+      When charge is measured in moles, \(q = nF\) where \(n\) is the number of charge passing in moles, and \(F\) is the Faraday constant \(96485 C\cdot mol^{-1}\). Thus
+      $$
+      \cssId{eq-8}{\mathcal{E} = \mathcal{E}^{\circ} - \frac{RT}{nF}log\left(\gamma_{H}m_{H,eq}\cdot\gamma_{Cl}m_{Cl,eq}\right) \tag{8}}
+      $$
+      where \(\mathcal{E}^{\circ}\) is a reaction and temperature specific constant that does not vary with concentration.
+      Since under equilibrium both \(m_{H,eq} = m\) and \(m_{Cl,eq} = m\), where \(m\) is the prepared concentration of \(HCl\), we get
+      $$
+      \mathcal{E} = \mathcal{E}^{\circ} - \frac{RT}{nF}log\left(\gamma_{H}\gamma_{Cl}\right) - 2\frac{RT}{nF}log\left(m\right)
+      $$
+      Since both the activity coefficients \(\gamma\) approaches 1 at infinite dilution \(m = 0\), we can interpolate the above graph to \(m=0\) and read out \(\mathcal{E}^{\circ}\) for each and every temperature, as done by Harned and Ehlers<sup id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup>.
+      With \(\mathcal{E}^{\circ}\) in hand, we can alter the concentrations a bit by adding some salts such as
+      $$
+      H_{2}\space\vert\space KOH(m_{KOH}), KCl(m_{KCl})\space\vert\space AgCl, Ag
+      $$
+      Here, the net reaction remains the same \(\frac{1}{2}H_{2}(g) + AgCl(s) \rightleftharpoons Ag(s) + H^{+}(aq) + Cl^{-}(aq)\), but we control \(m_{H^{+}}\) through \(m_{KOH}\) and \(m_{Cl^{-}}\) through \(m_{KCl}\).
+      The reason why \(m_{H^{+}}\) can be controlled by \(m_{KOH}\) is because without \(HCl\), \(m_{H^{+}}\) is entirely determined by the ionization of water \(H_{2}O \rightleftharpoons H^{+} + OH^{-}\), whose equilibrium is controlled by the \(m_{OH^{-}}\) in \(KOH\).
+      In this case, we can rewrite <a href="#eq-8">eq. 8</a> in terms of \(K_{water} = \frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\)
+      $$
+      \mathcal{E} - \mathcal{E}^{\circ} + \frac{RT}{nF}log\left(\frac{m_{KCL}}{m_{KOH}}\right) = -\frac{RT}{nF}log\left(K_{water}\right) -\frac{RT}{nF}log\left(\frac{\gamma_{Cl}\gamma_{H_{2}O}m_{H_{2}O}}{\gamma_{OH}}\right)
+      $$
+      Since the second term on the right hand side of the above equation approaches 0 as the ionic strength \(I = m_{KOH} + m_{KCl}\) approaches 0, the left hand side would converge to \(-\frac{RT}{nF}log\left(K_{water}\right)\).
+      <div style="text-align: center;"><img src="kw.png"></div>
+      As we can see from the graph<sup id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup> above, this is indeed the case.
+      By repeating the experiment for different temperatures, we can gather the following data<sup id="cite_ref-7"><a href="#cite_note-7">[7]</a></sup><sup id="cite_ref-7"><a href="#cite_note-8">[8]</a></sup> for \(K_{water}\).
+      <table id="k-water">
+        <thead>
+          <tr><td>\(t [^{\circ}C]\)</td><td>\(K_{water} [10^{-14}]\)</td></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0.1139</td></tr>
+          <tr><td>5</td><td>0.1846</td></tr>
+          <tr><td>10</td><td>0.2920</td></tr>
+          <tr><td>15</td><td>0.4505</td></tr>
+          <tr><td>20</td><td>0.6809</td></tr>
+          <tr><td>25</td><td>1.008</td></tr>
+          <tr><td>30</td><td>1.469</td></tr>
+          <tr><td>35</td><td>2.089</td></tr>
+          <tr><td>40</td><td>2.919</td></tr>
+          <tr><td>45</td><td>4.018</td></tr>
+          <tr><td>50</td><td>5.474</td></tr>
+          <tr><td>55</td><td>7.297</td></tr>
+          <tr><td>60</td><td>9.614</td></tr>
+        </tbody>
+      </table>
+      If we plot the logarithm of the above data against \(\frac{1}{T}\), we get the following graph
+      <div style="text-align: center;"><img src="kw_plot.png"></div>
+      as we can see, the slope is 6717 accoding to potentiometry, which tallies incredibly well with the figure of 6718 from calorimetric measurements!
+      Moreover, since \(K_{water}\) increases as temperature rises, we can infer that the conductivity of water improves along with temperature, a fact which is also proven by experiments.
+      </p>
 
       <h2>Reference</h2>
       <ol style="text-align: left;">
         <li id="cite_note-1">
           <b><a href="#cite_ref-1">^</a></b>
-          Jacobs, G. K., Kerrick, D. M., & Krupka, K. M. (1981). The high-temperature heat capacity of natural calcite (CaCO3). Physics and Chemistry of Minerals, 7(2), 55–59.
+          Jacobs, G. K., Kerrick, D. M., & Krupka, K. M. (1981). The high-temperature heat capacity of natural calcite (CaCO3). Physics and Chemistry of Minerals, 7(2), 55–59. <a href="https://sci-hub.se/https://doi.org/10.1007/BF00309451">doi:10.1007/bf00309451</a>
         </li>
         <li id="cite_note-2">
           <b><a href="#cite_ref-2">^</a></b>
           Wikipedia <a href="https://en.wikipedia.org/wiki/Calcium_carbonate#Calcination_equilibrium">article</a> on Calcination.
+        </li>
+        <li id="cite_note-3">
+          <b><a href="#cite_ref-3">^</a></b>
+          Hale, J. D., Izatt, R. M., & Christensen, J. J. (1963). A calorimetric study of the heat of ionization of water at 25°. The Journal of Physical Chemistry, 67(12), 2605–2608. <a href="https://sci-hub.se/https://doi.org/10.1021/j100806a025">doi:10.1021/j100806a025</a>
+        </li>
+        <li id="cite_note-4">
+          <b><a href="#cite_ref-4">^</a></b>
+          Pitzer, K. S. (1937). The Heats of Ionization of Water, Ammonium Hydroxide, Carbonic, Phosphoric, and Sulfuric Acids. The Variation of Ionization Constants with Temperature and the Entropy Change with Ionization. Journal of the American Chemical Society, 59(11), 2365–2371. <a href="https://sci-hub.se/https://doi.org/10.1021/ja01290a080">doi:10.1021/ja01290a080</a>
+        </li>
+        <li id="cite_note-5">
+          <b><a href="#cite_ref-5">^</a></b>
+          Harned, H. S., & Ehlers, R. W. (1932). The dissociation constant of acetic acid from 0 to 35° centigrade. Journal of the American Chemical Society, 54(4), 1350–1357. <a href="harned_ehlers_acetic.pdf">doi:10.1021/ja01343a013</a>
+        </li>
+        <li id="cite_note-6">
+          <b><a href="#cite_ref-6">^</a></b>
+          R. A. Robinson and R. H. Stokes, "<a href="robinson_stokes_electrolyte_solutions.pdf">Electrolyte Solutions</a>," 2nd ed., Butterworths, London (1965), page 364.
+        </li>
+        <li id="cite_note-7">
+          <b><a href="#cite_ref-7">^</a></b>
+          Hepler, L. G., and Woolley, E. M. (1973). In "Water, A Comprehensive Treatise" (F. Franks, ed.), Vol. 3 "<a href="hepler_woolley_water.pdf">Aqueous Solutions of Simple Electrolytes</a>", page 146. Plenum, New York.
+        </li>
+        <li id="cite_note-8">
+          <b><a href="#cite_ref-8">^</a></b>
+          Harned, H. S., & Hamer, W. J. (1933). The Ionization Constant of Water and the Dissociation of Water in Potassium Chloride Solutions from Electromotive Forces of Cells without Liquid Junction1. Journal of the American Chemical Society, 55(6), 2194–2206. <a href="https://sci-hub.se/https://doi.org/10.1021/ja01333a002">doi:10.1021/ja01333a002</a>
         </li>
       </ol>
     </div>
