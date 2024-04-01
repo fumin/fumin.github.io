@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <style>
+body {
+  font-size: xx-large;
+}
+table {
+  font-size: xx-large;
+}
+  </style>
+  <body>
+    <div id="container" style="margin-left:auto; margin-right:auto;">
+<h1>Statistics</h1>
+
+<h2>Mean \(E(X)\) may not capture a problem's concern</h2>
+<p>
+<q>
+Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g. for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?
+</q>
+-- <a href="https://twitter.com/littmath/status/1769044719034647001">Daniel Litt</a></p>
+<p>Answer: Bob wins</p>
+<p>An intuitive explanation is that HH's distribution is more skewed due to the fact that HH's possible scores are much higher due to consecutive heads. Thus, HH's distribution has more probability mass in the region <code>x &lt; mean</code>. Since HH and HT have the same mean, it follows that <code>HH &lt; HT</code> happens more frequently.</p>
+<p>Let <code>n</code> be the sequence length, the mean of Alice's and Bob's distributions are the same <code>(n-1)/4</code>. The below diagram shows the distributions of <code>HH</code> and <code>HT</code> and <code>HH - HT</code>:</p>
+<img src="n16.png">
+<img src="n16diff.png">
+<p>As we increase n, the number of possible sequences increases exponentially. Thus we experiment with the sampling method, too. As shown in the below diagrams for <code>n = 32</code>, the sampling method matches pretty well with the exact one:</p>
+<img src="n32.png">
+<img src="n32diff.png">
+<p>Having confirmed that sampling works, we plot the case for <code>n = 1024</code></p>
+<img src="n1024.png">
+<p>It seems that the Central Limit Theorem is in effect here. Moreover the edge HT over HH has diminishes as the sequence length increases:</p>
+<table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
+  <thead><tr>
+    <td></td>
+    <td>16</td>
+    <td>32</td>
+    <td>1024</td>
+  </tr></thead>
+  <tbody>
+    <tr><td><code>hh &lt; ht</code></td><td>0.464</td><td>0.475</td><td>0.495</td></tr>
+    <tr><td><code>hh == ht</code></td><td>0.143</td><td>0.100</td><td>0.018</td></tr>
+    <tr><td><code>hh &gt; ht</code></td><td>0.393</td><td>0.425</td><td>0.487</td></tr>
+  </tbody>
+</table>
+
+<h2>Mean Deviation is more useful than Standard Deviation</h2>
+<p>The classical argument of the Standard Deviation \(\sqrt{\frac{1}{n-1}\sum(x-\overline{x})^{2}}\) having an advantage over the Mean Absolute Deviation \(\frac{1}{n}\sum\left| x - \overline{x} \right|\) is a fragile one.
+It works only for the perfect Normal distribution and collapses at the slightest occurance of fat tails.
+In mathematical terms, the argument states that the statistical efficiency \(\frac{Var(X)}{E(X)^{2}}\) of the Standard Deviation is better than that of the Mean Deviation:</p>
+$$\displaylines{
+\begin{aligned}
+\text{Asymptotic Relative Efficiency (ARE)} =\space & \underset{n\to \infty }{lim}\left( \frac{\frac{Var(Std)}{E(Std)^{2}}}{\frac{Var(Mad)}{E(Mad)^{2}}} \right) \\
+=\space & \underset{n\to \infty }{lim}\frac{\frac{n{\Gamma(\frac{n}{2})}^{2}}{2{\Gamma(\frac{n+1}{2})}^{2}}-1}{\frac{\pi-2}{2n}} \\
+=\space & \frac{1}{\pi-2} \simeq 0.875
+\end{aligned}
+}$$
+<p>However, this result quickly becomes invalidated when considering the simplest model for volatility, which is a mixing model with an occasional jump with probability \(p\):</p>
+$$\displaylines{
+Var(x)=\begin{cases}
+\sigma^{2}(1+a) & \text{with probability $p$} \\
+\sigma^{2} & \text{with probability $p-1$}
+\end{cases}
+}$$
+<p>The below diagram shows simulation results with \(p=0.01\) and \(n=10000\):</p>
+<div style="text-align: center;"><img src="are.png"></div>
+<p>We see that even though for \(a=0\) \(RE=0.878\), for \(a=2\) \(RE=1.434\) which starts to cause degradation. In other words, a minute presence of outliers makes MAD more efficient than STD.</p>
+<p>Morever, many statistical phenomena and processes have "infinite variance" (such as the popular Pareto 80/20 rule) but have finite, and sometimes very well behaved, mean deviations.
+Whenever the mean exists, MAD exists. The reverse (infinite MAD and finite STD) is never true.</p>
+<p>In summary, we should retire the notion of Standard Deviation and replace it with the more effective one of Mean Deviation.
+Standard deviation, STD, should be left to mathematicians, physicists and mathematical statisticians deriving limit theorems.
+There is no scientific reason to use it in statistical investigations in the age of the computer.</p>
+
+<h2>The Central Limit Theorem does not apply in important real world problems</h2>
+<p></p>
+
+<h2>Physics might dictate that the mean \(E(X)\) be non-existent</h2>
+<p>Consider the intensity of a point light source on a vertical wall, as shown below:</p>
+<div style="text-align: center;"><img src="light.svg"></img></div>
+<p>The probability of \(\theta\) is the uniform distribution, and the distance between the light source and the wall is \(\ell\). We are interested in the distribution of \(x\). Since \(tan(\theta)=\frac{x}{\ell}\), the distribution is:</p>
+$$\displaylines{
+\begin{aligned}
+P(X) =\space & 1 \cdot d\theta \\
+=\space & \frac{d\theta}{dx}dx \\
+=\space & \frac{1}{\pi} \frac{\ell}{\ell^{2}+x^{2}}dx
+\end{aligned}
+}$$
+<p>which is the Cauchy distribution \(Cauchy(\ell)\). The Cauchy distribution has the property that the sum of two Cauchies is also a Cauchy, \(Cauchy(\ell_{1}) + Cauchy(\ell_{2}) = Cauchy(\ell_{1}+\ell_{2})\). This means we can view the distribution as a random walk by photons in small steps, known as the Huygens principle:</p>
+<div style="text-align: center;"><img src="walk.svg"></div>
+<p>We split \(\ell\) into \(n\) steps, and let \(X_{t}\) be the random variable describing a photon's random walk, \(P(X_{t}) = Cauchy(\frac{\ell}{n})\). The law of large numbers says that the final location of the photon, \(X_{1} + X_{2} + ... + X_{n}\) approaches \(n\cdot E(X)\) as \(n\) increases. In other words, we would observe a single spot of bright light at position \(n\cdot E(Cauchy(\frac{\ell}{n}))\), when the rest of the wall is completely dark. Alas, a completely dark wall is completely nonsensical in physics. The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
+<p></p>
+    </div>
+
+    <script>
+function onWindowResizeContainer() {
+  const container = document.querySelector("#container");
+  if (document.body.clientWidth/document.body.clientHeight > 1024/768) {
+    container.style.width = "70%";
+  } else {
+    container.style.width = "100%";
+  }
+}
+
+function main() {
+  onWindowResizeContainer();
+}
+main();
+    </script>
+
+  </body>
+</html>

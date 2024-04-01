@@ -1,0 +1,22 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="226" x2="532.00006" y1="226" x1="0.00002" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="450" x2="0" y1="3" x1="0" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="448" x2="483" y1="1" x1="483" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="52" x2="514.00001" y1="17" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="103" x2="514.00001" y1="68" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_7" y2="149" x2="514.00001" y1="114" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_8" y2="195" x2="514.00001" y1="160" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_9" y2="246" x2="514.00001" y1="211" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_10" y2="292" x2="514.00001" y1="257" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_11" y2="335" x2="514.00001" y1="300" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_12" y2="386" x2="514.00001" y1="351" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_13" y2="432" x2="514.00001" y1="397" x1="484.00001" stroke="#ffffff" fill="#000000"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_14" y2="46" x2="481.99998" y1="226" x1="2.00001" stroke="#ffffff" fill="#000000"/>
+  <text xml:space="preserve" text-anchor="start" font-family="math" font-size="24" stroke-width="0" id="svg_15" y="139" x="465" stroke="#ffffff" fill="#ffffff">x</text>
+  <text xml:space="preserve" text-anchor="start" font-family="math" font-size="24" id="svg_16" y="216" x="310" stroke-width="0" stroke="#ffffff" fill="#ffffff">l</text>
+  <text xml:space="preserve" text-anchor="start" font-family="math" font-size="24" stroke-width="0" id="svg_17" y="216" x="98" stroke="#ffffff" fill="#ffffff">θ</text>
+ </g>
+</svg>

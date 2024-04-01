@@ -1,2 +1,3 @@
 *.swp
 .DSStore
+.ipynb_checkpoints
