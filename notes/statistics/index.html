@@ -73,8 +73,46 @@ Whenever the mean exists, MAD exists. The reverse (infinite MAD and finite STD) 
 Standard deviation, STD, should be left to mathematicians, physicists and mathematical statisticians deriving limit theorems.
 There is no scientific reason to use it in statistical investigations in the age of the computer.</p>
 
-<h2>The Central Limit Theorem does not apply in important real world problems</h2>
-<p></p>
+<h2>The Central Limit Theorem does not apply to many real world problems with finite sample sizes</h2>
+<p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) grows sub-linearly.
+The below graph (Fig 8.1<sup id="cite_ref-1a"><a href="#cite_note-1">[1]</a></sup>) illustrates this phenomenon:
+<div style="text-align: center;"><img src="kappa.png"></img></div>
+A consequence of this is that for all powers \(p=1,2,3,\cdots\), if \(E(X^{p}) < \infty\) then (10.2.6<sup id="cite_ref-1b"><a href="#cite_note-1">[1]</a></sup>)
+$$\displaylines{
+\underset{n\to \infty}{lim}\frac{\text{max}(X_{1}^{p},X_{2}^{p},\cdots ,X_{n}^{p})}{X_{1}^{p}+X_{2}^{p}+\cdots +X_{n}^{p}} = 0
+}$$
+For example, in the case of \(p=4\) the forth moment kurtosis, if it exists should make it harder and harder for a single data point to dominate the entire sum as \(n\) increases.
+The below Max-to-Sum plot (MS plot) for the Taiwan and U.S. stock market shows this is not the case:
+<div style="text-align: center;"><img src="ms_taiex.png"></img></div>
+<div style="text-align: center;"><img src="ms_sp500.png"></img></div>
+<div style="text-align: center;"><img src="ms_taiex_gauss.png"></img></div>
+<table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
+  <thead><tr>
+    <td></td>
+    <td>dataset size</td>
+    <td>Max-to-Sum</td>
+  </tr></thead>
+  <tbody>
+    <tr><td>Taiwan stock index (TAIEX)</td><td>15556</td><td>0.15</td></tr>
+    <tr><td>S&amp;P 500</td><td>17356</td><td>0.40</td></tr>
+    <tr><td>Gaussian with same σ as TAIEX</td><td>15556</td><td>0.03</td></tr>
+  </tbody>
+</table>
+</p>
+<p>
+The reason for the volality in the kurtosis of both the Taiwan and U.S. stock markets is due to their fat tails.
+To quantify how fat the tails are, we fit them to the pareto distribution \(\frac{1}{x^{\alpha + 1}}\) where alpha is the tail index.
+The smaller \(\alpha\), the fatter the tail; for \(\alpha <= 4\) kertosis does not exist; for \(\alpha <= 3\) skewness does not exist; for \(\alpha <= 2\) variance becomes infinite; for \(\alpha <= 1\) mean becomes infinite.
+<div style="text-align: center;"><img src="loglog_taiex.png"></img></div>
+<div style="text-align: center;"><img src="loglog_sp500.png"></img></div>
+We see that the fitted tail indices are smaller than 3, which explains why the 3rd and 4th moments in the MS plots never converge.
+A quantitative metric to measure the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1c"><a href="#cite_note-1">[1]</a></sup>).
+Let \(\mathbb{M}(n) = \mathbb{E}(\left| S_{n} - \mathbb{E}(S_{n}) \right|)\) be the mean absolute deviation for \(n\) summands, then
+$$\displaylines{
+\kappa(n_{0}, n) = 2 + \frac{log(n) - log(n_{0})}{log(\mathbb{M}(n_{0})) - log(\mathbb{M}(n))}
+}$$
+
+</p>
 
 <h2>Physics might dictate that the mean \(E(X)\) be non-existent</h2>
 <p>Consider the intensity of a point light source on a vertical wall, as shown below:</p>
@@ -89,8 +127,20 @@ P(X) =\space & 1 \cdot d\theta \\
 }$$
 <p>which is the Cauchy distribution \(Cauchy(\ell)\). The Cauchy distribution has the property that the sum of two Cauchies is also a Cauchy, \(Cauchy(\ell_{1}) + Cauchy(\ell_{2}) = Cauchy(\ell_{1}+\ell_{2})\). This means we can view the distribution as a random walk by photons in small steps, known as the Huygens principle:</p>
 <div style="text-align: center;"><img src="walk.svg"></div>
-<p>We split \(\ell\) into \(n\) steps, and let \(X_{t}\) be the random variable describing a photon's random walk, \(P(X_{t}) = Cauchy(\frac{\ell}{n})\). The law of large numbers says that the final location of the photon, \(X_{1} + X_{2} + ... + X_{n}\) approaches \(n\cdot E(X)\) as \(n\) increases. In other words, we would observe a single spot of bright light at position \(n\cdot E(Cauchy(\frac{\ell}{n}))\), when the rest of the wall is completely dark. Alas, a completely dark wall is completely nonsensical in physics. The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
-<p></p>
+<p>We split \(\ell\) into \(n\) steps, and let \(X_{t}\) be the random variable describing a photon's random walk, \(P(X_{t}) = Cauchy(\frac{\ell}{n})\).
+The law of large numbers says that the final location of the photon, \(X_{1} + X_{2} + ... + X_{n}\) approaches \(n\cdot E(X)\) as \(n\) increases.
+In other words, we would observe a single spot of bright light at position \(n\cdot E(Cauchy(\frac{\ell}{n}))\), when the rest of the wall is completely dark.
+However, a completely dark wall is completely nonsensical in physics.
+The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
+
+<h2>Reference</h2>
+<ol style="text-align: left;">
+  <li id="cite_note-1">
+    ^ <b><a href="#cite_ref-1a">a</a></b> <b><a href="#cite_ref-1b">b</a></b> <b><a href="#cite_ref-1c">c</a></b>
+    Nassim Nicholas Taleb, Statistical Consequences of Fat Tails: Real World Preasymptotics, Epistemology, and Applications<a href="https://arxiv.org/abs/2001.10488">arXiv:2001.10488</a>
+  </li>
+</ol>
+
     </div>
 
     <script>
