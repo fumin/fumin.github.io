@@ -74,18 +74,17 @@ Standard deviation, STD, should be left to mathematicians, physicists and mathem
 There is no scientific reason to use it in statistical investigations in the age of the computer.</p>
 
 <h2>The Central Limit Theorem does not apply to many real world problems with finite sample sizes</h2>
-<p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) grows sub-linearly.
+<p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) grows sub-linearly, and thus \(\underset{n\to \infty}{lim}\left( \frac{S_{n}}{n}-\mu \right) = 0\).
 The below graph (Fig 8.1<sup id="cite_ref-1a"><a href="#cite_note-1">[1]</a></sup>) illustrates this phenomenon:
 <div style="text-align: center;"><img src="kappa.png"></img></div>
 A consequence of this is that for all powers \(p=1,2,3,\cdots\), if \(E(X^{p}) < \infty\) then (10.2.6<sup id="cite_ref-1b"><a href="#cite_note-1">[1]</a></sup>)
 $$\displaylines{
 \underset{n\to \infty}{lim}\frac{\text{max}(X_{1}^{p},X_{2}^{p},\cdots ,X_{n}^{p})}{X_{1}^{p}+X_{2}^{p}+\cdots +X_{n}^{p}} = 0
 }$$
-For example, in the case of \(p=4\) the forth moment kurtosis, if it exists should make it harder and harder for a single data point to dominate the entire sum as \(n\) increases.
-The below Max-to-Sum plot (MS plot) for the Taiwan and U.S. stock market shows this is not the case:
-<div style="text-align: center;"><img src="ms_taiex.png"></img></div>
-<div style="text-align: center;"><img src="ms_sp500.png"></img></div>
-<div style="text-align: center;"><img src="ms_taiex_gauss.png"></img></div>
+For example, in the case of \(p=4\), the existence of the fourth moment should prevent a single data point to dominate the kurtosis's calculation as \(n\) increases.
+This behaviour is observed for the Gaussian distribution, but not for both the Taiwan and U.S. stock markets, as shown in the below Max-to-Sum plot (MS plot):
+<div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="ms_taiex.png" style="width: 50%;"/><img src="ms_taiex_gauss.png" style="width: 50%;"/></div>
+<div style="text-align: center;"><img src="ms_sp500.png"/></div>
 <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
   <thead><tr>
     <td></td>
@@ -93,9 +92,9 @@ The below Max-to-Sum plot (MS plot) for the Taiwan and U.S. stock market shows t
     <td>Max-to-Sum</td>
   </tr></thead>
   <tbody>
-    <tr><td>Taiwan stock index (TAIEX)</td><td>15556</td><td>0.15</td></tr>
-    <tr><td>S&amp;P 500</td><td>17356</td><td>0.40</td></tr>
-    <tr><td>Gaussian with same σ as TAIEX</td><td>15556</td><td>0.03</td></tr>
+    <tr><td>Taiwan stock index (TAIEX)</td><td>777</td><td>0.16</td></tr>
+    <tr><td>S&amp;P 500</td><td>867</td><td>0.24</td></tr>
+    <tr><td>Gaussian with same σ as TAIEX</td><td>777</td><td>0.04</td></tr>
   </tbody>
 </table>
 </p>
@@ -106,12 +105,61 @@ The smaller \(\alpha\), the fatter the tail; for \(\alpha <= 4\) kertosis does n
 <div style="text-align: center;"><img src="loglog_taiex.png"></img></div>
 <div style="text-align: center;"><img src="loglog_sp500.png"></img></div>
 We see that the fitted tail indices are smaller than 3, which explains why the 3rd and 4th moments in the MS plots never converge.
+</p>
+<p>
 A quantitative metric to measure the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1c"><a href="#cite_note-1">[1]</a></sup>).
-Let \(\mathbb{M}(n) = \mathbb{E}(\left| S_{n} - \mathbb{E}(S_{n}) \right|)\) be the mean absolute deviation for \(n\) summands, then
+Let \(\mathbb{M}(n) = \mathbb{E}(\left| S_{n} - \mathbb{E}(S_{n}) \right|)\) be the mean absolute deviation for \(n\) summands, define
 $$\displaylines{
-\kappa(n_{0}, n) = 2 + \frac{log(n) - log(n_{0})}{log(\mathbb{M}(n_{0})) - log(\mathbb{M}(n))}
+\kappa(n_{0}, n) = 2 - \frac{\text{log}(\frac{n}{n_{0}})}{\text{log}(\frac{\text{min}\left\{ \mathbb{M}(i),\space i\ge n \right\} }{\mathbb{M}(n_{0})})}
 }$$
-
+By definition, \(\kappa(n_{0}, n) \ge \kappa(n_{0}, n+1)\), and for <a href="https://en.wikipedia.org/wiki/Stable_distribution">stable distributions</a> \(\kappa(n_{0}, n) = 2 - \alpha\).
+Since the Gaussian distribution corresponds to \(Stable(2)\), \(\kappa_{gaussian} = 0\).
+</p>
+<p>
+Let \(P\) be some distribution, \(n_{g}\) be some sample size, since \(\kappa\) is related to the mean absolute deviation \(\mathbb{M}\), we can use it to calculate the minimum sample size \(n_{\nu}\) such that the deviation of said distribution \(P\) \(\frac{\mathbb{M}_{P}(n_{nu})}{n_{nu}}\) is less than that of a Gaussian \(\frac{\mathbb{M}_{gaussian}(n_{g})}{n_{g}}\).
+Let \(n_{0}=1\), and scale \(P\) such that \(\mathbb{M}_{P}(1)=\mathbb{M}_{gaussian}(1)\), then
+$$\displaylines{
+\begin{aligned}
+\frac{\mathbb{M}_{P}(n_{nu})}{n_{nu}} \le \frac{\mathbb{M}_{gaussian}(n_{g})}{n_{g}} & \Rightarrow \frac{n_{\nu}^{\frac{1}{2-\kappa(n_{\nu})}}}{n_{\nu}} < \frac{n_{g}^{\frac{1}{2}}}{n_{g}} \\
+& \Rightarrow n_{\nu} < n_{g}^{\frac{2-\kappa(n_{\nu})}{2(1-\kappa(n_{\nu}))}} \\
+\end{aligned}
+}$$
+Since \(n_{\nu} > n_{g}\), thus \(\kappa(n_{\nu}) < \kappa(n_{g})\). In this case,
+$$\displaylines{
+\begin{aligned}
+\kappa(n_{g}) < \frac{2\kappa(n_{g})}{\kappa(n_{g})+1} & \Rightarrow \kappa(n_{\nu}) < \frac{2\kappa(n_{g})}{\kappa(n_{g})+1} \\
+& \Rightarrow \frac{2-\kappa(n_{\nu})}{2(1-\kappa(n_{\nu}))} < \frac{1}{1-\kappa(n_{g})} \\
+& \Rightarrow n_{\nu} < n_{g}^{\frac{1}{1-\kappa(n_{g})}}
+\end{aligned}
+}$$ 
+In other words, given \(n_{g}\), we can use \(n_{\nu} = n_{g}^{\frac{1}{1-\kappa(n_{g})}}\) to gaurantee that \(\frac{\mathbb{M}_{P}(n_{\nu})}{n_{\nu}} < \frac{\mathbb{M}_{gaussian}(n_{g})}{n_{g}}\).
+For the pareto distribution, we have the following values for \(\kappa(n)\):
+<table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;">
+  <thead><tr>
+    <td>alpha</td>
+    <td>2</td>
+    <td>30</td>
+    <td>100</td>
+    <td>1,000</td>
+    <td>1,000,000</td>
+  </tr></thead>
+  <tbody>
+    <tr><td>1.25</td><td>0.829</td><td>0.799</td><td>0.790</td><td>0.779</td><td>0.765</td></tr>
+    <tr><td>1.50</td><td>0.724</td><td>0.660</td><td>0.639</td><td>0.608</td><td>0.561</td></tr>
+    <tr><td>1.75</td><td>0.650</td><td>0.560</td><td>0.529</td><td>0.482</td><td>0.400</td></tr>
+    <tr><td>2.00</td><td>0.594</td><td>0.487</td><td>0.449</td><td>0.391</td><td>0.286</td></tr>
+    <tr><td>2.25</td><td>0.551</td><td>0.431</td><td>0.389</td><td>0.326</td><td>0.214</td></tr>
+    <tr><td>2.50</td><td>0.517</td><td>0.387</td><td>0.343</td><td>0.278</td><td>0.169</td></tr>
+    <tr><td>2.75</td><td>0.488</td><td>0.353</td><td>0.308</td><td>0.242</td><td>0.140</td></tr>
+    <tr><td>3.00</td><td>0.465</td><td>0.325</td><td>0.280</td><td>0.215</td><td>0.120</td></tr>
+    <tr><td>3.25</td><td>0.445</td><td>0.302</td><td>0.257</td><td>0.194</td><td>0.106</td></tr>
+    <tr><td>3.50</td><td>0.428</td><td>0.283</td><td>0.238</td><td>0.178</td><td>0.095</td></tr>
+    <tr><td>3.75</td><td>0.413</td><td>0.267</td><td>0.223</td><td>0.164</td><td>0.087</td></tr>
+    <tr><td>4.00</td><td>0.400</td><td>0.253</td><td>0.210</td><td>0.153</td><td>0.081</td></tr>
+  </tbody>
+</table>
+N 777, mean 0.0069194, stdev 0.0766082, t statistic 2.5177
+265, 0.0042273, stdev 0.0715087, t statistic 0.9623
 </p>
 
 <h2>Physics might dictate that the mean \(E(X)\) be non-existent</h2>
