@@ -74,8 +74,9 @@ Standard deviation, STD, should be left to mathematicians, physicists and mathem
 There is no scientific reason to use it in statistical investigations in the age of the computer.</p>
 
 <h2>The Central Limit Theorem does not apply to many real world problems with finite sample sizes</h2>
-<p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) grows sub-linearly, and thus \(\underset{n\to \infty}{lim}\left( \frac{S_{n}}{n}-\mu \right) = 0\).
-The below graph (Fig 8.1<sup id="cite_ref-1a"><a href="#cite_note-1">[1a]</a></sup>) illustrates this phenomenon:
+<p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) converges to \(n\mu + n^{\frac{1}{\alpha}}\text{Stable}(\alpha)\) where \(\text{Stable}(\alpha)\) is the <a href="https://en.wikipedia.org/wiki/Stable_distribution">Stable distribution</a>, parameterized by the tail index \(\alpha\).
+Thus when \(\alpha > 1\), \(\underset{n\to \infty}{lim}\left( \frac{S_{n}}{n} - \mu \right) = n^{\frac{1}{\alpha}-1}  = 0\) and we get the Law of Large Numbers.
+The below graph (Fig 8.1<sup id="cite_ref-1a"><a href="#cite_note-1">[1a]</a></sup>) illustrates this phenomenon assuming \(X_{n}\) has been subtracted by the linear trend \(\mu\) leaving the random walk \(S_{n}\):
 <div style="text-align: center;"><img src="kappa.png"></img></div>
 A consequence of this is that for all powers \(p=1,2,3,\cdots\), if \(E(X^{p}) < \infty\) then (10.2.6<sup id="cite_ref-1b"><a href="#cite_note-1">[1b]</a></sup>)
 $$\displaylines{
@@ -112,15 +113,18 @@ The smaller \(\alpha\), the fatter the tail; for \(\alpha <= 4\) kertosis does n
 <div style="text-align: center;"><img src="loglog_taiex.png"></img></div>
 <div style="text-align: center;"><img src="loglog_sp500.png"></img></div>
 We see that the fitted tail indices are smaller than 3, which explains why the 3rd and 4th moments in the MS plots never converge.
-Without the 4th moment, the Central Limit Theorem ceases to work for the variance, and thus it becomes impossible to know the true standard deviation no matter how large the sample size is.
+Without the 4th moment, the sum of squares converges to \(n\text{Stable}(\alpha)\) with \(\alpha < 1\) instead of the <a href="https://en.wikipedia.org/wiki/Variance#Distribution_of_the_sample_variance">chi-square distribution</a>.
+In this case, the expected value of the variance \(E\left( \frac{n\text{Stable}(\alpha)}{n} \right) = E(\text{Stable}(\alpha)) = \infty\).
+Moreover, since the chi-square test for variance and the <a href="https://en.wikipedia.org/wiki/F-test#Regression_problems">F-test for regression</a> depend on the convergence to the chi-square distribution, they cease to work for the Taiwan and U.S. stock markets.
+To use similar conventional statistical tests that rely on the gaussian distribution, we need precise measurements on the differences between the true distribution and the gaussian under the same sample size.
 </p>
 <p>
-A quantitative metric to measure the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1d"><a href="#cite_note-1">[1d]</a></sup>).
+One such quantitative metric to measure the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1d"><a href="#cite_note-1">[1d]</a></sup>).
 Let \(\mathbb{M}(n) = \mathbb{E}(\left| S_{n} - \mathbb{E}(S_{n}) \right|)\) be the mean absolute deviation for \(n\) summands, define
 $$\displaylines{
 \kappa(n_{0}, n) = 2 - \frac{\text{log}(\frac{n}{n_{0}})}{\text{log}(\frac{\text{min}\left\{ \mathbb{M}(i),\space i\ge n \right\} }{\mathbb{M}(n_{0})})}
 }$$
-By definition, \(\kappa(n_{0}, n) \ge \kappa(n_{0}, n+1)\), and for <a href="https://en.wikipedia.org/wiki/Stable_distribution">stable distributions</a> \(\kappa(n_{0}, n) = 2 - \alpha\).
+By definition, \(\kappa(n_{0}, n) \ge \kappa(n_{0}, n+1)\), and for stable distributions \(\kappa(n_{0}, n) = 2 - \alpha\).
 Since the Gaussian distribution corresponds to \(Stable(2)\), \(\kappa_{gaussian} = 0\).
 </p>
 <p>
