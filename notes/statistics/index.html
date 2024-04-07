@@ -90,12 +90,12 @@ This behaviour is observed for the Gaussian distribution, but not for both the T
   <thead><tr>
     <td></td>
     <td>dataset size</td>
-    <td>Max-to-Sum</td>
+    <td>\(|X|^{4}\) Max-to-Sum</td>
   </tr></thead>
   <tbody>
     <tr><td>Taiwan stock index (TAIEX)</td><td>777 (58 years)</td><td>0.16</td></tr>
     <tr><td>S&amp;P 500</td><td>867 (69 years)</td><td>0.24</td></tr>
-    <tr><td>Gaussian with same σ as TAIEX</td><td>777</td><td>0.04</td></tr>
+    <tr><td>Gaussian with same σ as TAIEX</td><td>777</td><td>0.05</td></tr>
     <tr><td colspan="3" style="text-align: center;">Data below from Table 7.2 Taleb<sup id="cite_ref-1c"><a href="#cite_note-1">[1c]</a></sup></td></tr>
     <tr><td>Silver</td><td>46 years</td><td>0.94</td></tr>
     <tr><td>Crude Oil</td><td>26 years</td><td>0.79</td></tr>
@@ -108,18 +108,18 @@ This behaviour is observed for the Gaussian distribution, but not for both the T
 </p>
 <p>
 The reason for the volality in the kurtosis of both the Taiwan and U.S. stock markets is due to their fat tails.
-To quantify how fat the tails are, we fit them to the pareto distribution \(\frac{1}{x^{\alpha + 1}}\) where alpha is the tail index.
+To quantify how fat the tails are, we fit them to the pareto distribution \(\frac{1}{x^{\alpha + 1}}\) where alpha is the tail index<sup id="foot_ref-2"><a href="#foot_note-2">2</a></sup>. 
 The smaller \(\alpha\), the fatter the tail; for \(\alpha <= 4\) kertosis does not exist; for \(\alpha <= 3\) skewness does not exist; for \(\alpha <= 2\) variance becomes infinite; for \(\alpha <= 1\) mean becomes infinite.
 <div style="text-align: center;"><img src="loglog_taiex.png"></img></div>
 <div style="text-align: center;"><img src="loglog_sp500.png"></img></div>
-We see that the fitted tail indices are smaller than 3, which explains why the 3rd and 4th moments in the MS plots never converge.
-Without the 4th moment, the sum of squares converges to \(n\text{Stable}(\alpha)\) with \(\alpha < 1\) instead of the <a href="https://en.wikipedia.org/wiki/Variance#Distribution_of_the_sample_variance">chi-square distribution</a>.
-In this case, the expected value of the variance \(E\left( \frac{n\text{Stable}(\alpha)}{n} \right) = E(\text{Stable}(\alpha)) = \infty\).
-Moreover, since the chi-square test for variance and the <a href="https://en.wikipedia.org/wiki/F-test#Regression_problems">F-test for regression</a> depend on the convergence to the chi-square distribution, they cease to work for the Taiwan and U.S. stock markets.
-To use similar conventional statistical tests that rely on the gaussian distribution, we need precise measurements on the differences between the true distribution and the gaussian under the same sample size.
 </p>
 <p>
-One such quantitative metric to measure the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1d"><a href="#cite_note-1">[1d]</a></sup>).
+We see that the fitted tail indices are smaller than 3, which explains why the 3rd and 4th moments in the MS plots never converge.
+With a tail index \(\alpha\) less than 4, the sample variance \(\frac{1}{n}\sum X_{i}^{2}\) converges to \(\frac{1}{n^{1-\frac{2}{\alpha}}}\left(\text{log}(n)\right)^{\frac{2}{\alpha}} \text{Stable}(\frac{\alpha}{2})\) with \(\frac{\alpha}{2} < 2\), instead of the <a href="https://en.wikipedia.org/wiki/Variance#Distribution_of_the_sample_variance">chi-square distribution</a>.
+Since \(n^{1-\frac{2}{\alpha}}\) is slower than \(\sqrt{n}\), which is the convergence speed provided by the Central Limit Theorem, the <a href="https://en.wikipedia.org/wiki/F-test_of_equality_of_variances#Properties">chi-square test</a> for variance and the <a href="https://en.wikipedia.org/wiki/F-test#Regression_problems">Goodness of fit test</a> for linear regression give dangerously misleading confidence intervals for the Taiwan and U.S. stock markets<sup id="foot_ref-3"><a href="#foot_note-3">3</a></sup>.
+</p>
+<p>
+A quantitative metric that measures the convergence speed of the Central Limit Theorem is the \(\kappa\) metric introduced by Nassim Taleb (Equation 8.1 <sup id="cite_ref-1d"><a href="#cite_note-1">[1d]</a></sup>).
 Let \(\mathbb{M}(n) = \mathbb{E}(\left| S_{n} - \mathbb{E}(S_{n}) \right|)\) be the mean absolute deviation for \(n\) summands, define
 $$\displaylines{
 \kappa(n_{0}, n) = 2 - \frac{\text{log}(\frac{n}{n_{0}})}{\text{log}(\frac{\text{min}\left\{ \mathbb{M}(i),\space i\ge n \right\} }{\mathbb{M}(n_{0})})}
@@ -209,12 +209,114 @@ In other words, we would observe a single spot of bright light at position \(n\c
 However, a completely dark wall is completely nonsensical in physics.
 The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
 
+<h2>Power laws are more common than the gaussian in the sample size limit \(n\to \infty\)</h2>
+<p>
+Many fields are interested in quantities outside of the sum of random variables \(X_{1}+X{2}+\cdots +X{n}\).
+For example, hydrology is focused on the maxima of random variables \(\text{max}\left( X_{1}, X{2}, \cdots , X{n} \right)\) where \(X_{i}\) represents the flood level.
+The insurance industry is concerned with the mean excess function \(E\left( X-u | X>u \right)\) which can be interpreted as the expected claim size.
+The mean excess function is also called mean residual life in a reliability or medical context.
+For these quantities, We have the following limit laws:
+<ul>
+  <li>
+    Generalized Central Limit Theorem:
+    $$\displaylines{
+    X_{1}+X_{2}+\cdots +X_{n} \underset{n\to\infty}{=} Stable(\alpha) \underset{x\to\infty}{\sim} \begin{cases}
+    \frac{1}{x^{1+\alpha}} & ,\space X \sim \frac{1}{x^{1+\alpha}},\space 0 < \alpha < 2 \\
+    Gaussian & ,\space others \\
+    \end{cases}
+    }$$
+  </li>
+  <li>
+    Fisher–Tippett–Gnedenko Theorem (Definition 3.4.1, Embrechts<sup id="cite_ref-2a"><a href="#cite_note-2">[2a]</a></sup>):
+    $$\displaylines{
+    \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) \underset{n\to\infty}{=} GEV \underset{x\to\infty}{\sim} \begin{cases}
+    \frac{1}{x^{1+\alpha}} & ,\space X \sim \frac{1}{x^{1+\alpha}},\space \alpha< \infty \\
+    e^{-x} & ,\space \alpha = \infty \\
+    \end{cases}
+    }$$
+    <p>
+    where GEV is the Generalized Extreme Value distribution.
+    </p>
+  </li>
+  <li>
+    Pickands–Balkema–De Haan Theorem:
+    $$\displaylines{
+    E\left( X-u | X>u \right) \underset{u\to\infty}{=} GPD \space \begin{cases}
+    \frac{1}{x^{1+\alpha}} & ,\space X \sim \frac{1}{x^{1+\alpha}},\space \alpha< \infty \\
+    e^{-x} & ,\space \alpha = \infty \\
+    \end{cases}
+    }$$
+    where GPD is the Generalized Pareto Distribution.
+    Note that the GPD is different from the GEV, though their behaviour are the same as \(x \to \infty\).
+  </li>
+</ul>
+In the above theorems, \(\space X \sim \frac{1}{x^{1+\alpha}}\) means the survival function \(\overline{F}(x) = \frac{1}{x^{\alpha}}L(x)\) where \(L(x)\) is slowly varying.
+The definition of slowly varying is \(\underset{n\to \infty}{lin}\frac{L(tx)}{L(x)}=1\) for all \(t > 0\).
+</p>
+
+<p>
+Robust statistics is not robust, median 
+empirical distribution is not empirical.
+Statistics is never standard
+</p>
+
 <hr>
 <ol>
   <li id="foot_note-1">
     <b><a href="#foot_ref-1">^</a></b>
     We use 20 day returns for the Taiwan stock market, as opposed to the 1 day in Chapter 10 of Taleb<sup id="cite_ref-1e"><a href="#cite_note-1">[1e]</a></sup>.
     The reason is because Taiwan's 1 day return distribution is not a Pareto, due to the market regulation of capping daily stock price fluctuations at 7%.
+  </li>
+  <li id="foot_note-2">
+    <b><a href="#foot_ref-2">^</a></b>
+    The Zipf plot shows a necessary but not sufficient condition for fat tails.
+    Therefore, we complement the analysis with a mean excess function plot (ME plot).
+    The mean excess function is defined as \(e(u) = E(X-u|X>u)\), which captures the idea of \(X\)'s expected excess beyond some threshold \(u\), given that \(X > u\).
+    It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2z"><a href="#cite_note-2">[2z]</a></sup>).
+    Below we show \(e(u)\) for some classical distributions:
+    <div style="text-align: center;"><img src="me.png"></div>
+    Below we show the ME plots for both the Taiwan and U.S. stock markets:
+    <div style="text-align: center;"><img src="me_taiex.png"></div>
+    <div style="text-align: center;"><img src="me_sp500.png"></div>
+    Since there is undoubtedly an upward trend, it is clear that both data belong to the subexponential class and have fat tails.
+    To further ascertain that we have a true pareto tail, and not just a log-normal with large variance, we employ the Discriminant Moment-ratio plot<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup> shown below:
+   <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="moment_ratio_taiex.png" style="max-width: 50%;"/><img src="moment_ratio.png" style="max-width: 50%;"/></div>
+    Given that both the Taiwan and U.S. stock market data lie squarely in the Pareto region, we can confidently rule out the possibility of the Log-normal distribution.
+  </li>
+  <li id="foot_note-3">
+    <p>
+    <b><a href="#foot_ref-3">^</a></b>
+    Here we numerically show how far off the Central Limit Theorem estimates are for the variance of Taiwan's stock market TAIEX.
+    The sample size of TAIEX is 777, and is sampled from the \(\text{Pareto}(2.39)\) distribution.
+    If we blindly conduct the standard chi-square test for variance at upper significance level of 5%, we get an upper confidence limit of \(\text{inverse-CDF}\left( \frac{\chi^{2}(777-1)}{777-1}, 0.05 \right) = \text{scipy.stats.ppf(1-0.05, 776)/776} = 1.0849\).
+    Such a tight confidence interval of 8% may lead to the erroneous belief that our sample size of 777 is sufficient.
+    This can also be seen in the below Monte Carlo results:
+    </p>
+    <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_gaussian.png" style="max-width: 50%;"/><img src="var_gaussian_loglog.png" style="max-width: 50%;"/></div>
+    <p>
+    Next, we turn to the true distribution \(\text{Pareto}(2.39)\) whose results are shown below:
+    </p>
+    <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_pareto.png" style="max-width: 50%;"/><img src="var_pareto_loglog.png" style="max-width: 50%;"/></div>
+    <p>
+    We see that the confidence interval now becomes 85% of our variance estimate.
+    Moreover, since the mode is at 0.5, we have a high probability of underestimating the true variance.
+    These issues are due to the power law fat tail present in the above graph even at a sample size of 777.
+    The below graph shows that even a million samples retain a 30% uncertainty in our estimate:
+    </p>
+    <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_pareto_1000000.png" style="max-width: 50%;"/><img src="var_pareto_1000000_loglog.png" style="max-width: 50%;"/></div>
+    <p>
+    To conclude, tests involving the square of a random variable \(X^{2}\) in the numerator are dangerous to perform on distributions that lack the 4th moment, which include the majority of real world data.
+    This means standard statistical concepts such as covariance \(\sum_{i}(x_{i}-\overline{x_{i}})(y_{i}-\overline{y_{i}})\), as well as the \(R^{2}\) coefficient for linear regression \(R^{2}=1-\frac{\sum_{i}\left( y_{i}-(ax_{i}+b) \right)^{2}}{\sum_{i}\left(y_{i}-\overline{y_{i}}\right)^{2}}\) are much less useful than they are advertised.
+    </p>
+  </li>
+  <li id="foot_note-4">
+    <b><a href="#foot_ref-4">^</a></b>
+    $$\displaylines{
+    \begin{aligned}
+    \int_{x+y>L,\space x>1,\space y>1}^{\infty}f(x)f(y)dxdy =\space & abc \\
+    =\space & \int_{L}^{\infty}f(x)dx+\int_{L}^{\infty}f(y)dy +\int_{0}^{L-\frac{1}{\sqrt(2)}}\int_{L}^{2L}f(u+v)f(u-v)dudv - \int_{L}^{\infty}\int_{L}^{\infty}f(x)f(y)dxdy
+    \end{aligned}
+    }$$
   </li>
 </ol>
 
@@ -227,6 +329,15 @@ The only way out of this paradox is to conclude that the mean of the Cauchy dist
     <b><a href="#cite_ref-1d">d</a></b>
     <b><a href="#cite_ref-1e">e</a></b>
     Nassim Nicholas Taleb, Statistical Consequences of Fat Tails: Real World Preasymptotics, Epistemology, and Applications<a href="https://arxiv.org/abs/2001.10488">arXiv:2001.10488</a>
+  </li>
+  <li id="cite_note-2">
+    ^ <b><a href="#cite_ref-2a">a</a></b>
+    <b><a href="#cite_ref-2z">b</a></b>
+    Modelling Extremal Events: for Insurance and Finance, Paul Embrechts, Claudia Klüppelberg, Thomas Mikosch, <a href="https://link.springer.com/book/10.1007/978-3-642-33483-2">Springer</a>
+  </li>
+  <li id="cite_note-3">
+    <b><a href="#cite_ref-3">^</a></b>
+    Are your data really Pareto distributed?, Pasquale Cirillo, <a href="https://arxiv.org/abs/1306.0100">arXiv:1306.0100</a>
   </li>
 </ol>
 
