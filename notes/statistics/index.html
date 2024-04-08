@@ -250,21 +250,58 @@ For these quantities, We have the following limit laws:
     Note that the GPD is different from the GEV, though their behaviour are the same as \(x \to \infty\).
   </li>
 </ul>
-In the above theorems, \(\space X \sim \frac{1}{x^{1+\alpha}}\) means the survival function \(\overline{F}(x) = \frac{1}{x^{\alpha}}L(x)\) where \(L(x)\) is slowly varying.
-The definition of slowly varying is \(\underset{n\to \infty}{lin}\frac{L(tx)}{L(x)}=1\) for all \(t > 0\).
-</p>
-
-<p>
-Robust statistics is not robust, median 
-empirical distribution is not empirical.
-Statistics is never standard
+The fat tails of the Pareto distribution have the following properties:
+<ul>
+  <li>
+    \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t>0\)<sup id="foot_ref-4"><a href="#foot_note-4">4</a></sup>, in other words if we observed some high level quantity in the past, the probability that we observe any higher level is 1.
+  </li>
+  <li>
+    \(P\left( X_{1}+X_{2}+\cdots X_{n} > x\right)=P\left( \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) > x \right)\)<sup id="foot_ref-5"><a href="#foot_note-5">5</a></sup>, thus if we see a sum of events exceeding some high level, it is always due to one particular catastrophy.
+  </li>
+  <li>
+    \(E\left( X-u|X>u \right)=\frac{1}{\alpha}\cdot u\), where \(\alpha\) is the tail index<sup id="foot_ref-6"><a href="#foot_note-6">6</a></sup>.
+    This means it is impossible to hedge against a disaster by an insurance policy that pays only a predetermined fixed amount, since the shortfall is always larger than 0.
+  </li>
+</ul>
+We borrow Taleb's words to summarize this section:
+<ul>
+  <li>
+    Robust statistics is not robust.
+    <a href="https://en.wikipedia.org/wiki/Robust_statistics">Robust statistics</a> shoots for methods that don't change in response of a tail event, such as the trimmed mean or winsorization.
+    We now know that the one of two outlier events such as the 1987 U.S. stock market crash hold the key to truly understanding our data.
+  </li>
+  <li>
+    The empirical distribution is not empirical.
+    One aspect of this concept is that future maxima are poorly tracked by past data without some intelligent extrapolation.
+    Another aspect is the conflation between the true expected payoff above some threshold \(K\), with the naive multiplication of the impact at \(K\) and the probability of exceeding \(K\)<sup id="cite_ref-1e"><a href="#cite_note-1">[1e]</a></sup>.
+    In mathematical terms, let \(f\) be a probability density function, and \(g\) be an impact function. The true expected payoff above \(K\), \(I_{1}\) is:
+    $$\displaylines{
+    I_{1} = \int_{K}^{\infty}g(x)f(x)dx
+    }$$
+    The misleading payoff \(I_{2}\) is:
+    $$\displaylines{
+    I_{2} = g(K)\int_{K}^{\infty}f(x)dx
+    }$$
+    For \(g\) that is monotically increasing, \(I_{1}=I_{2}\) only under thin tails, not fat tails.
+    One example of this confusion is Bill Gates' complaint about the media spending over 30% of their coverage on terrorism, which actually causes only 0.01% of deaths statistically (section 3.6 Taleb<sup id="cite_ref-1f"><a href="#cite_note-1">[1f]</a></sup>).
+    <div style="text-align: center;"><img src="causesofdeath.jpeg"></div>
+    In this case the payoff is simply \(g(x)=x\), and according to Taleb the tail index of wars is \(\alpha=0.53\).
+    Since the mean of \(\frac{1}{x^{1+0.53}}\) is \(\infty\), the difference between \(I_{1}\) and \(I_{2}\) is infinity.
+  </li>
+  <li>
+    Statistics is never standard.
+    The convergence speed of the Central Limit Theorem is often ignored in statistical discussions.
+    Unfortunately, such ignorance leads to significant gaps between the true and calculated values for important quantities such as the Value at risk (VaR) of a portfolio, or the Gini coefficient for economic inequality.
+    In general, the scientific way to handle fat-tailed data is to first estimate its tail index, then do inference based on the resulting Pareto model.
+  </li>
+</ul>
 </p>
 
 <hr>
 <ol>
   <li id="foot_note-1">
     <b><a href="#foot_ref-1">^</a></b>
-    We use 20 day returns for the Taiwan stock market, as opposed to the 1 day in Chapter 10 of Taleb<sup id="cite_ref-1e"><a href="#cite_note-1">[1e]</a></sup>.
+    We use 20 day returns for the Taiwan stock market, as opposed to the 1 day in Chapter 10 of Taleb<sup id="cite_ref-1g"><a href="#cite_note-1">[1g]</a></sup>.
     The reason is because Taiwan's 1 day return distribution is not a Pareto, due to the market regulation of capping daily stock price fluctuations at 7%.
   </li>
   <li id="foot_note-2">
@@ -272,7 +309,7 @@ Statistics is never standard
     The Zipf plot shows a necessary but not sufficient condition for fat tails.
     Therefore, we complement the analysis with a mean excess function plot (ME plot).
     The mean excess function is defined as \(e(u) = E(X-u|X>u)\), which captures the idea of \(X\)'s expected excess beyond some threshold \(u\), given that \(X > u\).
-    It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2z"><a href="#cite_note-2">[2z]</a></sup>).
+    It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2b"><a href="#cite_note-2">[2b]</a></sup>).
     Below we show \(e(u)\) for some classical distributions:
     <div style="text-align: center;"><img src="me.png"></div>
     Below we show the ME plots for both the Taiwan and U.S. stock markets:
@@ -311,12 +348,49 @@ Statistics is never standard
   </li>
   <li id="foot_note-4">
     <b><a href="#foot_ref-4">^</a></b>
+    We note that from Equation 3.45, Embrechts<sup id="cite_ref-2c"><a href="#cite_note-2">[2c]</a></sup>:
+    $$\displaylines{
+    P\left( x>u+t | x>u \right)=\begin{cases}
+    \left( 1 + \frac{1}{\alpha}\cdot \frac{t}{e(u)} \right)^{-\alpha} & ,\space \alpha<\infty \\
+    e^{-\frac{t}{e(u)}} & ,\space \alpha=\infty
+    \end{cases}
+    }$$
+    where \(e(u)\) is the mean excess function.
+    For the subexponential class, \(\underset{u\to \infty}{lim}e(u)=\infty\). Therefore, \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t\).
+    Another derivation can be found in Lemma 1.3.5, Embrechts<sup id="cite_ref-2d"><a href="#cite_note-2">[2d]</a></sup>.
+  </li>
+  <li id="foot_note-5">
+    <b><a href="#foot_ref-5">^</a></b>
+    Here we prove that \(P\left( X_{1}+X_{2}+\cdots X_{n} > x\right) = P\left( \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) > x \right)\) as \(x\to \infty\) for the Pareto distribution \(\frac{\alpha}{x^{1+\alpha}}\).
+    We focus on the case \(n=2\) as the general case follows by induction.
+    On the right hand side we have:
     $$\displaylines{
     \begin{aligned}
-    \int_{x+y>L,\space x>1,\space y>1}^{\infty}f(x)f(y)dxdy =\space & abc \\
-    =\space & \int_{L}^{\infty}f(x)dx+\int_{L}^{\infty}f(y)dy +\int_{0}^{L-\frac{1}{\sqrt(2)}}\int_{L}^{2L}f(u+v)f(u-v)dudv - \int_{L}^{\infty}\int_{L}^{\infty}f(x)f(y)dxdy
+    P\left( \text{max}\left( X, Y \right) > L \right) =\space & P\left( X > L \right) + P\left( Y > L \right) - P\left( X > L \wedge Y > L \right) \\
+    =\space & \int_{L}^{\infty}\frac{\alpha}{x^{1+\alpha}}dx + \int_{L}^{\infty}\frac{\alpha}{y^{1+\alpha}}dy - \int_{L}^{\infty}\int_{L}^{\infty}\frac{\alpha}{x^{1+\alpha}}\frac{\alpha}{y^{1+\alpha}}dxdy \\
+    =\space & \frac{1}{L^{\alpha}} + \frac{1}{L^{\alpha}} - \frac{1}{L^{2\alpha}} \\
+    =\space & 2\cdot \frac{1}{L^{\alpha}}
     \end{aligned}
     }$$
+    For the left hand side, we consult the below diagram:
+    <div style="text-align: center;"><img src="subexponential.svg"></div>
+    $$\displaylines{
+    \begin{aligned}
+    P\left( X+Y>L \right) =\space & 2\cdot \text{area}_{A} + \text{area}_{B} \\
+    =\space & 2\cdot \int_{1}^{\frac{L}{2}}\int_{L}^{\infty}\frac{\alpha}{\left( z-y \right)^{1+\alpha}}\frac{\alpha}{y^{1+\alpha}}dzdy+\frac{2^{2\alpha}}{L^{2\alpha}} \space,\space \text{where}\space z=x+y \\
+    =\space & 2\cdot \int_{1}^{\frac{L}{2}}\frac{1}{\left( L-y \right)^{\alpha}}\frac{\alpha}{y^{1+\alpha}}dy \\
+    =\space & 2\left[ \frac{1}{\left( L-y \right)^{\alpha}}\left( -\frac{1}{y^{\alpha}} \right) \bigg\rvert_{1}^{\frac{L}{2}} - \int_{1}^{\frac{L}{2}}\frac{\alpha}{\left( L-y \right)^{1+\alpha}}\left( -\frac{1}{y^{\alpha}} \right)dy \right] \text{, integration by parts} \\
+    =\space & 2\left[\frac{1}{\left( L-1 \right)^{\alpha}} - \frac{2^{2\alpha}}{L^{2\alpha}} + \int_{1}^{\frac{L}{2}}\frac{\alpha}{\left( L-y \right)^{1+\alpha}}\frac{1}{y^{\alpha}}dy \right] \\
+    <\space & 2\left( \frac{1}{\left( L-1 \right)^{\alpha}} - \frac{2^{2\alpha}}{L^{2\alpha}} \right) \space,\space \text{since the last term is a positive number} \\
+    =\space & 2\cdot \frac{1}{L^{\alpha}}
+    \end{aligned}
+    }$$
+    Since \(P\left( \text{max}\left( X, Y \right) > L \right) < P\left( X+Y>L \right)\) and \(P\left( \text{max}\left( X, Y \right) > L \right)=\frac{2}{L^{\alpha}}\), we get \(\frac{2}{L^{\alpha}} < P\left( X+Y>L \right) < \frac{2}{L^{\alpha}}\), which completes our proof.
+  </li>
+  <li id="foot_note-6">
+    <b><a href="#foot_ref-6">^</a></b>
+    For a derivation of the mean excess function of the Pareto distribution, see Eliazar<sup id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup>.
+    For a list of \(e(u)\) for some standard distributions, see Table 3.4.7 Embrechts<sup id="cite_ref-2e"><a href="#cite_note-2">[2e]</a></sup>.
   </li>
 </ol>
 
@@ -328,17 +402,48 @@ Statistics is never standard
     <b><a href="#cite_ref-1c">c</a></b>
     <b><a href="#cite_ref-1d">d</a></b>
     <b><a href="#cite_ref-1e">e</a></b>
-    Nassim Nicholas Taleb, Statistical Consequences of Fat Tails: Real World Preasymptotics, Epistemology, and Applications<a href="https://arxiv.org/abs/2001.10488">arXiv:2001.10488</a>
+    <b><a href="#cite_ref-1f">f</a></b>
+    <b><a href="#cite_ref-1g">g</a></b>
+    Nassim Nicholas Taleb, Statistical Consequences of Fat Tails: Real World Preasymptotics, Epistemology, and Applications, <a href="https://arxiv.org/abs/2001.10488">arXiv:2001.10488</a>
   </li>
   <li id="cite_note-2">
     ^ <b><a href="#cite_ref-2a">a</a></b>
-    <b><a href="#cite_ref-2z">b</a></b>
+    <b><a href="#cite_ref-2b">b</a></b>
+    <b><a href="#cite_ref-2c">c</a></b>
+    <b><a href="#cite_ref-2d">d</a></b>
+    <b><a href="#cite_ref-2e">e</a></b>
     Modelling Extremal Events: for Insurance and Finance, Paul Embrechts, Claudia Klüppelberg, Thomas Mikosch, <a href="https://link.springer.com/book/10.1007/978-3-642-33483-2">Springer</a>
   </li>
   <li id="cite_note-3">
     <b><a href="#cite_ref-3">^</a></b>
     Are your data really Pareto distributed?, Pasquale Cirillo, <a href="https://arxiv.org/abs/1306.0100">arXiv:1306.0100</a>
   </li>
+  <li id="cite_note-4">
+    <b><a href="#cite_ref-4">^</a></b>
+    Lindy's law, Iddo Eliazar, Physica A: Statistical Mechanics and its Applications
+  </li>
+</ol>
+
+    </div>
+
+    <script>
+function onWindowResizeContainer() {
+  const container = document.querySelector("#container");
+  if (document.body.clientWidth/document.body.clientHeight > 1024/768) {
+    container.style.width = "70%";
+  } else {
+    container.style.width = "100%";
+  }
+}
+
+function main() {
+  onWindowResizeContainer();
+}
+main();
+    </script>
+
+  </body>
+</html>
 </ol>
 
     </div>

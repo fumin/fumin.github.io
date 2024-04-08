@@ -1,0 +1,22 @@
+<svg width="320" height="240" xmlns="http://www.w3.org/2000/svg">
+ <rect width="100%" height="100%" fill="black"/>
+ <g>
+  <title>Layer 1</title>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="219.50001" x2="317.25009" y1="220" x1="2.24998" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="237.00001" x2="20" y1="0.49999" x1="20" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="237.00001" x2="170" y1="0.49999" x1="170" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="70" x2="317.25009" y1="70" x1="2.24998" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="218.50002" x2="169.75002" y1="70.49999" x1="19.74999" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="145" x2="317.25009" y1="145" x1="97.75001" stroke="#ffffff" fill="none"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_9" y2="144.99998" x2="97.49998" y1="0.49999" x1="97.49998" stroke="#ffffff" fill="none"/>
+  <rect opacity="0.5" id="svg_10" height="156.50006" width="231.00009" y="-10.50003" x="98.25001" stroke="#ffffff" fill="#619E73"/>
+  <path id="svg_12" d="m-122.13132,-74.04213l0.56913,0l0.17587,-0.54067l0.17587,0.54067l0.56913,0l-0.46044,0.33415l0.17588,0.54067l-0.46044,-0.33416l-0.46044,0.33416l0.17588,-0.54067l-0.46044,-0.33415z" stroke="#ffffff" fill="#619E73"/>
+  <path opacity="0.5" id="svg_13" d="m97.25001,145.00003l73.8771,73.85919l162.37297,2.14085l-1.0442,-74.9296" stroke="#ffffff" fill="#B8874D"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="36" stroke-width="0" id="svg_14" y="191.00004" x="215.75005" stroke="#ffffff" fill="#ffffff">A</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="36" stroke-width="0" id="svg_15" y="84.50002" x="215.75005" stroke="#ffffff" fill="#ffffff">B</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="18" stroke-width="0" id="svg_16" y="236.00006" x="172.25004" stroke="#ffffff" fill="#ffffff">x=L</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="18" stroke-width="0" id="svg_17" y="62.00001" x="45.25" stroke="#ffffff" fill="#ffffff">y=L</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="18" stroke-width="0" id="svg_18" y="163.00003" x="29.24999" stroke="#ffffff" fill="#ffffff">(L/2, L/2)</text>
+ </g>
+
+</svg>
