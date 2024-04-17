@@ -307,21 +307,21 @@ We borrow Taleb's words to summarize this section:
   <li id="foot_note-2">
     <b><a href="#foot_ref-2">^</a></b>
     Before fitting our data, it is important to check that our sample is indeed independent and identically distributed (i.i.d.).
-    Define a new record as a data point whose absolute value is larger than all previous data.
-    In this case, for i.i.d. random variables, the number of new records seen at time \(t\) is roughly \(log(t)\) (Equation 10.3, Taleb<sup id="cite_ref-1h"><a href="#cite_note-1">[1h]</a></sup>).
-    Below we see that this is indeed the case of the Taiwan and U.S. stock markets:
-    <div style="text-align: center;"><img src="record.png"></div>
-    Another signature of i.i.d. is that data points exceeding a high threshold form a Poisson process, and thus the inter-arrival times of these high values follow the exponential distribution (Example 6.5.9, Embrechts<sup id="cite_ref-2b"><a href="#cite_note-2">[2b]</a></sup>).
+    For i.i.d. data, events exceeding a high threshold form a Poisson process, and thus the inter-arrival times of these high values follow the exponential distribution (Example 6.5.9, Embrechts<sup id="cite_ref-2b"><a href="#cite_note-2">[2b]</a></sup>).
     The left plot below shows that this is indeed the case for the Taiwan stock market.
     The right plot below further confirms that these inter-arrival times are mutually independent.
+    <p>
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="interarrival_qq_taiex.png" style="max-width: 50%;"/><img src="interarrival_acf_taiex.png" style="max-width: 50%;"/></div>
+    </p>
     For the U.S. stock market, the below plots show that the independent Poisson process assumption holds:
+    <p>
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="interarrival_qq_sp500.png" style="max-width: 50%;"/><img src="interarrival_acf_sp500.png" style="max-width: 50%;"/></div>
+    </p>
   </li>
   <li id="foot_note-3">
     <b><a href="#foot_ref-3">^</a></b>
     The Zipf plot shows a necessary but not sufficient condition for fat tails.
-    Therefore, we complement the analysis with a mean excess function plot (ME plot).
+    Therefore, we complement the analysis with a mean excess function plot (ME plot)<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup>.
     The mean excess function is defined as \(e(u) = E(X-u|X>u)\), which captures the idea of \(X\)'s expected excess beyond some threshold \(u\), given that \(X > u\).
     It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2c"><a href="#cite_note-2">[2c]</a></sup>).
     Below we show \(e(u)\) for some classical distributions:
@@ -330,9 +330,6 @@ We borrow Taleb's words to summarize this section:
     <div style="text-align: center;"><img src="me_taiex.png"></div>
     <div style="text-align: center;"><img src="me_sp500.png"></div>
     Since there is undoubtedly an upward trend, it is clear that both data belong to the subexponential class and have fat tails.
-    To further ascertain that we have a true pareto tail, and not just a log-normal with large variance, we employ the Discriminant Moment-ratio plot<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup> shown below:
-   <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="moment_ratio_taiex.png" style="max-width: 50%;"/><img src="moment_ratio.png" style="max-width: 50%;"/></div>
-    Given that both the Taiwan and U.S. stock market data lie squarely in the Pareto region, we can confidently rule out the possibility of the Log-normal distribution.
   </li>
   <li id="foot_note-4">
     <p>
@@ -418,7 +415,6 @@ We borrow Taleb's words to summarize this section:
     <b><a href="#cite_ref-1e">e</a></b>
     <b><a href="#cite_ref-1f">f</a></b>
     <b><a href="#cite_ref-1g">g</a></b>
-    <b><a href="#cite_ref-1h">h</a></b>
     Nassim Nicholas Taleb, Statistical Consequences of Fat Tails: Real World Preasymptotics, Epistemology, and Applications, <a href="https://arxiv.org/abs/2001.10488">arXiv:2001.10488</a>
   </li>
   <li id="cite_note-2">
