@@ -93,16 +93,15 @@ This behaviour is observed for the Gaussian distribution, but not for both the T
     <td>\(|X|^{4}\) Max-to-Sum</td>
   </tr></thead>
   <tbody>
-    <tr><td>Taiwan stock index (TAIEX)</td><td>311 (58 years)</td><td>0.26</td></tr>
-    <tr><td>S&amp;P 500</td><td>347 (69 years)</td><td>0.21</td></tr>
-    <tr><td>Gaussian with same σ as TAIEX</td><td>311</td><td>0.08</td></tr>
+    <tr><td>Taiwan stock index (TAIEX)</td><td>915 (58 yrs)</td><td>0.22</td></tr>
+    <tr><td>S&amp;P 500</td><td>1020 (69 yrs)</td><td>0.57</td></tr>
+    <tr><td>Gaussian with same σ as TAIEX</td><td>915</td><td>0.04</td></tr>
     <tr><td colspan="3" style="text-align: center;">Data below from Table 7.2 Taleb<sup id="cite_ref-1c"><a href="#cite_note-1">[1c]</a></sup></td></tr>
     <tr><td>Silver</td><td>46 years</td><td>0.94</td></tr>
     <tr><td>Crude Oil</td><td>26 years</td><td>0.79</td></tr>
-    <tr><td>Nikkei</td><td>23 years</td><td>0.72</td></tr>
     <tr><td>Yen/USD</td><td>38 years</td><td>0.27</td></tr>
-    <tr><td>Canadian Dollar</td><td>38 years</td><td>0.06</td></tr>
-    <tr><td>Copper</td><td>48 years</td><td>0.05</td></tr>
+    <tr><td>Jakarta Stock Index</td><td>16 years</td><td>0.19</td></tr>
+    <tr><td>Corn</td><td>49 years</td><td>0.18</td></tr>
   </tbody>
 </table>
 </p>
@@ -181,9 +180,9 @@ For the pareto distribution, we have the following values for \(\kappa(n)\):
 <p>
 For the Taiwan stock index, we have \(n_{\nu}=15555\) daily samples, sample mean \(\overline{x}=0.00015\), sample standard deviation \(s=0.00624\).
 Setting the null hypothesis to \(\mu=0\), the naive t-statistic is \(\frac{\overline{x}-\mu}{\frac{s}{\sqrt{n_{\nu}}}}=3.01\), which is above the 5% critical value of 1.96.
-However, since the Taiwan stock index has a tail index of \(\alpha=2.04\), the true gaussian degrees of freedom with a deviation that is equal to \(\text{Pareto}(2.04)\) is actually \(n_{g}=n_{\nu}^{\frac{2-2\kappa_{\alpha}(n_{\nu})}{2-\kappa_{\alpha}(n_{\nu})}}\).
-From <a href="#table-1">Table 1</a>, we see that \(\kappa_{2.04}(15555)\simeq 0.348\).
-This means the true equivalent gaussian sample size is \(n_{g}=15555^{\frac{2-2*0.348}{2-0.348}}=2036\), and the true t-statistic is 1.08, which is not significant.
+However, since the Taiwan stock index has a tail index of \(\alpha=2.63\), the true gaussian degrees of freedom with a deviation that is equal to \(\text{Pareto}(2.63)\) is actually \(n_{g}=n_{\nu}^{\frac{2-2\kappa_{\alpha}(n_{\nu})}{2-\kappa_{\alpha}(n_{\nu})}}\).
+From <a href="#table-1">Table 1</a>, we see that \(\kappa_{2.63}(15555)\simeq 0.2\).
+This means the true equivalent gaussian sample size is \(n_{g}=15555^{\frac{2-2*0.2}{2-0.2}}=5323\), and the true t-statistic is 1.75, which is not significant.
 Therefore, when using the Central Limit Theorem correctly, even with 58 years of data, it remains inconclusive whether the Taiwan stock market has a non-zero return.
 </p>
 <p>
@@ -301,7 +300,7 @@ We borrow Taleb's words to summarize this section:
 <ol>
   <li id="foot_note-1">
     <b><a href="#foot_ref-1">^</a></b>
-    We use 50 day returns for the Taiwan stock market, as opposed to the 1 day in Chapter 10 of Taleb<sup id="cite_ref-1g"><a href="#cite_note-1">[1g]</a></sup>.
+    We use 17 day returns for the Taiwan stock market, as opposed to the 1 day in Chapter 10 of Taleb<sup id="cite_ref-1g"><a href="#cite_note-1">[1g]</a></sup>.
     The reason is because Taiwan's 1 day return distribution is not a Pareto, due to the market regulation of capping daily stock price fluctuations at 7%.
   </li>
   <li id="foot_note-2">
@@ -335,21 +334,21 @@ We borrow Taleb's words to summarize this section:
     <p>
     <b><a href="#foot_ref-4">^</a></b>
     Here we numerically show how far off the Central Limit Theorem estimates are for the variance of Taiwan's stock market TAIEX.
-    The sample size of TAIEX is 311, and is sampled from the \(\text{Pareto}(2.04)\) distribution.
-    If we blindly conduct the standard chi-square test for variance at upper significance level of 5%, we get an upper confidence limit of \(\text{inverse-CDF}\left( \frac{\chi^{2}(311-1)}{311-1}, 0.05 \right) =\) <code>scipy.stats.chi2.ppf(1-0.05, 310)/310 = 1.1357</code>.
-    Henceforth, we might erroneously believe that 95% percent of the time, our sample estimate would deviate from the true variance by only 13%, implying that our sample size of 311 is sufficient.
+    The sample size of TAIEX is 915, and is sampled from the \(\text{Pareto}(2.63)\) distribution.
+    If we blindly conduct the standard chi-square test for variance at upper significance level of 5%, we get an upper confidence limit of \(\text{inverse-CDF}\left( \frac{\chi^{2}(311-1)}{311-1}, 0.05 \right) =\) <code>scipy.stats.chi2.ppf(1-0.05, 914)/914 = 1.0782</code>.
+    Henceforth, we might erroneously believe that 95% percent of the time, our sample estimate would deviate from the true variance by only 8%, implying that our sample size of 915 is sufficient.
     This can also be seen in the below Monte Carlo results for Gaussians:
     </p>
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_gaussian.png" style="max-width: 50%;"/><img src="var_gaussian_loglog.png" style="max-width: 50%;"/></div>
     <p>
-    However, in reality under the true distribution \(\text{Pareto}(2.04)\), our sample woule be totally unrepresentaive of the population as shown below:
+    However, in reality under the true distribution \(\text{Pareto}(2.63)\), the situation is drastically different as shown below:
     </p>
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_pareto.png" style="max-width: 50%;"/><img src="var_pareto_loglog.png" style="max-width: 50%;"/></div>
     <p>
-    We see that the <a href="https://en.wikipedia.org/wiki/Mode_(statistics)">mode</a> is less than 0.1, and the 95% percentile is at 0.4.
-    This means we are likely to underestimate the true variance by 10x, and 95% of the time the true variance is at least double that of our estimate.
-    Moreover, we observe that the these issues are due to the power law fat tail that are not attenuated even at a sample size of 311.
-    The below graph shows that even with a million samples, we will still be underestimating 95% of the time:
+    We see that the <a href="https://en.wikipedia.org/wiki/Mode_(statistics)">mode</a> is around 0.5, and the 95% percentile is at 1.9.
+    This means we are likely to underestimate the true variance by half, and our confidence interval is as large as 190%.
+    Moreover, we observe that the these issues are due to the power law fat tail that is not attenuated even at a sample size of 915.
+    The below graph shows that even with a million samples, we will still be unable to give confidence intervals that are as tight as the standard chi-square test:
     </p>
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="var_pareto_1000000.png" style="max-width: 50%;"/><img src="var_pareto_1000000_loglog.png" style="max-width: 50%;"/></div>
     <p>
