@@ -319,8 +319,10 @@ We borrow Taleb's words to summarize this section:
     <div style="text-align: center;"><img src="record_perm.png"></div>
     </p>
     <p>
-    On the time domain side, for i.i.d. data, events exceeding a high threshold form a <a href="https://en.wikipedia.org/wiki/Poisson_point_process">Poisson process</a>.
-    Therefore, the inter-arrival times of these high values follow the exponential distribution (Example 6.5.9, Embrechts<sup id="cite_ref-2b"><a href="#cite_note-2">[2b]</a></sup>).
+    Since we are focused on the tails, our actual sample is only a subset of our data consisting of only values exceeding some threshold.
+    We want to make sure this subset is also i.i.d.
+    According to Theorem 5.3.2, Embrechts<sup id="cite_ref-2b"><a href="#cite_note-2">[2b]</a></sup>, the key to achieving i.i.d. is in choosing a sufficiently high threshold, such that points above this threshold form a <a href="https://en.wikipedia.org/wiki/Poisson_point_process">Poisson process</a>.
+    In this case, the inter-arrival times of these high values follow the exponential distribution (Example 6.5.9, Embrechts<sup id="cite_ref-2c"><a href="#cite_note-2">[2c]</a></sup>).
     The left plot below shows that this is indeed the case for the Taiwan stock market.
     The right plot below further confirms that these inter-arrival times are mutually independent.
     <div style="text-align: center; position: relative; left: -10vw; width: 90vw;"><img src="interarrival_qq_taiex.png" style="max-width: 50%;"/><img src="interarrival_acf_taiex.png" style="max-width: 50%;"/></div>
@@ -337,7 +339,7 @@ We borrow Taleb's words to summarize this section:
     The Zipf plot shows a necessary but not sufficient condition for fat tails.
     Therefore, we complement the analysis with a mean excess function plot (ME plot)<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup>.
     The mean excess function is defined as \(e(u) = E(X-u|X>u)\), which captures the idea of \(X\)'s expected excess beyond some threshold \(u\), given that \(X > u\).
-    It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2c"><a href="#cite_note-2">[2c]</a></sup>).
+    It is most useful for identifying the subexponential family of distributions, since they are the only class of distributions where \(\underset{u\to \infty}{lim}e(u) = \infty\) (Equation 6.5<sup id="cite_ref-2d"><a href="#cite_note-2">[2d]</a></sup>).
     Below we show \(e(u)\) for some classical distributions:
     <div style="text-align: center;"><img src="me.png"></div>
     Below we show the ME plots for both the Taiwan and U.S. stock markets:
@@ -373,7 +375,7 @@ We borrow Taleb's words to summarize this section:
   </li>
   <li id="foot_note-5">
     <b><a href="#foot_ref-5">^</a></b>
-    We note that from Equation 3.45, Embrechts<sup id="cite_ref-2d"><a href="#cite_note-2">[2d]</a></sup>:
+    We note that from Equation 3.45, Embrechts<sup id="cite_ref-2e"><a href="#cite_note-2">[2e]</a></sup>:
     $$\displaylines{
     P\left( x>u+t | x>u \right)=\begin{cases}
     \left( 1 + \frac{1}{\alpha}\cdot \frac{t}{e(u)} \right)^{-\alpha} & ,\space \alpha<\infty \\
@@ -382,7 +384,7 @@ We borrow Taleb's words to summarize this section:
     }$$
     where \(e(u)\) is the mean excess function.
     For the subexponential class, \(\underset{u\to \infty}{lim}e(u)=\infty\). Therefore, \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t\).
-    Another derivation can be found in Lemma 1.3.5, Embrechts<sup id="cite_ref-2e"><a href="#cite_note-2">[2e]</a></sup>.
+    Another derivation can be found in Lemma 1.3.5, Embrechts<sup id="cite_ref-2f"><a href="#cite_note-2">[2f]</a></sup>.
   </li>
   <li id="foot_note-6">
     <b><a href="#foot_ref-6">^</a></b>
@@ -415,7 +417,7 @@ We borrow Taleb's words to summarize this section:
   <li id="foot_note-7">
     <b><a href="#foot_ref-7">^</a></b>
     For a derivation of the mean excess function of the Pareto distribution, see Eliazar<sup id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup>.
-    For a list of \(e(u)\) for some standard distributions, see Table 3.4.7 Embrechts<sup id="cite_ref-2f"><a href="#cite_note-2">[2f]</a></sup>.
+    For a list of \(e(u)\) for some standard distributions, see Table 3.4.7 Embrechts<sup id="cite_ref-2g"><a href="#cite_note-2">[2g]</a></sup>.
   </li>
 </ol>
 
@@ -439,6 +441,7 @@ We borrow Taleb's words to summarize this section:
     <b><a href="#cite_ref-2d">d</a></b>
     <b><a href="#cite_ref-2e">e</a></b>
     <b><a href="#cite_ref-2f">f</a></b>
+    <b><a href="#cite_ref-2g">f</a></b>
     Modelling Extremal Events: for Insurance and Finance, Paul Embrechts, Claudia Klüppelberg, Thomas Mikosch, <a href="https://link.springer.com/book/10.1007/978-3-642-33483-2">Springer</a>
   </li>
   <li id="cite_note-3">
