@@ -296,6 +296,71 @@ We borrow Taleb's words to summarize this section:
 </ul>
 </p>
 
+<h2>Causal questions can never be answered from data and statistics alone</h2>
+<p>
+<a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson's paradox</a> states that statistical results that appear within groups can disappear or reverse itself when the groups are combined.
+Moreover, whether to trust the partitioned or combined data depends on the causal structure giving rise to the data.
+</p>
+<p>
+The below graph<sup id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup> describes different scenarios regarding the question, "does treatment lead to recovery?", which is of a causal nature.
+<div style="text-align: center;"><img src="treatment_recovery.png"></div>
+</p>
+<ul>
+	<li>
+In case (a) above, patients that are prescribed treatment are sampled according to the gender distribution in the population.
+Since the recovery from the disease is also gender dependent, gender is a confounding variable, and thus when comparing the with treatment and without treatment data, we should look at the partitioned results.
+	</li>
+	<li>
+However, in case (b) above, since blood pressure is a side effect of the treatment, we may see that under the healthy low blood pressure group, all patients received treatment, and there are 0 patients that were not treated, rendering it impossible to do a comparison.
+In this case, we should look at the combined results.
+	</li>
+</ul>
+<p>
+A systematic way to decide whether to trust the partitioned or combined results is to apply the backdoor criterion<sup id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup>.
+First, some definitions:
+<ul>
+	<li>
+		A path that connects X to Y is a <i>backdoor path</i> from X to Y if it has an arrowhead pointing to X.
+	</li>
+	<li>
+		X is a <i>collider</i> on a path if the path enters and exits X both through arrowheads.
+	</li>
+	<li>
+		A path is <i>blocked</i> by X if
+		<ul>
+			<li>X is conditioned on, when X is an ordinary node</li>
+			<li>X is <em>not</em> conditioned on, when X is a collider </li>
+		</ul>
+	</li>
+</ul>
+With these definitions, the backdoor criterion states:
+</p>
+<p>
+A set of conditioned nodes \(S\) is sufficient for measuing the total effect of X to Y if:
+<ul>
+	<li>
+		Every unblocked backdoor path from X to Y is intercepted by a node in S
+	</li>
+	<li>
+		For every collider in S, S must also contain a non-collider along that collider's path
+	</li>
+</ul>
+</p>
+<p>
+Case (c) in the above graph illustrates a collider scenario.
+\(L_{1}\) is a health-conscious personality (more physically healthy, more visits to the doctor).
+\(L_{2}\) is a pre-cancer lesion that affects recovery.
+\(Z\) is a diagnostic test for pre-cancer.
+In this case, the backdoor path \(X\gets \circ\to  Z\gets \circ \to  Y\) is blocked when \(Z\) is <em>not</em> conditioned on, since \(Z\) is a collider.
+In other words, the combined results should be used.
+</p>
+<p>
+For case (d), \(Z\) should be conditioned on.
+<div style="text-align: center;"><img src="treatment_e.png"></div>
+For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\left\{ L_{1}, Z \right\}\) or \(\left\{L_{2}, Z \right\}\).
+</p>
+
+
 <hr>
 <ol>
   <li id="foot_note-1">
@@ -451,6 +516,14 @@ We borrow Taleb's words to summarize this section:
   <li id="cite_note-4">
     <b><a href="#cite_ref-4">^</a></b>
     Lindy's law, Iddo Eliazar, Physica A: Statistical Mechanics and its Applications
+  </li>
+  <li id="cite_note-5">
+    <b><a href="#cite_ref-5">^</a></b>
+    Causal Diagrams for Epidemiologic Research, Greenland, Sander; Pearl, Judea; Robins, James M. (January 1999), Epidemiology, 10 (1): 37–48, <a href="https://sci-hub.ru/10.1097/00001648-199901000-00008">doi:10.1097/00001648-199901000-00008</a>
+  </li>
+  <li id="cite_note-6">
+    <b><a href="#cite_ref-6">^</a></b>
+    Understanding Simpson's Paradox, Judea Pearl, The American Statistician. 68 (1): 8–13, <a href="http://ftp.cs.ucla.edu/pub/stat_ser/r414-reprint.pdf">doi:10.2139/ssrn.2343788</a>
   </li>
 </ol>
 
