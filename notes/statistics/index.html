@@ -15,7 +15,7 @@ table {
     <div id="container" style="margin-left:auto; margin-right:auto;">
 <h1>Statistics</h1>
 
-<h2>Mean \(E(X)\) may not capture a problem's concern</h2>
+<h2 id="mean-not-capture">Mean \(E(X)\) may not capture a problem's concern &nbsp;<a href="#mean-not-capture">#</a></h2>
 <p>
 <q>
 Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For each HH in the sequence of flips, Alice gets a point; for each HT, Bob does, so e.g. for the sequence THHHT Alice gets 2 points and Bob gets 1 point. Who is most likely to win?
@@ -46,7 +46,7 @@ Flip a fair coin 100 times—it gives a sequence of heads (H) and tails (T). For
   </tbody>
 </table>
 
-<h2>Mean Deviation is more useful than Standard Deviation</h2>
+<h2 id="mean-deviation">Mean Deviation is more useful than Standard Deviation &nbsp;<a href="#mean-deviation">#</a></h2>
 <p>The classical argument regarding the Standard Deviation \(\sqrt{\frac{1}{n-1}\sum(x-\overline{x})^{2}}\) having an advantage over the Mean Absolute Deviation \(\frac{1}{n}\sum\left| x - \overline{x} \right|\) is a fragile one.
 It works only for the perfect Normal distribution and collapses at the slightest occurance of fat tails.
 In mathematical terms, the argument states that the statistical efficiency \(\frac{Var(X)}{E(X)^{2}}\) of the Standard Deviation is better than that of the Mean Deviation:</p>
@@ -73,7 +73,7 @@ Whenever the mean exists, MAD exists. The reverse (infinite MAD and finite STD) 
 Standard deviation, STD, should be left to mathematicians, physicists and mathematical statisticians deriving limit theorems.
 There is no scientific reason to use it in statistical investigations in the age of the computer.</p>
 
-<h2>The Central Limit Theorem does not apply to many real world problems with finite sample sizes</h2>
+<h2 id="central-limit">The Central Limit Theorem does not apply to many real world problems with finite sample sizes &nbsp;<a href="#central-limit">#</a></h2>
 <p>The Generalized Central Limit Theorem states that the sum of random variables \(S_{n} = X_{1}+X_{2}+\cdots +X_{n}\) converges to \(n\mu + n^{\frac{1}{\alpha}}\text{Stable}(\alpha)\) where \(\text{Stable}(\alpha)\) is the <a href="https://en.wikipedia.org/wiki/Stable_distribution">Stable distribution</a>, parameterized by the tail index \(\alpha\).
 Thus when \(\alpha > 1\), \(\underset{n\to \infty}{lim}\left( \frac{S_{n}}{n} - \mu \right) = n^{\frac{1}{\alpha}-1}  = 0\) and we get the Law of Large Numbers.
 The below graph (Fig 8.1<sup id="cite_ref-1a"><a href="#cite_note-1">[1a]</a></sup>) illustrates this phenomenon assuming \(X_{n}\) has been subtracted by the linear trend \(\mu\) leaving the random walk \(S_{n}\):
@@ -182,14 +182,14 @@ For the Taiwan stock index, we have \(n_{\nu}=15555\) daily samples, sample mean
 Setting the null hypothesis to \(\mu=0\), the naive t-statistic is \(\frac{\overline{x}-\mu}{\frac{s}{\sqrt{n_{\nu}}}}=3.01\), which is above the 5% critical value of 1.96.
 However, since the Taiwan stock index has a tail index of \(\alpha=2.51\), the true gaussian degrees of freedom with a deviation that is equal to \(\text{Pareto}(2.51)\) is actually \(n_{g}=n_{\nu}^{\frac{2-2\kappa_{\alpha}(n_{\nu})}{2-\kappa_{\alpha}(n_{\nu})}}\).
 From <a href="#table-1">Table 1</a>, we see that \(\kappa_{2.51}(15555)\simeq 0.231\).
-This means the true equivalent gaussian sample size is \(n_{g}=15555^{\frac{2-2*0.231}{2-0.231}}=4411\), and the true t-statistic is 1.60, which is not significant.
-Therefore, when using the Central Limit Theorem correctly, even with 58 years of data, it remains inconclusive whether the Taiwan stock market has a non-zero return.
+This means the true equivalent gaussian sample size is \(n_{g}=15555^{\frac{2-2*0.231}{2-0.231}}=4411\), and the true t-statistic is 1.60 (p-value 11%), which is not 5% significant.
+Therefore, when using the Central Limit Theorem correctly, even with 58 years of data, it remains inconclusive whether the Taiwan stock market has a non-zero return (such a conclusion actually takes at least 349 years of data<sup id="foot_ref-5"><a href="#foot_note-5">5</a></sup>).
 </p>
 <p>
 For the common 80/20 law which is \(\text{Pareto}(\text{log}_{4}(5))=\text{Pareto}(1.16)\), to get mean deviations equivalent to a 30 sample gaussian, the Central Limit Theorem would require a sample size of \(30^{\frac{1}{1-\kappa_{\text{Pareto}(1.16)}(30)}}=30^{\frac{1}{1-0.863}}=6\cdot 10^{10}\).
 </p>
 
-<h2>Physics might dictate that the mean \(E(X)\) be non-existent</h2>
+<h2 id="physics-mean">Physics might dictate that the mean \(E(X)\) be non-existent &nbsp;<a href="#physics-mean">#</a></h2>
 <p>Consider the intensity of a point light source on a vertical wall, as shown below:</p>
 <div style="text-align: center;"><img src="light.svg"></img></div>
 <p>The probability of \(\theta\) is the uniform distribution, and the distance between the light source and the wall is \(\ell\). We are interested in the distribution of \(x\). Since \(tan(\theta)=\frac{x}{\ell}\), the distribution is:</p>
@@ -200,7 +200,7 @@ P(X) =\space & 1 \cdot d\theta \\
 =\space & \frac{1}{\pi} \frac{\ell}{\ell^{2}+x^{2}}dx
 \end{aligned}
 }$$
-<p>which is the Cauchy distribution \(Cauchy(\ell)\). The Cauchy distribution has the property that the sum of two Cauchies is also a Cauchy, \(Cauchy(\ell_{1}) + Cauchy(\ell_{2}) = Cauchy(\ell_{1}+\ell_{2})\). This means we can view the distribution as a random walk by photons in small steps, known as the Huygens principle:</p>
+<p>which is the Cauchy distribution \(Cauchy(\ell)\). The Cauchy distribution, like all stable distributions, has the property that the sum of two independent Cauchies is also a Cauchy, \(Cauchy(\ell_{1}) + Cauchy(\ell_{2}) = Cauchy(\ell_{1}+\ell_{2})\). This means we can view the distribution as a random walk by photons in small steps, known as the Huygens principle:</p>
 <div style="text-align: center;"><img src="walk.svg"></div>
 <p>We split \(\ell\) into \(n\) steps, and let \(X_{t}\) be the random variable describing a photon's random walk, \(P(X_{t}) = Cauchy(\frac{\ell}{n})\).
 The law of large numbers says that the final location of the photon, \(X_{1} + X_{2} + ... + X_{n}\) approaches \(n\cdot E(X)\) as \(n\) increases.
@@ -208,7 +208,7 @@ In other words, we would observe a single spot of bright light at position \(n\c
 However, a completely dark wall is completely nonsensical in physics.
 The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
 
-<h2>Power laws are more common than the gaussian in the sample size limit \(n\to \infty\)</h2>
+<h2 id="power-laws-common">Power laws are more common than the gaussian in the sample size limit \(n\to \infty\) &nbsp;<a href="#power-laws-common">#</a></h2>
 <p>
 Many fields are interested in quantities outside of the sum of random variables \(X_{1}+X{2}+\cdots +X{n}\).
 For example, hydrology is focused on the maxima of random variables \(\text{max}\left( X_{1}, X{2}, \cdots , X{n} \right)\) where \(X_{i}\) represents the flood level.
@@ -252,13 +252,13 @@ For these quantities, We have the following limit laws:
 The fat tails of the Pareto distribution have the following properties:
 <ul>
   <li>
-    \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t>0\)<sup id="foot_ref-5"><a href="#foot_note-5">5</a></sup>, in other words if we observed some high level quantity in the past, the probability that we observe any higher level is 1.
+    \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t>0\)<sup id="foot_ref-6"><a href="#foot_note-6">6</a></sup>, in other words if we observed some high level quantity in the past, the probability that we observe any higher level is 1.
   </li>
   <li>
-    \(P\left( X_{1}+X_{2}+\cdots X_{n} > x\right)=P\left( \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) > x \right)\)<sup id="foot_ref-6"><a href="#foot_note-6">6</a></sup>, thus if we see a sum of events exceeding some high level, it is always due to one particular catastrophy.
+    \(P\left( X_{1}+X_{2}+\cdots X_{n} > x\right)=P\left( \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) > x \right)\)<sup id="foot_ref-7"><a href="#foot_note-7">7</a></sup>, thus if we see a sum of events exceeding some high level, it is always due to one particular catastrophy.
   </li>
   <li>
-    \(E\left( X-u|X>u \right)=\frac{1}{\alpha}\cdot u\), where \(\alpha\) is the tail index<sup id="foot_ref-7"><a href="#foot_note-7">7</a></sup>.
+    \(E\left( X-u|X>u \right)=\frac{1}{\alpha}\cdot u\), where \(\alpha\) is the tail index<sup id="foot_ref-8"><a href="#foot_note-8">8</a></sup>.
     This means it is impossible to hedge against a disaster by an insurance policy that pays only a predetermined fixed amount, since the shortfall is always larger than 0.
   </li>
 </ul>
@@ -267,7 +267,7 @@ We borrow Taleb's words to summarize this section:
   <li>
     Robust statistics is not robust.
     <a href="https://en.wikipedia.org/wiki/Robust_statistics">Robust statistics</a> shoots for methods that don't change in response of a tail event, such as the trimmed mean or winsorization.
-    We now know that the one of two outlier events such as the 1987 U.S. stock market crash hold the key to truly understanding our data.
+    We now know that the one or two outlier events such as the 1987 U.S. stock market crash hold the key to truly understanding our data.
   </li>
   <li>
     The empirical distribution is not empirical.
@@ -296,27 +296,27 @@ We borrow Taleb's words to summarize this section:
 </ul>
 </p>
 
-<h2>Causal questions can never be answered from data and statistics alone</h2>
+<h2 id="causal-questions">Causal questions can never be answered from data and statistics alone &nbsp;<a href="#causal-questions">#</a></h2>
 <p>
 <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson's paradox</a> states that statistical results that appear within groups can disappear or reverse itself when the groups are combined.
 Moreover, whether to trust the partitioned or combined data depends on the causal structure giving rise to the data.
 </p>
 <p>
-The below graph<sup id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup> describes different scenarios regarding the question, "does treatment lead to recovery?", which is of a causal nature.
+The below graph<sup id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup> describes different scenarios regarding the question, "does treatment lead to recovery?", which is of a causal nature.
 <div style="text-align: center;"><img src="treatment_recovery.png"></div>
 </p>
 <ul>
 	<li>
-In case (a) above, patients that are prescribed treatment are sampled according to the gender distribution in the population.
+In case (a) above, patients that are given treatment are more likely to be of a particular gender say female, perhaps due to quiks in the medical system.
 Since the recovery from the disease is also gender dependent, gender is a confounding variable, and thus when comparing the with treatment and without treatment data, we should look at the partitioned results.
 	</li>
 	<li>
-However, in case (b) above, since blood pressure is a side effect of the treatment, we may see that under the healthy low blood pressure group, all patients received treatment, and there are 0 patients that were not treated, rendering it impossible to do a comparison.
+However, in case (b) above, since the main purpose of the treatment is to move patients from the high-risk high-blood-pressure group to the low-blood pressure group, it does not make sense to look at the results for each individual group.
 In this case, we should look at the combined results.
 	</li>
 </ul>
 <p>
-A systematic way to decide whether to trust the partitioned or combined results is to apply the backdoor criterion<sup id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup>.
+A systematic way to decide whether to trust the partitioned or combined results is to apply the backdoor criterion<sup id="cite_ref-6"><a href="#cite_note-6">[6]</a></sup>.
 First, some definitions:
 <ul>
 	<li>
@@ -353,11 +353,79 @@ Case (c) in the above graph illustrates a collider scenario.
 \(Z\) is a diagnostic test for pre-cancer.
 In this case, the backdoor path \(X\gets \circ\to  Z\gets \circ \to  Y\) is blocked when \(Z\) is <em>not</em> conditioned on, since \(Z\) is a collider.
 In other words, the combined results should be used.
+Traditional statistic recommends that we "control for everything".
+However, case (c) is a good example where controlling \(Z\) actually introduces spurious effects from the latent variable \(L_{2}\).
 </p>
 <p>
 For case (d), \(Z\) should be conditioned on.
 <div style="text-align: center;"><img src="treatment_e.png"></div>
 For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\left\{ L_{1}, Z \right\}\) or \(\left\{L_{2}, Z \right\}\).
+</p>
+<p>
+Note that the quantity provided by the backdoor criterion is the <em>total</em> effect.
+Whether or not the total effect is the right question to ask depends on the research at hand.
+Let's look at a real world example regarding the U.S. health-care system's efficacy against COVID-19:
+</p>
+<table style="margin-left: auto; margin-right: auto;">
+	<caption id="table-2">Table 2: COVID-19 fatality rates (in percentages) in the U.S.<sup id="foot_ref-9"><a href="#foot_note-9">9</a></sup></caption>
+	<thead><tr>
+		<th style="padding-right: 1em; border-bottom: solid;">Age\Race</th>
+		<th style="padding-right: 1em; border-bottom: solid;">White, non-Hispanic</th>
+		<th style="padding-right: 1em; border-bottom: solid;">Others</th>
+	</tr></thead>
+	<tbody>
+		<tr><td>0-19</td><td style="text-align: right;">0.04</td><td style="text-align: right;">0.03</td></tr>
+		<tr><td>20-29</td><td style="text-align: right;">0.04</td><td style="text-align: right;">0.04</td></tr>
+		<tr><td>30-39</td><td style="text-align: right;">0.05</td><td style="text-align: right;">0.11</td></tr>
+		<tr><td>40-49</td><td style="text-align: right;">0.14</td><td style="text-align: right;">0.27</td></tr>
+		<tr><td>50-59</td><td style="text-align: right;">0.25</td><td style="text-align: right;">0.72</td></tr>
+		<tr><td>60-69</td><td style="text-align: right;">0.77</td><td style="text-align: right;">1.89</td></tr>
+		<tr><td>70-79</td><td style="text-align: right;">3.46</td><td style="text-align: right;">5.38</td></tr>
+		<tr><td>80+</td><td style="text-align: right;">14.50</td><td style="text-align: right;">14.19</td></tr>
+		<tr><td style="padding-right: 1em; border-top: solid;">All age groups</td><td style="border-top: solid; text-align: right;">0.55</td><td style="border-top: solid; text-align: right;">0.50</td></tr>
+	</tbody>
+</table>
+<p>
+The question we'd like to ask from this data is: Is the U.S. medical system fair to people of all races?
+Looking at the partitioned data, non-whites have a much higher fatality rate than whites across all age groups except for the very young and old.
+For the 50-59 age group, this fatality rate gap may be as high as 3x.
+However, when we look at the combined data, the conclusion is reversed, with whites overall having a slightly higher fatality rate.
+</p>
+<p>
+The reason for this discrepency is simple: Whites are older.
+According to the U.S. census, 9.4% of whites are over 75 years old, whereas for non-whites this figure is only 4.8%.
+At the same time, old people are precisely the ones who are at greatest risk of dying from COVID by a wide margin as can be seen from <a href="#table-2">Table 2</a>.
+In other words, if you tell me that you are white and COVID-positive, but do not tell me your age, I have to assume you have a higher risk of dying than your neighbor who is black and COVID-positive.
+But once you tell me your age, your risk of dying becomes much less than your neighbor who is black, COVID-positive and of the same age.
+Surely the act of telling me your age should not make any difference to your medical condition.
+</p>
+<p>
+To resolve this paradox, we have to determine which is a more accurate picture of reality, one where we look at the partitioned data or the other where we look at the combined?
+<div style="text-align: center;"><img src="covid_causal.png"></div>
+If we apply the backdoor criterion along with the above causal model, we would choose the aggregate data, and conclude that the American clinical system does not discriminate against non-whites.
+</p>
+<p>
+However, a deeper inspect of this argument suggests that it may not be representing our true intentions.
+The question the backdoor criterion is targeting is, "What is the total lifetime effect of intervening (before birth) to change a person's race?".
+ And yes: if we could perform that intervention, and if our sole objective was to prevent death from COVID, we would choose to change our race from white to non-white.
+ The benefit we would get from such an intervention is that we are less likely to live beyond 75 years old where we are at a high risk of dying from COVID.
+Obviously, this is nonsense as saving lifes from COVID by making people die earlier is not a justifiable health policy.
+</p>
+<p>
+Thus, the query we want to interrogate the data with is not “What is the total effect?” but “What is the direct effect?”
+In fact, this form of query is almost always what we are truly interested in when talking about discrimination.
+With respect to discrimination in the U.S. health-care system, our true intention is to <em>hold all other variables constant</em>, and see what is the effect of changing race alone. 
+In this case, that means stratifying the data by Age, and reporting the Controlled Direct Effects (CDE) for each age group, CDE(\(40\lt age\lt49\)), CDE(\(50\lt age\lt59\)), etc.
+Alternatively, we could use the Mediation Formula for the Natural Direct Effect
+$$\displaylines{
+NDE_{x,x'}(Y)=\sum_{z}\left[ E(Y|x',z)-E(Y|x,z)\right] P(z|x)
+}$$
+where \(x\) denotes the race of non-whites and \(x'\) for whites, Y denotes fatality, and z denotes age groups.
+In this case, the NDE of setting race from non-white to white is -0.17%, meaning the fatality would drop from 0.50% to 0.33%, which is supportive of discrimination.
+</p>
+<p>
+In conclusion, data and statistical calculations themselves are the least important aspects of scientific research.
+The genuinely critical parts are the underlying or assumed causal structure of the data, as well as the causal questions that capture our true intentions.
 </p>
 
 
@@ -440,6 +508,13 @@ For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\
   </li>
   <li id="foot_note-5">
     <b><a href="#foot_ref-5">^</a></b>
+    Given \(\overline{x}=0.00015\), \(s=0.00624\), null hypothesis of \(\mu=0\) and \(P_{gaussian}(-1.96 < x < 1.96) = 0.95\), we want to first calculate the number of gaussian samples \(n_{g}\) corresponding to a 95% confidence t-statistic \(\frac{\overline{x}-\mu}{\frac{s}{\sqrt{n_{g}}}}=1.96\).
+    This gives \(n_{g}=(1.96\cdot \frac{0.00624}{0.00015-0})^{2} = 6648\).
+    Next, using \(\kappa_{2.51}(6648)\simeq 0.231\), we get the number of samples required by the true \(Pareto(2.51)\) distribution \(n_{\nu}=6648^{\frac{1}{1-0.231}}=93538\).
+    Since the average number of trading days per year in Taiwan is 268, this translates into \(\frac{93538}{268}=349\) years.
+  </li>
+  <li id="foot_note-6">
+    <b><a href="#foot_ref-6">^</a></b>
     We note that from Equation 3.45, Embrechts<sup id="cite_ref-2e"><a href="#cite_note-2">[2e]</a></sup>:
     $$\displaylines{
     P\left( x>u+t | x>u \right)=\begin{cases}
@@ -451,8 +526,8 @@ For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\
     For the subexponential class, \(\underset{u\to \infty}{lim}e(u)=\infty\). Therefore, \(\underset{u\to \infty}{lim}P\left( x>u+t | x>u \right)=1\) for all \(t\).
     Another derivation can be found in Lemma 1.3.5, Embrechts<sup id="cite_ref-2f"><a href="#cite_note-2">[2f]</a></sup>.
   </li>
-  <li id="foot_note-6">
-    <b><a href="#foot_ref-6">^</a></b>
+  <li id="foot_note-7">
+    <b><a href="#foot_ref-7">^</a></b>
     Here we prove that \(P\left( X_{1}+X_{2}+\cdots X_{n} > x\right) = P\left( \text{max}\left( X_{1}, X_{2}, \cdots , X_{n} \right) > x \right)\) as \(x\to \infty\) for the Pareto distribution \(\frac{\alpha}{x^{1+\alpha}}\).
     We focus on the case \(n=2\) as the general case follows by induction.
     On the right hand side we have:
@@ -479,10 +554,137 @@ For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\
     }$$
     Since \(P\left( \text{max}\left( X, Y \right) > L \right) < P\left( X+Y>L \right)\) and \(P\left( \text{max}\left( X, Y \right) > L \right)=\frac{2}{L^{\alpha}}\), we get \(\frac{2}{L^{\alpha}} < P\left( X+Y>L \right) < \frac{2}{L^{\alpha}}\), which completes our proof.
   </li>
-  <li id="foot_note-7">
-    <b><a href="#foot_ref-7">^</a></b>
+  <li id="foot_note-8">
+    <b><a href="#foot_ref-8">^</a></b>
     For a derivation of the mean excess function of the Pareto distribution, see Eliazar<sup id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup>.
     For a list of \(e(u)\) for some standard distributions, see Table 3.4.7 Embrechts<sup id="cite_ref-2g"><a href="#cite_note-2">[2g]</a></sup>.
+  </li>
+  <li id="foot_note-9">
+    <b><a href="#foot_ref-9">^</a></b>
+    The raw data comes in the name of "Covid-19 Case Surveillance Public Use Data".
+    The sqlite commands to aggregate the data are:
+    <pre>
+    .import COVID-19_Case_Surveillance_Public_Use_Data.csv covid --csv
+    select *, cast(deaths as float)/num_cases from (select age_group, case when `Race and ethnicity (combined)`='White, Non-Hispanic' then 'white' else 'other' end as race, sum(1) as num_cases, sum(case when death_yn='Yes' then 1 else 0 end) as deaths from covid where current_status='Laboratory-confirmed case' and age_group not in ('NA', 'Unknown') and medcond_yn='No' group by age_group, race);
+    </pre>
+    The aggregated number of confirmed cases and deaths is given below:
+    <table style="margin-left: auto; margin-right: auto; border-spacing: 1em 0;"><thead>
+      <tr>
+        <th>age_group</th>
+        <th>race</th>
+        <th>num_cases</th>
+        <th>deaths</th>
+      </tr></thead>
+    <tbody>
+      <tr>
+        <td>0 - 9 Years</td>
+        <td>other</td>
+        <td>21049</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>0 - 9 Years</td>
+        <td>white</td>
+        <td>10929</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>10 - 19 Years</td>
+        <td>other</td>
+        <td>48859</td>
+        <td>12</td>
+      </tr>
+      <tr>
+        <td>10 - 19 Years</td>
+        <td>white</td>
+        <td>43449</td>
+        <td>16</td>
+      </tr>
+      <tr>
+        <td>20 - 29 Years</td>
+        <td>other</td>
+        <td>92645</td>
+        <td>40</td>
+      </tr>
+      <tr>
+        <td>20 - 29 Years</td>
+        <td>white</td>
+        <td>77203</td>
+        <td>33</td>
+      </tr>
+      <tr>
+        <td>30 - 39 Years</td>
+        <td>other</td>
+        <td>75982</td>
+        <td>83</td>
+      </tr>
+      <tr>
+        <td>30 - 39 Years</td>
+        <td>white</td>
+        <td>50992</td>
+        <td>25</td>
+      </tr>
+      <tr>
+        <td>40 - 49 Years</td>
+        <td>other</td>
+        <td>59138</td>
+        <td>157</td>
+      </tr>
+      <tr>
+        <td>40 - 49 Years</td>
+        <td>white</td>
+        <td>44041</td>
+        <td>63</td>
+      </tr>
+      <tr>
+        <td>50 - 59 Years</td>
+        <td>other</td>
+        <td>40753</td>
+        <td>292</td>
+      </tr>
+      <tr>
+        <td>50 - 59 Years</td>
+        <td>white</td>
+        <td>43781</td>
+        <td>109</td>
+      </tr>
+      <tr>
+        <td>60 - 69 Years</td>
+        <td>other</td>
+        <td>19053</td>
+        <td>360</td>
+      </tr>
+      <tr>
+        <td>60 - 69 Years</td>
+        <td>white</td>
+        <td>27443</td>
+        <td>211</td>
+      </tr>
+      <tr>
+        <td>70 - 79 Years</td>
+        <td>other</td>
+        <td>6750</td>
+        <td>363</td>
+      </tr>
+      <tr>
+        <td>70 - 79 Years</td>
+        <td>white</td>
+        <td>11463</td>
+        <td>397</td>
+      </tr>
+      <tr>
+        <td>80+ Years</td>
+        <td>other</td>
+        <td>3621</td>
+        <td>514</td>
+      </tr>
+      <tr>
+        <td>80+ Years</td>
+        <td>white</td>
+        <td>6027</td>
+        <td>874</td>
+      </tr>
+    </tbody></table>
   </li>
 </ol>
 
@@ -506,7 +708,7 @@ For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\
     <b><a href="#cite_ref-2d">d</a></b>
     <b><a href="#cite_ref-2e">e</a></b>
     <b><a href="#cite_ref-2f">f</a></b>
-    <b><a href="#cite_ref-2g">f</a></b>
+    <b><a href="#cite_ref-2g">g</a></b>
     Modelling Extremal Events: for Insurance and Finance, Paul Embrechts, Claudia Klüppelberg, Thomas Mikosch, <a href="https://link.springer.com/book/10.1007/978-3-642-33483-2">Springer</a>
   </li>
   <li id="cite_note-3">
@@ -519,11 +721,11 @@ For case (e) above, \(Z\) itself is not sufficient, and we have use the sets \(\
   </li>
   <li id="cite_note-5">
     <b><a href="#cite_ref-5">^</a></b>
-    Causal Diagrams for Epidemiologic Research, Greenland, Sander; Pearl, Judea; Robins, James M. (January 1999), Epidemiology, 10 (1): 37–48, <a href="https://sci-hub.ru/10.1097/00001648-199901000-00008">doi:10.1097/00001648-199901000-00008</a>
+    Understanding Simpson's Paradox, Judea Pearl, The American Statistician. 68 (1): 8–13, <a href="http://ftp.cs.ucla.edu/pub/stat_ser/r414-reprint.pdf">doi:10.2139/ssrn.2343788</a>
   </li>
   <li id="cite_note-6">
     <b><a href="#cite_ref-6">^</a></b>
-    Understanding Simpson's Paradox, Judea Pearl, The American Statistician. 68 (1): 8–13, <a href="http://ftp.cs.ucla.edu/pub/stat_ser/r414-reprint.pdf">doi:10.2139/ssrn.2343788</a>
+    Causal Diagrams for Epidemiologic Research, Greenland, Sander; Pearl, Judea; Robins, James M. (January 1999), Epidemiology, 10 (1): 37–48, <a href="https://sci-hub.ru/10.1097/00001648-199901000-00008">doi:10.1097/00001648-199901000-00008</a>
   </li>
 </ol>
 
