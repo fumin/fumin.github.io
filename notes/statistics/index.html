@@ -262,12 +262,39 @@ The fat tails of the Pareto distribution have the following properties:
     This means it is impossible to hedge against a disaster by an insurance policy that pays only a predetermined fixed amount, since the shortfall is always larger than 0.
   </li>
 </ul>
+
+<h2 id="fat-correlation">Independence-Correlation relationship breaks down for fat tails. &nbsp;<a href="#fat-correlation">#</a></h2>
+<p>
+Correlation implies independence between random variables \(X_{1}\) and \(X_{2}\) when they are stably normal,
+that is \(Y = aX_{1} + bX_{2}\) normal for all \(a\) and \(b\).
+</p>
+<p>
+However, this is not the case for fat tailed distributions.
+In fact, the multivariate Cauchy distribution with zero correlation, while stable<sup id="foot_ref-9"><a href="#foot_note-9">9</a></sup>, is not independent:
+$$\displaylines{
+\begin{aligned}
+\text{MultivariateCauchy} =\space & \frac{1}{2\pi}\frac{1}{\left(x_{1}^{2}+x_{2}^{2}+1\right)^{\frac{3}{2}}}dx_{1}dx_{2} \\
+\text{IndependentCauchy} =\space & \left(\frac{1}{\pi}\frac{1}{x_{1}^{2}+1}dx_{1}\right)\left(\frac{1}{\pi}\frac{1}{x_{2}^{2}+1}dx_{2}\right)
+\end{aligned}
+}$$
+This different is made most stark in the following contour plots:
+<div style="text-align: center;"><img src="multivariate_stable1.png" style="max-width: 50%;"/><img src="independent_stable1.png" style="max-width: 50%;"/></div>
+</p>
+<p>
+It turns out that we need to stay close to Gaussian for the \(\text{Uncorrelated}\rightarrow \text{Independent}\) inference to be valid:
+<div style="text-align: center;"><img src="independent_stable1.png" style="max-width: 33%;"/><img src="independent_stable1_5.png" style="max-width: 33%;"/><img src="independent_stable1_75.png" style="max-width: 33%;"/></div>
+<div style="text-align: center;"><img src="independent_stable1_9.png" style="max-width: 33%;"/><img src="independent_stable1_975.png" style="max-width: 33%;"/><img src="independent_stable2.png" style="max-width: 33%;"/></div>
+</p>
+
 We borrow Taleb's words to summarize this section:
 <ul>
   <li>
     Robust statistics is not robust.
     <a href="https://en.wikipedia.org/wiki/Robust_statistics">Robust statistics</a> shoots for methods that don't change in response of a tail event, such as the trimmed mean or winsorization.
     We now know that the one or two outlier events such as the 1987 U.S. stock market crash hold the key to truly understanding our data.
+    <p>
+    Moreover, <a href="https://en.wikipedia.org/wiki/Elliptical_distribution#Robust_statistics:_Asymptotics">claims</a> in Robust statistics often amount to robustness within some elliptical distribution family, which as we have seen above means nothing under the presence of fat tails.
+    </p>
   </li>
   <li>
     The empirical distribution is not empirical.
@@ -367,7 +394,7 @@ Whether or not the total effect is the right question to ask depends on the rese
 Let's look at a real world example regarding the U.S. health-care system's efficacy against COVID-19:
 </p>
 <table style="margin-left: auto; margin-right: auto;">
-	<caption id="table-2">Table 2: COVID-19 fatality rates (in percentages) in the U.S.<sup id="foot_ref-9"><a href="#foot_note-9">9</a></sup></caption>
+	<caption id="table-2">Table 2: COVID-19 fatality rates (in percentages) in the U.S.<sup id="foot_ref-10"><a href="#foot_note-10">10</a></sup></caption>
 	<thead><tr>
 		<th style="padding-right: 1em; border-bottom: solid;">Age\Race</th>
 		<th style="padding-right: 1em; border-bottom: solid;">White, non-Hispanic</th>
@@ -561,6 +588,19 @@ The genuinely critical parts are the underlying or assumed causal structure of t
   </li>
   <li id="foot_note-9">
     <b><a href="#foot_ref-9">^</a></b>
+    Here we show that the zero correlation multivariate Cauchy distribution is stable, that is \(Y = aX_{1} + bX_{2}\) is Cauchy for all \(a\) and \(b\).
+$$\displaylines{
+\begin{aligned}
+\int_{-\infty}^{\infty}\frac{1}{2\pi}\frac{1}{\left(x_{1}^{2}+x_{2}^{2}+1\right)^{\frac{3}{2}}}dx_{1}dx_{2} =\space & \int_{-\infty}^{\infty}\frac{1}{2\pi}\frac{1}{\left(x_{1}^{2}+\left(\frac{y}{b}-\frac{a}{b}x_{1}\right)^{2}+1\right)^{\frac{3}{2}}}dx_{1}\frac{1}{b}dy \\
+=\space & \frac{1}{2\pi b}\frac{1}{y^{2}+a^{2}+b^{2}}\frac{x_{1}(a^{2}+b^{2})-ay}{\sqrt{\frac{(y-ax_{1})^{2}}{b^{2}}+x_{1}^{2}+1}}\bigg\rvert_{-\infty}^{\infty}dy \\
+=\space & \frac{1}{2\pi b}\frac{1}{y^{2}+a^{2}+b^{2}}\frac{x_{1}(a^{2}+b^{2})}{\frac{|x_{1}|}{b}\sqrt{a^{2}+b^{2}}}\bigg\rvert_{-\infty}^{\infty}dy \\
+=\space & \frac{1}{\pi\sqrt{a^{2}+b^{2}}}\frac{1}{(\frac{y}{\sqrt{a^{2}+b^{2}}})^{2}+1}dy \\
+=\space & \text{Cauchy}(0, \sqrt{a^{2}+b^{2}})
+\end{aligned}
+}$$
+  </li>
+  <li id="foot_note-10">
+    <b><a href="#foot_ref-10">^</a></b>
     The raw data comes in the name of "Covid-19 Case Surveillance Public Use Data".
     The sqlite commands to aggregate the data are:
     <pre>
