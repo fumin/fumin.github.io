@@ -1,6 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"context"
+	"crypto/aes"
+	"crypto/cipher"
+	"encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -8,9 +13,50 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/pkg/errors"
 )
+
+func pkcs7Pad(plaintext []byte, blocksize int) []byte {
+	n := blocksize - (len(plaintext) % blocksize)
+	padded := make([]byte, len(plaintext)+n)
+	copy(padded, plaintext)
+	copy(padded[len(plaintext):], bytes.Repeat([]byte{byte(n)}, n))
+	return padded
+}
+
+func aescbc(key, plaintext, iv []byte) ([]byte, error) {
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, errors.Wrap(err, "")
+	}
+	padded := pkcs7Pad(plaintext, aesCipher.BlockSize())
+
+	enc := cipher.NewCBCEncrypter(aesCipher, []byte(iv))
+	ciphertext := make([]byte, len(padded))
+	enc.CryptBlocks(ciphertext, padded)
+	return ciphertext, nil
+}
+
+func haoshijiaKey() (string, string, error) {
+	now := strconv.FormatInt(time.Now().Unix(), 10)
+
+	plaintext := []byte("ajdf45bmlk")
+	plaintext = append(plaintext, ',')
+	plaintext = append(plaintext, []byte(now)...)
+
+	key := []byte("zyf2SRraTUBUXWhidTzL3T6_oKoCOV_x4ZJwX0kXxYI=")
+	iv := []byte{75, 105, 83, 158, 196, 65, 236, 181, 61, 119, 220, 163, 224, 19, 51, 241}
+	ciphertext, err := aescbc(key[:16], plaintext, iv)
+	if err != nil {
+		return "", "", errors.Wrap(err, "")
+	}
+
+	ciphertextb64 := base64.StdEncoding.EncodeToString(ciphertext)
+	ivb64 := base64.StdEncoding.EncodeToString(iv)
+	return ciphertextb64, ivb64, nil
+}
 
 func get() ([]byte, error) {
 	// cachePath := "haoshijia.json"
@@ -20,8 +66,27 @@ func get() ([]byte, error) {
 	// }
 	// return rbody, nil
 
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	encrypted, iv, err := haoshijiaKey()
+	if err != nil {
+		return nil, errors.Wrap(err, "")
+	}
+
+	// Prepare request.
 	urlStr := "https://backend.houseplus.com.tw/api/get_pi_list"
-	resp, err := http.Post(urlStr, "", nil)
+	reqBody := bytes.NewBuffer(nil)
+	req, err := http.NewRequestWithContext(ctx, "POST", urlStr, reqBody)
+	if err != nil {
+		return nil, errors.Wrap(err, "")
+	}
+	req.Header.Add("encrypted", encrypted)
+	req.Header.Add("iv", iv)
+	req.Header.Add("Content-Type", "application/json")
+
+	// Do request.
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, errors.Wrap(err, "")
 	}
@@ -144,7 +209,7 @@ func mainWithErr() error {
 	}
 	data, err := parse(body)
 	if err != nil {
-		return errors.Wrap(err, "")
+		return errors.Wrap(err, fmt.Sprintf("\"%s\"", body))
 	}
 
 	fmt.Printf("t,value\n")
