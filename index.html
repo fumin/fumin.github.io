@@ -1,18 +1,120 @@
 <head>
-  <style>
-body {
-  text-align: center;
-  font-size: xx-large;
+<style>
+@media screen and (max-width: 700px) {
+#main-container {
+  width: 100%;
 }
-  </style>
+#profile-intro {
+  float: left;
+  width: 80%;
+}
+#profile-img {
+  width: 20%;
+}
+}
+
+@media screen and (min-width: 700px) {
+#main-container {
+  margin-left:auto;
+  margin-right:auto;
+  width: 70%;
+}
+#profile-intro {
+  float: left;
+  width: 90%;
+}
+#profile-img {
+  width: 10%;
+}
+}
+
+#profile {
+  overflow: hidden;
+}
+.publication {
+  overflow: hidden;
+}
+</style>
 </head>
+
 <body>
-  <div>
-    <h2><a href="pcontrol/index.html">Position control</a></h2>
-    <p>Simulation of position and rotation control.</p>
-  </div>
-  <div>
-    <h2><a href="plant.html">Plant</a></h2>
-    <p>Plant identification using Deep Learning.</p>
-  </div>
+<div id="main-container">
+
+<div style="height: 1em;"></div>
+<div id="profile">
+<div id="profile-intro">
+I am Fumin whose interest lies in Physics and Computer Science.<br>
+</div>
+<img src="bio/profile.jpg" id="profile-img">
+</div>
+
+<h2>News</h2>
+
+<div>Matrix Product States <a href="https://pkg.go.dev/github.com/fumin/qising/mps">library</a>, which is backed by a multi-dimensional complex tensor <a href="https://pkg.go.dev/github.com/fumin/tensor">package</a>.</div>
+
+<div>Note on <a href="notes/statistics">Statistics</a>.</div>
+<div>Note on <a href="notes/thermo">Thermodynamics</a>.</div>
+
+<div>I gave a recent <a href="https://docs.google.com/presentation/d/1neE8g6Xj8IqTvgZbnRRewl7eeQJLE_pbXGgie_0DhZo/edit?usp=sharing">talk</a> about price prediction.</div>
+
+<h2>Publications</h2>
+
+<div>Recent notes can be found <a href="notes">here</a>.</div>
+
+<div class="publication">
+<h3>
+Leveraging Demonstrations for Deep Reinforcement Learning on Robotics Problems with Sparse Rewards, <a href="https://arxiv.org/pdf/1707.08817.pdf">arXiv:1707.08817</a>
+</h3>
+<p>
+This work demonstrates robust behaviour of robots against errors and variations in the environment.<br>
+Force feedback allows the robot to recover from mistakes along its trajectory, in contrast to conventional scripting methods.
+More information can be found in this <a href="https://docs.google.com/presentation/d/1lEIG9VAJpvDLlCdHluc3I7nOzOaxMSG4QdbW3nALNmg/edit?usp=sharing">RSS talk</a>.
+</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WGJwLfeVN9w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<div class="publication">
+<h3>
+Grounded Language Learning in a Simulated 3D World, <a href="https://arxiv.org/pdf/1706.06551.pdf">arXiv:1706.06551</a>
+</h3>
+<p>
+This work demonstrates language understanding through Reinforcement Learning in a sensory rich environment.<br>
+Through task solving, the agent is able to generalize to the combinatorial number of sentence constructs, a key feature of human language.
+</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wJjdu1bPJ04" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<div class="publication">
+<h3>
+Latent Predictor Networks for Code Generation, Association for Computational Linguistics, 2016, <a href="https://arxiv.org/pdf/1603.06744.pdf">arXiv:1603.06744</a>
+</h3>
+<p style="width: 75%; float: left;">
+This work shows that neural networks can learn utilities of cards from their linguistic description in the games "Magic the Gathering" and "Hearthstone".
+</p>
+<img src="bio/latent_predictor.png" style="width: 25%;">
+</div>
+
+<div class="publication">
+<h3>
+Modeling the diffusion of preferences on social networks, SIAM International Conference on Data Mining, 2013, <a href="http://epubs.siam.org/doi/pdf/10.1137/1.9781611972832.67">pdf</a>
+</h3>
+<div style="width: 50%; float: left;">
+This work provides a social network model that captures the real world phenomenon of opinion leaders influencing opinion followers.
+<div style="height: 0.5em;"></div>
+As a result, it answers questions such as given the initial beliefs of the leaders and the global structure of the social graph, what would be the long term opinions of each and every member in this network.
+</div>
+<img src="bio/diffusion_social_network.png" style="width: 50%;">
+</div>
+
+<h2>Miscellaneous</h2>
+I am a contributor to <a href="https://github.com/golang/go/commit/6c848c6e888781b5385cec34e5740ac192323242">Go</a> and the <a href="https://www.gimp.org/">GNU Image Editor</a> (powered by <a href="https://gegl.org/release-notes.html">GEGL</a>).
+I have a <a href="https://github.com/fumin/">Github</a> and some of my work in the distant past can be found <a href="https://www.csie.ntu.edu.tw/~d00922005/">here</a>.
+
+<h2>Contact</h2>
+<div>awaw fumin at gmail dot com (<- remove the spaces)</div>
+<a href="https://mastodon.social/@shaoyu">Masterdon</a>, <a href="https://x.com/awawfumin">Twitter</a>.
+
+<div style="height: 100px;"></div>
+
+</div> <!-- #main-container -->
 </body>
