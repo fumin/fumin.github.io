@@ -10,10 +10,23 @@ body {
 table {
   font-size: xx-large;
 }
+#contents li:not(:last-child) {
+	margin-bottom: 1em;
+}
   </style>
   <body>
     <div id="container" style="margin-left:auto; margin-right:auto;">
 <h1>Statistics</h1>
+
+<ul id="contents">
+  <li><a href="#mean-not-capture">Mean \(E(X)\) may not capture a problem's concern</a></li>
+  <li><a href="#mean-deviation">Mean Deviation is more useful than Standard Deviation</a></li>
+  <li><a href="#central-limit">The Central Limit Theorem does not apply to many real world problems with finite sample sizes</a></li>
+  <li><a href="#physics-mean">Physics might dictate that the mean \(E(X)\) be non-existent</a></li>
+  <li><a href="#power-laws-common">Power laws are more common than the Gaussian in the sample size limit \(n\to \infty\)</a></li>
+  <li><a href="#fat-correlation">No-Correlation-implies-independence breaks down for fat tails</a></li>
+  <li><a href="#causal-questions">Causal questions can never be answered from data and statistics alone</a></li>
+</ul>
 
 <h2 id="mean-not-capture">Mean \(E(X)\) may not capture a problem's concern &nbsp;<a href="#mean-not-capture">#</a></h2>
 <p>
@@ -208,7 +221,7 @@ In other words, we would observe a single spot of bright light at position \(n\c
 However, a completely dark wall is completely nonsensical in physics.
 The only way out of this paradox is to conclude that the mean of the Cauchy distribution does not exist.</p>
 
-<h2 id="power-laws-common">Power laws are more common than the gaussian in the sample size limit \(n\to \infty\) &nbsp;<a href="#power-laws-common">#</a></h2>
+<h2 id="power-laws-common">Power laws are more common than the Gaussian in the sample size limit \(n\to \infty\) &nbsp;<a href="#power-laws-common">#</a></h2>
 <p>
 Many fields are interested in quantities outside of the sum of random variables \(X_{1}+X{2}+\cdots +X{n}\).
 For example, hydrology is focused on the maxima of random variables \(\text{max}\left( X_{1}, X{2}, \cdots , X{n} \right)\) where \(X_{i}\) represents the flood level.
@@ -263,10 +276,10 @@ The fat tails of the Pareto distribution have the following properties:
   </li>
 </ul>
 
-<h2 id="fat-correlation">Independence-Correlation relationship breaks down for fat tails. &nbsp;<a href="#fat-correlation">#</a></h2>
+<h2 id="fat-correlation">No-Correlation-implies-Independence breaks down for fat tails. &nbsp;<a href="#fat-correlation">#</a></h2>
 <p>
-Correlation implies independence between random variables \(X_{1}\) and \(X_{2}\) when they are stably normal,
-that is \(Y = aX_{1} + bX_{2}\) normal for all \(a\) and \(b\).
+When random variables \(X_{1}\) and \(X_{2}\) are stably normal, no correlation between them implies their independence.
+Stably normal is defined as \(Y = aX_{1} + bX_{2}\) normal for all \(a\) and \(b\).
 </p>
 <p>
 However, this is not the case for fat tailed distributions.
@@ -767,28 +780,6 @@ $$\displaylines{
     <b><a href="#cite_ref-6">^</a></b>
     Causal Diagrams for Epidemiologic Research, Greenland, Sander; Pearl, Judea; Robins, James M. (January 1999), Epidemiology, 10 (1): 37–48, <a href="https://sci-hub.ru/10.1097/00001648-199901000-00008">doi:10.1097/00001648-199901000-00008</a>
   </li>
-</ol>
-
-    </div>
-
-    <script>
-function onWindowResizeContainer() {
-  const container = document.querySelector("#container");
-  if (document.body.clientWidth/document.body.clientHeight > 1024/768) {
-    container.style.width = "70%";
-  } else {
-    container.style.width = "100%";
-  }
-}
-
-function main() {
-  onWindowResizeContainer();
-}
-main();
-    </script>
-
-  </body>
-</html>
 </ol>
 
     </div>

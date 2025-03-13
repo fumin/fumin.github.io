@@ -1,0 +1,174 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  </head>
+  <style> 
+body {
+  font-size: xx-large;
+}
+table {
+  font-size: xx-large;
+}
+  </style>
+  <body>
+    <div id="container" style="margin-left:auto; margin-right:auto;">
+<h1>E-values supersede p-values</h1>
+
+<h2 id="p-hacking">P-hacking &nbsp;<a href="#p-hacking">#</a></h2>
+<p>
+P-hacking refers to the act of proclaiming a discovery based on p-values, when in fact the claimed discovery does not exist. 
+Are the below scientific studies examples of p-hacking?
+<ul>
+  <li>
+    Wennerholm et al.<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> wanted to know which practice is more beneficial to pregnant women: inducing baby delivery at 41 weeks, or waiting for a longer while?
+    They reported a significant p-value of 0.03 for inducing early at 41 weeks, but with a caveat: the experiment was stopped early after running for 2 years when 6 babies were born dead or died shortly after birth.
+  </li>
+  <li style="margin-top: 1em;">
+    Carney et al.<sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup> suggested that <a href="https://en.wikipedia.org/wiki/Power_posing">power posing</a> not only made people <i>feel</i> more confident, but actually also improved outcomes in the real world through higher levels of testosterone.
+    They reported a p-value of \(p<.05\) for increased risk taking among power posers, but in a later <a href="https://faculty.haas.berkeley.edu/dana_carney/pdf_my%20position%20on%20power%20poses.pdf">letter</a> disclosed that this was obtained via <q>running subjects in chunks and checking the effect along the way.</q>
+  </li>
+</ul>
+The answer to both examples is yes, the p-values are invalid in the sense that the true Type I error rates (false-positives) are not less than 5%, but can be any number up to 100%.
+<p>
+Alarmingly, a recent survey<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup> revealed that 56% of psychologists succumbed to the practice of <q>deciding whether to collect more data after looking to see whether the results were significant</q>.
+While collecting data until a desired p-value is obtained is obviously cheating, there are situations where the correct decision to be made is less clear:
+What if you submit a paper and the <i>referee</i> asks you to test a couple more subjects?
+Should you refuse because it invalidates your p-values!?
+</p>
+<p>
+Conceptually, these difficulties faced by p-values stem from the fact that p-values depend on counterfactuals:
+<ul>
+  <li>
+    Suppose I plan to test a new medication on exactly 100 patients.
+    I do this and obtain a (just) significant result (\(p=0.03\) based on fixed \(n=100\)).
+    But just to make sure I ask a statistician whether I did everything right.
+  </li>
+  <li>
+    Now the statistician asks: <b>what <i>would</i> you have done if your result had been 'almost-but-not-quite' significant?</b>
+  </li>
+  <li>
+    I say <q>Well I never thought about that. Well, perhaps, but I'm not sure, I would have asked my boss for money to test another 50 patients</q>.
+  </li>
+  <li>
+    Now the statistician says: that means your result is invalid!
+  </li>
+</ul>
+In other words, whether or not a test based on p-values is valid depends on what we would have done in situations that did not occur.
+</p>
+<p>
+Conversely, say we observe a \(p=10^{-6}\), it is wrong to claim that we have rejected the null at say the incredible significance level of \(\alpha=2\times 10^{-6}\).
+To get a Type-I error guarantee of \(\alpha\), we must set \(\alpha\) in advance, not after we have looked at the data.
+Thus under the p-value paradigm, with \(\alpha\) set at 0.05 both \(p=10^{-6}\) and \(p=0.0499\) tell the same thing: that the Type-I error rate is 0.05.
+This is a bit counterintuitive, we ought to be able to say more about our data when evidence suggests so.
+This is achieved through e-values.
+</p>
+
+<h2 id="opt-cont">E-values allow optional continuation &nbsp;<a href="#opt-cont">#</a></h2>
+<p>
+In the following, we will be focusing on the <code>mom</code> e-value defined in equation B4 of Ly et al.<sup id="cite_ref-4"><a href="#cite_note-4">[4]</a></sup>.
+We will show that treating p-values as evidence and <i>acting</i> on it, leads to inflated Type-I errors.
+In contrast, doing the same thing on e-values does not.
+In particular, we simulate the scenario of:
+<ul>
+  <li>Research group A tests medication.</li>
+  <li>Research group B sees results of A and decides:
+    <ul>
+      <li>If research group A's p-value is below some threshold, then result is conclusive and study is stopped.</li>
+      <li>Else, result is 'promising but not conclusive', so research group B tries again on new data.</li>
+    </ul>
+  </li>
+  <li>Research group C sees results from A and B, and goes through the same decision making process of continuing study or not.</li>
+  <li>Research group D, E, F...</li>
+</ul>
+Figure 1 below shows what happens across 1000 simulations:
+<div style="text-align: center; position: relative; left: -10vw; width: 90vw;">
+  <img src="optional_continuation_p.png" style="max-width: 50%;">
+  <img src="optional_continuation_e.png" style="max-width: 50%;">
+</div>
+Figure 1: Simulation of p-value and e-value based two sample t-test with and without optional continuation.<br>
+<details>
+  <summary>Simulation and figure details</summary>
+  Left figure: P-value based tests.<br>
+  X-axis is the number of collected data, and y-axis is the p-value.
+  Each trace contains data from a pair of Normal distributions whose difference in mean is \(\delta\).
+  The null hypothesis \(H_{0}\) is set to true, meaning \(\delta=0\).
+  The blue horizontal line denotes the continuation decision threshold of \(\alpha=0.05\).
+  Dashed vertical lines denote the end of each study, whose collected data size is 40.
+  At the end of each study, p-values are examanied, and subsequent studies are canceled if the p-value is less than \(\alpha\). 
+  For the non-existent hypothetical studies, dashed lines are used to mark their traces.
+  Traces whose p-values are below \(\alpha\) rejecting the null, at the end of the last study are colored green.
+  Traces that rejected the null in the interim, but not at the end of the last study are colored red.
+  Type-I errors are calculated as \(\frac{\text{# of null rejections}}{\text{# of simulations}}\).
+  <br>
+  Right figure: e-value based tests. For e-values, the criterion for rejecting the null hypothesis is \(e_{n} > \frac{1}{\alpha}\). The blue horizontal line denotes the threshold \(\frac{1}{\alpha}\).
+</details>
+</p>
+<p>
+From Figure 1, we see that when the assumptions of traditional hypothesis testing are met, p-value based tests uphold their guarantee of Type-I error 4.8% less than \(\alpha=5\%\).
+However, when optional continuation is introduced the Type-I error jumps to 14.7%, due to the fact that data between studies are no longer independent.
+Such increase in false positives lie at the heart of the <a href="https://en.wikipedia.org/wiki/Replication_crisis">replication crisis</a> in modern science.
+E-values in contrast, control the Type-I error below \(\alpha\) at all times, even under optional continuation.
+By viewing each data point as its own study, the same can be said for the case under optional stopping.
+</p>
+<p>
+From a theoretical perspective, the reason why p-values break down with optional continuation is because, under the null hypothesis, p-values are uniformly distributed as can be seen from Figure 1.
+Since p-values are uniformly distributed under the null, they fluctuate freely between zero and one, and would always eventually dip below any \(\alpha\) threshold.
+On the other hand, under the null, e-processes are non-increasing and typically would drift towards zero.
+</p>
+<p>
+In fact, mathematically speaking e-values represent the accumulated wealth of a gambler playing in a multi-round game, in which no money is expected to be gained if the null hypothesis holds true:
+with the convention \(E_{1}=1\), for any stopping time \(N\), \(\mathbb{E}_{H_{0}}\left[ E_{N}\le 1\right]\),
+where \(\mathbb{E}_{H_{0}}\left[ \cdots\right]\) denotes taking the expectation of a random variable with respect to the null hypothesis \(H_{0}\).
+</p>
+<p>
+Although, e-values remain relatively unknown among the broader scientific community, there has been a few successful real world applications of e-values to date.
+For example, Rosanne Turner et al.<sup id="cite_ref-5"><a href="#cite_note-5">[5]</a></sup> showed that if e-values were used in the labour induction study discussed above<b><a href="#cite_ref-1">^</a></b>,
+researchers in that study would likely have stopped the experiment earlier saving one or two stillborn children, without compromising the statistically validity of their findings.
+In conclusion, E is the new P, and we should be using e-values instead of p-values going forward.
+</p>
+
+<h2>Reference</h2>
+<ol style="text-align: left;">
+  <li id="cite_note-1">
+    <b><a href="#cite_ref-1">^</a></b>
+     Wennerholm U, Saltvedt S, Wessberg A, Alkmark M, Bergh C, Wendel S B et al. Induction of labour at 41 weeks versus expectant management and induction of labour at 42 weeks (SWEdish Post-term Induction Study, SWEPIS): multicentre, open label, randomised, superiority trial BMJ 2019; 367 :l6131 <a href="https://www.bmj.com/content/367/bmj.l6131">doi:10.1136/bmj.l6131</a>
+  </li>
+  <li id="cite_note-2">
+    <b><a href="#cite_ref-2">^</a></b>
+    Carney DR, Cuddy AJ, Yap AJ. Power posing: brief nonverbal displays affect neuroendocrine levels and risk tolerance. Psychol Sci. 2010 Oct;21(10):1363-8. <a href="https://pubmed.ncbi.nlm.nih.gov/20855902">doi:10.1177/0956797610383437</a>
+  </li>
+  <li id="cite_note-3">
+    <b><a href="#cite_ref-3">^</a></b>
+    John LK, Loewenstein G, Prelec D. Measuring the prevalence of questionable research practices with incentives for truth telling. Psychol Sci. 2012 May 1;23(5):524-32. <a href="https://pubmed.ncbi.nlm.nih.gov/22508865">doi:10.1177/0956797611430953</a>
+  </li>
+  <li id="cite_note-4">
+    <b><a href="#cite_ref-4">^</a></b>
+    Alexander Ly, U. Boehm, G., A. Ramdas, D. van Ravenzwaaij. Safe Anytime-Valid Inference: Practical Maximally Flexible Sampling Designs for Experiments Based on e-Values. <a href="https://osf.io/preprints/psyarxiv/h5vae_v2">doi.org/10.31234/osf.io/h5vae</a>
+  </li>
+  <li id="cite_note-5">
+    <b><a href="#cite_ref-5">^</a></b>
+    Rosanne J. Turner, Alexander Ly, Peter D. Grunwald, Generic E-variables for exact sequential k-sample tests that allow for optional stopping, Journal of Statistical Planning and Inference, Volume 230, 2024, <a href="https://doi.org/10.1016/j.jspi.2023.106116">https://doi.org/10.1016/j.jspi.2023.106116</a>
+  </li>
+</ol>
+    </div>
+
+    <script>
+function onWindowResizeContainer() {
+  const container = document.querySelector("#container");
+  if (document.body.clientWidth/document.body.clientHeight > 1024/768) {
+    container.style.width = "70%";
+  } else {
+    container.style.width = "100%";
+  }
+}
+
+function main() {
+  onWindowResizeContainer();
+}
+main();
+    </script>
+
+  </body>
+</html>
+
