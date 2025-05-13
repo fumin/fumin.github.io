@@ -1,0 +1,55 @@
+! Gmail mobile download app version
+! Apr 21, 2025 https://mail.google.com
+mail.google.com###nav
+
+! Google stupid Gemini
+! Apr 22, 2025 https://www.google.com
+www.google.com##.q8sySb
+
+! Facebook bottom open in app banner
+! May 2, 2025 https://m.facebook.com
+m.facebook.com##.bg-s24.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s27.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s9.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s16.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s19.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s21.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s23.m > .bottom.fixed-container.m
+m.facebook.com##.bg-s26.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s4.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s11.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s17.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s18.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s20.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s21.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s25.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s28.m > .bottom.fixed-container.m
+m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
+
+! Facebook group recommendations 
+! May 7, 2025 https://m.facebook.com
+m.facebook.com##div.displayed.m > .m > .bg-s2.m
+
+! Facebook follow recommendations 
+m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
+!style(background-color: yellow !important;) 
+
+! removes "Discover more" and all tweets succedding them
+x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
+x.com##[aria-label="Timeline: Conversation"] h2:upward(4) ~ *
+
+! timeline:search content
+! removes all follow suggestions and communities
+x.com##[aria-label="Timeline: Search timeline"] > * > *:has([data-testid="tweet"]):upward(1) > :not([data-testid="tweet"]:upward(3))
+! timeline: posts content
+! removes "Who to follow", "Promote" and "Get verified"
+x.com##[aria-label$=" posts"] > * > :not([data-testid="tweet"]:upward(1)):is([data-testid="cellInnerDiv"])
+x.com##[data-testid="UserName"] [href="/i/premium_sign_up"]:upward(4)
+
+! Twitter home page shortcut should show address bar
+$csp=manifest-src 'none'
+
+! twitter - hide the "readers added context they thought ..."
+x.com##[data-testid="birdwatch-pivot"]
+! twitter - hide the "context is written by people who use .." (next DIV box below the one listed above)
+x.com##[data-testid="birdwatch-pivot"] + div

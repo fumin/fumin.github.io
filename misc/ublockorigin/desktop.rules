@@ -1,0 +1,12 @@
+no-cosmetic-filtering: mobile01.com true
+no-cosmetic-filtering: pixnet.net true
+no-csp-reports: * true
+no-large-media: behind-the-scene false
+no-remote-fonts: mobile01.com true
+no-remote-fonts: pixnet.net true
+no-scripting: 591.com.tw true
+no-scripting: land.591.com.tw false
+no-scripting: market.591.com.tw false
+no-scripting: sale.591.com.tw false
+no-scripting: mobile01.com true
+no-scripting: pixnet.net true
