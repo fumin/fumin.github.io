@@ -36,6 +36,7 @@ m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"
 
 ! Facebook reels
 m.facebook.com##[aria-label="reel"]:upward(2)
+facebook.com##a[href="/reel/"]
 
 ! removes "Discover more" and all tweets succedding them
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
