@@ -34,6 +34,9 @@ m.facebook.com##div.displayed.m > .m > .bg-s2.m
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
 !style(background-color: yellow !important;) 
 
+! Facebook reels
+m.facebook.com##[aria-label="reel"]:upward(2)
+
 ! removes "Discover more" and all tweets succedding them
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4) ~ *
@@ -45,6 +48,8 @@ x.com##[aria-label="Timeline: Search timeline"] > * > *:has([data-testid="tweet"
 ! removes "Who to follow", "Promote" and "Get verified"
 x.com##[aria-label$=" posts"] > * > :not([data-testid="tweet"]:upward(1)):is([data-testid="cellInnerDiv"])
 x.com##[data-testid="UserName"] [href="/i/premium_sign_up"]:upward(4)
+! May 15, 2025 https://x.com
+x.com##.r-1ny4l3l.r-1adg3ll.css-175oi2r > .css-175oi2r > .r-kemksi.css-175oi2r
 
 ! Twitter home page shortcut should show address bar
 $csp=manifest-src 'none'
