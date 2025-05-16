@@ -31,7 +31,7 @@ m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
 !m.facebook.com##div.displayed.m > .m > .bg-s2.m
 
 ! Facebook follow recommendations 
-m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(4)
+m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
 !style(background-color: yellow !important;) 
 
 ! Facebook reels
