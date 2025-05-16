@@ -28,15 +28,14 @@ m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
 
 ! Facebook group recommendations 
 ! May 7, 2025 https://m.facebook.com
-m.facebook.com##div.displayed.m > .m > .bg-s2.m
+!m.facebook.com##div.displayed.m > .m > .bg-s2.m
 
 ! Facebook follow recommendations 
-m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
+m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(4)
 !style(background-color: yellow !important;) 
 
 ! Facebook reels
-m.facebook.com##[aria-label="reel"]:upward(2)
-facebook.com##a[href="/reel/"]
+m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>h2>div>span:has-text("Reels"):upward(4)
 
 ! removes "Discover more" and all tweets succedding them
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
