@@ -32,7 +32,8 @@ m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
 
 ! Facebook follow recommendations 
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
-!style(background-color: yellow !important;) 
+!style(background-color: yellow !important;)
+m.facebook.com##div[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>div>div[data-mcomponent="TextArea"]>div[class="native-text"]:has-text("People you may know"):upward(4)
 
 ! Facebook reels
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>h2>div>span:has-text("Reels"):upward(4)
@@ -50,6 +51,7 @@ x.com##[aria-label$=" posts"] > * > :not([data-testid="tweet"]:upward(1)):is([da
 x.com##[data-testid="UserName"] [href="/i/premium_sign_up"]:upward(4)
 ! May 15, 2025 https://x.com
 x.com##.r-1ny4l3l.r-1adg3ll.css-175oi2r > .css-175oi2r > .r-kemksi.css-175oi2r
+x.com##.r-1oqcu8e.r-dnmrzs.css-175oi2r
 
 ! Twitter home page shortcut should show address bar
 $csp=manifest-src 'none'
