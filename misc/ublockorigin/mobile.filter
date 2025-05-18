@@ -42,6 +42,11 @@ m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4) ~ *
 
+!Who to follow
+x.com##main h2[role="heading"]:upward(4)
+x.com##button.css-175oi2r[data-testid="UserCell"]:upward(3)
+x.com##a[href="/i/connect_people?user_id="]:upward(3)
+
 ! timeline:search content
 ! removes all follow suggestions and communities
 x.com##[aria-label="Timeline: Search timeline"] > * > *:has([data-testid="tweet"]):upward(1) > :not([data-testid="tweet"]:upward(3))
