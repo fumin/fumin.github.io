@@ -27,7 +27,7 @@ m.facebook.com##.dark-mode.bg-s28.m > .bottom.fixed-container.m
 m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
 
 ! Facebook group recommendations 
-m.facebook.com##div[aria-label="Your group suggestions"]:upward(5)
+m.facebook.com##div[aria-label="Your group suggestions"]:upward(6)
 
 ! Facebook follow recommendations 
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
