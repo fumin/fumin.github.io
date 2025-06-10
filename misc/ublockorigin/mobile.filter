@@ -27,8 +27,7 @@ m.facebook.com##.dark-mode.bg-s28.m > .bottom.fixed-container.m
 m.facebook.com##.dark-mode.bg-s41.m > .bottom.fixed-container.m
 
 ! Facebook group recommendations 
-! May 7, 2025 https://m.facebook.com
-!m.facebook.com##div.displayed.m > .m > .bg-s2.m
+m.facebook.com##div[aria-label="Your group suggestions"]:upward(6)
 
 ! Facebook follow recommendations 
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
@@ -41,6 +40,11 @@ m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"
 ! removes "Discover more" and all tweets succedding them
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4)
 x.com##[aria-label="Timeline: Conversation"] h2:upward(4) ~ *
+
+!Who to follow
+x.com##main h2[role="heading"]:upward(4)
+x.com##button.css-175oi2r[data-testid="UserCell"]:upward(3)
+x.com##a[href="/i/connect_people?user_id="]:upward(3)
 
 ! timeline:search content
 ! removes all follow suggestions and communities
