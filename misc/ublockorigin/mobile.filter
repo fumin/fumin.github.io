@@ -32,7 +32,7 @@ m.facebook.com##div[aria-label="Your group suggestions"]:upward(6)
 ! Facebook follow recommendations 
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[class="m"]>div[class="m"]>div[class="m"]>div:has-text(Follow):upward(5)
 !style(background-color: yellow !important;)
-m.facebook.com##div[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>div>div[data-mcomponent="TextArea"]>div[class="native-text"]:has-text("People you may know"):upward(4)
+m.facebook.com##div[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>div>div[data-mcomponent="TextArea"]>div[class*="native-text"]:has-text("People you may know"):upward(4)
 
 ! Facebook reels
 m.facebook.com##[data-mcomponent="MContainer"] >div[data-mcomponent="MContainer"]>div[data-mcomponent="MContainer"]>h2>div>span:has-text("Reels"):upward(4)
