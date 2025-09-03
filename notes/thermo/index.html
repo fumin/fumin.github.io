@@ -127,9 +127,13 @@ a:active {
       Suppose in addition to mechanical work, we also have electrical work defined by \(\mathcal{E}\Delta q\), where \(\mathcal{E}\) is the electromotive force, and \(\Delta q\) the amount of electric charge passing through.
       In this case \(Q = \Delta U + P\Delta V + \mathcal{E}\Delta q\), and thus
       $$
-      \cssId{eq-6}{\Delta S_{environment} = -\frac{\Delta U + P\Delta V + \mathcal{E}\Delta q}{T} \tag{6}}
+      \Delta S_{environment} = -\frac{\Delta U + P\Delta V + \mathcal{E}\Delta q}{T}
       $$
-      On the other hand, \(\Delta S_{system}\) in general may have additional factors contributing, such as changes in particle numbers due to chemical reactions.
+      On the other hand, \(\Delta S_{system}\) in general may have additional factors contributing, such as changes in particle numbers due to chemical reactions:
+      $$
+      \cssId{eq-6}{\Delta S_{system} = \frac{Q}{T} -\sum_{i} \mu_{i}\Delta N_{i}  \tag{6}}
+      $$
+      where \(\mu_{i}\) is the chemical potential of the \(i\)'th substance and \(\Delta N_{i}\) its change in numbers.
       Nonetheless, when those factors are absent, \(\Delta S_{system} = \frac{Q}{T}\) is a correct formula, and is routinely employed in the measurements of <a href="https://en.wikipedia.org/wiki/Standard_molar_entropy">standard molar entropies</a>.
       </p>
 
@@ -140,7 +144,7 @@ a:active {
       </p>
       <img src="carnot.svg">
       <p>The cycle on the left hand side of the above image depicts an arbitrary engine, whereas the right hand side describes a particular design called the Carnot engine.
-      Here we assume a conventional engine design without chemical reactions, thus from <a href="#eq-6">eq. 6</a> \(TdS = -TdS_{environment} = Q\) is the energy exchange with the environment.
+      Here we assume a conventional engine design without chemical reactions, thus from <a href="#eq-6">eq. 6</a> \(TdS = Q\) is the energy exchange with the environment.
       During the expansion phase where volume increases \(V\)⤴, the area under the curve \(TdS\) is the energy supplied by the environment \(Q_{in}\).
       Likewise, the area under the curve during the compression phase is the energy given away \(Q_{out}\).
       The difference between the two is the net work performed \(Q_{out}-Q_{in}=W\).
@@ -344,7 +348,7 @@ a:active {
       $$
       When charge is measured in moles, \(q = nF\) where \(n\) is the number of charge passing in moles, and \(F\) is the Faraday constant \(96485 C\cdot mol^{-1}\). Thus
       $$
-      \cssId{eq-8}{\mathcal{E} = \mathcal{E}^{\circ} - \frac{RT}{nF}log\left(\gamma_{H}m_{H,eq}\cdot\gamma_{Cl}m_{Cl,eq}\right) \tag{8}}
+      \cssId{eq-9}{\mathcal{E} = \mathcal{E}^{\circ} - \frac{RT}{nF}log\left(\gamma_{H}m_{H,eq}\cdot\gamma_{Cl}m_{Cl,eq}\right) \tag{9}}
       $$
       where \(\mathcal{E}^{\circ}\) is a reaction and temperature specific constant that does not vary with concentration.
       Since under equilibrium both \(m_{H,eq} = m\) and \(m_{Cl,eq} = m\), where \(m\) is the prepared concentration of \(HCl\), we get
@@ -358,7 +362,7 @@ a:active {
       $$
       Here, the net reaction remains the same \(\frac{1}{2}H_{2}(g) + AgCl(s) \rightleftharpoons Ag(s) + H^{+}(aq) + Cl^{-}(aq)\), but we control \(m_{H^{+}}\) through \(m_{KOH}\) and \(m_{Cl^{-}}\) through \(m_{KCl}\).
       The reason why \(m_{H^{+}}\) can be controlled by \(m_{KOH}\) is because without \(HCl\), \(m_{H^{+}}\) is entirely determined by the ionization of water \(H_{2}O \rightleftharpoons H^{+} + OH^{-}\), whose equilibrium is controlled by the \(m_{OH^{-}}\) in \(KOH\).
-      In this case, we can rewrite <a href="#eq-9">eq. 9</a> in terms of \(K_{water} = \frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{O,eq}}{m_{H_{2}O,eq}}\)
+      In this case, we can rewrite <a href="#eq-9">eq. 9</a> in terms of \(K_{water} = \frac{\gamma_{H}\gamma_{OH}}{\gamma_{H_{2}O}}\cdot\frac{m_{H,eq}m_{OH,eq}}{m_{H_{2}O,eq}}\)
       $$
       \mathcal{E} - \mathcal{E}^{\circ} + \frac{RT}{nF}log\left(\frac{m_{KCL}}{m_{KOH}}\right) = -\frac{RT}{nF}log\left(K_{water}\right) -\frac{RT}{nF}log\left(\frac{\gamma_{Cl}\gamma_{H_{2}O}m_{H_{2}O}}{\gamma_{OH}}\right)
       $$
