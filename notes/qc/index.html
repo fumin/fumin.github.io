@@ -1,0 +1,624 @@
+<html>
+  <head>
+		<meta charset="utf-8"/>
+    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-chtml.js"></script>
+  </head>
+  <body>
+		<div>
+			<h3>Phase damping channel</h3>
+			<div>
+			$$
+\begin{multline}\shoveleft
+\text{Kraus operators:}\space
+K_{0}=\begin{bmatrix}
+	1 & 0\\
+	0 & \sqrt{1-p}
+\end{bmatrix}
+,\space
+K_{1}=\begin{bmatrix}
+	0 & 0\\
+	0 & \sqrt{p}
+\end{bmatrix}
+,\space
+\text{Bloch vector:}\space
+\displaylines{
+	\begin{aligned}
+	& x = x\sqrt{1-p}\\
+	& y = y\sqrt{1-p}\\
+	& z = z\\
+	\end{aligned}
+}
+\end{multline}
+			$$
+			</div>
+			<div id="phase-damping-graph">
+				<div>
+					<span>p</span>
+					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.98">
+				</div>
+				<div class="graph" style="position: relative;">
+					<svg></svg>
+					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h3>Depolarizing channel</h3>
+			<div>
+			$$
+\begin{multline}\shoveleft
+\text{Kraus operators:}\space
+K_{0}=\sqrt{1-p}\hat{\mathbb{1}}
+,\space
+K_{1}=\sqrt{\frac{p}{3}}\hat{\sigma_{x}}
+,\space
+K_{2}=\sqrt{\frac{p}{3}}\hat{\sigma_{y}}
+,\space
+K_{3}=\sqrt{\frac{p}{3}}\hat{\sigma_{z}}
+,\space
+\text{Bloch vector:}\space
+\displaylines{
+	\begin{aligned}
+	& x = (1-\frac{4}{3}p)x\\
+	& y = (1-\frac{4}{3}p)y\\
+	& z = (1-\frac{4}{3}p)z\\
+	\end{aligned}
+}
+
+\end{multline}
+			$$
+			</div>
+			<div id="depolarizing-graph">
+				<div>
+					<span>p</span>
+					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.5">
+				</div>
+				<div class="graph" style="position: relative;">
+					<svg></svg>
+					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h3>Amplitude damping channel</h3>
+			<div>
+			$$
+\begin{multline}\shoveleft
+\text{Kraus operators:}\space
+K_{0}=\sqrt{\gamma}\begin{bmatrix}
+	1 & 0\\
+	0 & \sqrt{1-p}
+\end{bmatrix}
+,\space
+K_{1}=\sqrt{\gamma}\begin{bmatrix}
+	0 & \sqrt{p}\\
+	0 & 0
+\end{bmatrix}
+,\space
+K_{2}=\sqrt{1-\gamma}\begin{bmatrix}
+	\sqrt{1-p} & 0\\
+	0 & 0
+\end{bmatrix}
+,\space
+K_{3}=\sqrt{1-\gamma}\begin{bmatrix}
+	0 & 0\\
+	\sqrt{p} & 0
+\end{bmatrix}
+,\space
+\text{Bloch vector:}\space
+\displaylines{
+	\begin{aligned}
+	& x = x\sqrt{1-p}\\
+	& y = y\sqrt{1-p}\\
+	& z = p(2\gamma-1)+(1-p)z\\
+	\end{aligned}
+}
+\end{multline}
+			$$
+			</div>
+			<div id="amplitude-graph">
+				<div>
+					<span>p</span>
+					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.75">
+				</div>
+				<div>
+					<span>γ</span>
+					<input class="gamma-slider" type="range" min="0" max="1" step="0.01" value="0.75">
+				</div>
+				<div class="graph" style="position: relative;">
+					<svg></svg>
+					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+				</div>
+			</div>
+		</div>
+
+    <script type="module">
+import * as d3 from "https://cdn.skypack.dev/d3@7.9.0";
+import * as d33d from "https://cdn.skypack.dev/d3-3d@1.0.0";
+
+// h, s, and l are contained in the set [0, 1] and returns r, g, and b in the set [0, 255].
+function hslToRgb(h, s, l) {
+  var r, g, b;
+
+  if (s == 0) {
+    r = g = b = l; // achromatic
+  } else {
+    function hue2rgb(p, q, t) {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    }
+
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+
+  return {r: r*255, g: g*255, b: b*255};
+}
+
+function brightness(rgb) {
+	return 0.299*rgb.r + 0.587*rgb.g + 0.114*rgb.b;
+}
+
+function to3djs(p) {
+	return {x: p.y, y: -p.z, z: p.x};
+}
+
+function to3djs1(ps) {
+	let newps = [];
+	for (let i = 0; i < ps.length; i++) {
+		let pi = ps[i];
+		newps.push(to3djs(pi));
+	}
+	return newps;
+}
+
+function newGrid(graph) {
+	function newData(gridSize) {
+		let data = {};
+	
+		data.grid = [];
+		data.gridRows = 0;
+		for (var x = -gridSize.x; x <= gridSize.x; x+=gridSize.incr) {
+			data.gridRows = 0;
+			for (var y = -gridSize.y; y <= gridSize.y; y+=gridSize.incr) {
+	      data.grid.push(to3djs({x: x, y: y, z: 0}));
+				data.gridRows += 1;
+	    }
+	  }
+	
+		let axExt = 1.5;
+		data.xAxis = to3djs1([{x: -gridSize.x*axExt, y: 0, z: 0}, {x: gridSize.x*axExt, y: 0, z: 0}]);
+		data.yAxis = to3djs1([{x: 0, y: -gridSize.y*axExt, z: 0}, {x: 0, y: gridSize.y*axExt, z: 0}]);
+		data.zAxis = to3djs1([{x: 0, y: 0, z: -gridSize.z*axExt}, {x: 0, y: 0, z: gridSize.z*axExt}]);
+	
+		let labelExt = axExt+0.01;
+		data.xLabel = to3djs({x: gridSize.x*labelExt, y: 0, z: 0});
+		data.yLabel = to3djs({x: 0, y: gridSize.y*labelExt, z: 0});
+		data.zLabel = to3djs({x: 0, y: 0, z: gridSize.z*labelExt});
+	
+		return data;
+	}
+	let rawData = newData(graph.conf.gridSize);
+
+	function doTransform(state) {
+		let transforms = {};
+	  let data = {};
+		// d3-3d coordinate system is X is right, Y is down, and Z is sinking.
+		// However, in quantum mechanics, X is protuding, Y is right, and Z is up.
+		// Thus, rotZ is actually d3-3d.rotateY.
+	  transforms.grid = d33d.gridPlanes3D()
+			.rows(rawData.gridRows)
+			.origin(state.origin)
+			.scale(state.scale)
+			.rotateY(state.rotZ)
+			.rotateX(state.rotY);
+		data.grid = transforms.grid(rawData.grid);
+
+		transforms.line = d33d.lineStrips3D()
+			.origin(state.origin)
+			.scale(state.scale)
+			.rotateY(state.rotZ)
+			.rotateX(state.rotY);
+		data.xAxis = transforms.line([rawData.xAxis]);
+		data.yAxis = transforms.line([rawData.yAxis]);
+		data.zAxis = transforms.line([rawData.zAxis]);
+
+		transforms.point = d33d.points3D()
+			.origin(state.origin)
+			.scale(state.scale)
+			.rotateY(state.rotZ)
+			.rotateX(state.rotY);
+		data.xLabel = transforms.point([rawData.xLabel]);
+		data.yLabel = transforms.point([rawData.yLabel]);
+		data.zLabel = transforms.point([rawData.zLabel]);
+
+		return {transforms: transforms, data: data};
+	}
+
+	function draw() {
+		let tfm = doTransform(graph.state);
+
+		// Grid.
+		let grid = graph.arena.selectAll("path.grid").data(tfm.data.grid);
+		grid.enter().append("path").attr("class", "d33d grid")
+			.merge(grid)
+			.attr("stroke", "black")
+			.attr("stroke-width", 0.3)
+			.attr("fill", (d) => (d.ccw ? "#eee" : "#aaa"))
+      .attr("fill-opacity", 0.9)
+      .attr("d", tfm.transforms.grid.draw);
+    grid.exit().remove();
+
+		// Axis.
+		let xAxis = graph.arena.selectAll("path.xAxis").data(tfm.data.xAxis);
+		xAxis.enter().append("path").attr("class", "d33d xAxis")
+			.merge(xAxis)
+			.attr("stroke", "black")
+			.attr("stroke-width", 0.5)
+			.attr("d", tfm.transforms.line.draw)
+		xAxis.exit().remove();
+		let yAxis = graph.arena.selectAll("path.yAxis").data(tfm.data.yAxis);
+		yAxis.enter().append("path").attr("class", "d33d yAxis")
+			.merge(yAxis)
+			.attr("stroke", "black")
+			.attr("stroke-width", 0.5)
+			.attr("d", tfm.transforms.line.draw)
+		yAxis.exit().remove();
+		let zAxis = graph.arena.selectAll("path.zAxis").data(tfm.data.zAxis);
+		zAxis.enter().append("path").attr("class", "d33d zAxis")
+			.merge(zAxis)
+			.attr("stroke", "black")
+			.attr("stroke-width", 0.5)
+			.attr("d", tfm.transforms.line.draw)
+		zAxis.exit().remove();
+
+		// Axis labels.
+		let fontSize = (1.0 / graph.state.zoom.k)+"em";
+		let xLabel = graph.arena.selectAll("text.xLabel").data(tfm.data.xLabel);
+		xLabel.enter().append("text").attr("class", "d33d xLabel")
+			.merge(xLabel)
+			.attr("x", function(d){return d.projected.x;})
+			.attr("y", function(d){return d.projected.y;})
+			.text(function(d){return "x";})
+			.style("font-size", fontSize)
+			.attr("font-family", "system-ui sans-serif");
+		xLabel.exit().remove();
+		let yLabel = graph.arena.selectAll("text.yLabel").data(tfm.data.yLabel);
+		yLabel.enter().append("text").attr("class", "d33d yLabel")
+			.merge(yLabel)
+			.attr("x", function(d){return d.projected.x;})
+			.attr("y", function(d){return d.projected.y;})
+			.text(function(d){return "y";})
+			.style("font-size", fontSize)
+			.attr("font-family", "system-ui sans-serif");
+		yLabel.exit().remove();
+		let zLabel = graph.arena.selectAll("text.zLabel").data(tfm.data.zLabel);
+		zLabel.enter().append("text").attr("class", "d33d zLabel")
+			.merge(zLabel)
+			.attr("x", function(d){return d.projected.x;})
+			.attr("y", function(d){return d.projected.y;})
+			.text(function(d){return "z";})
+			.style("font-size", fontSize)
+			.attr("font-family", "system-ui sans-serif");
+		zLabel.exit().remove();
+	}
+
+	let drawer = {};
+	drawer.draw = draw;
+	return drawer;
+}
+
+function newQubitData() {
+	// Spherical coordinates.
+	let data = {};
+	data.p = [];
+	let numTheta = 16;
+	for (let thetaI = 0; thetaI <= numTheta; thetaI++) {
+		let theta = thetaI * Math.PI/numTheta;
+		let numPhi = 16;
+		if (thetaI == 0 || thetaI == numTheta) {
+			numPhi = 1;
+		}
+		for (let phiI = 0; phiI < numPhi; phiI++) {
+			let phi = phiI * 2*Math.PI/numPhi;
+			data.p.push({spherical: {theta: theta, phi: phi}});
+		}
+	}
+
+	// Cartisian coordinates.
+	for (let i = 0; i < data.p.length; i++) {
+		let p = data.p[i];
+		data.p[i].xyz = {};
+		data.p[i].xyz.x = Math.sin(p.spherical.theta)*Math.cos(p.spherical.phi);
+		data.p[i].xyz.y = Math.sin(p.spherical.theta)*Math.sin(p.spherical.phi);
+		data.p[i].xyz.z = Math.cos(p.spherical.theta);
+	}
+
+	// Color.
+	for (let i = 0; i < data.p.length; i++) {
+		let p = data.p[i];
+
+		let h = p.spherical.phi/(2*Math.PI);
+		let l = p.spherical.theta/Math.PI;
+		data.p[i].rgb = hslToRgb(h, 1, l);
+	}
+
+	return data;
+}
+
+function newQubitBefore(graph) {
+	let rawData = newQubitData();
+	// d3-3d cartisian.
+	rawData.d33d = [];
+	for (let i = 0; i < rawData.p.length; i++) {
+		let p = rawData.p[i];
+		rawData.d33d.push(to3djs(p.xyz));
+	}
+
+	function doTransform(state) {
+		let transforms = {};
+		let data = {};
+
+		transforms.point = d33d.points3D()
+			.origin(state.origin)
+			.scale(state.scale)
+			.rotateY(state.rotZ)
+			.rotateX(state.rotY);
+		let projected = transforms.point(rawData.d33d);
+		data.p = [];
+		for (let i = 0; i < rawData.p.length; i++) {
+			let rawp = rawData.p[i];
+			let pj = projected[i];
+
+			let p = rawp;
+			p.projected = pj;
+			data.p.push(p);
+		}
+
+		return {transforms: transforms, data: data};
+	}
+
+	function draw() {
+		let tfm = doTransform(graph.state);
+
+		let points = graph.arena.selectAll("circle.qubitbefore").data(tfm.data.p);
+		points.enter().append("circle").attr("class", "d33d qubitbefore")
+			.merge(points)
+			.attr("cx", function(d){return d.projected.projected.x})
+			.attr("cy", function(d){return d.projected.projected.y})
+			.attr("r", 3)
+			.attr("fill", function(d){return "rgb("+d.rgb.r+","+d.rgb.g+","+d.rgb.b+")";})
+			.attr("opacity", 0.5)
+			.attr("stroke", function(d){if(brightness(d.rgb)>0.66*255){return "rgb(0,0,0)";}else{return "rgb("+d.rgb.r+","+d.rgb.g+","+d.rgb.b+")";}});
+		points.exit().remove();
+	}
+
+	let drawer = {};
+	drawer.draw = draw;
+	return drawer;
+}
+
+function newQubitAfter(graph) {
+	let rawData = newQubitData();
+	// d3-3d cartisian.
+	rawData.d33d = [];
+	for (let i = 0; i < rawData.p.length; i++) {
+		let p = rawData.p[i];
+		rawData.d33d.push(to3djs(p.xyz));
+	}
+
+	let noiseSlider = document.querySelector(graph.conf.selector).querySelector(".noise-slider");
+	noiseSlider.addEventListener("input", function(ev){
+		graph.draw();
+	});
+	let gammaSlider = document.querySelector(graph.conf.selector).querySelector(".gamma-slider");
+	if (gammaSlider==null) {
+		gammaSlider = {valueAsNumber: 1};
+	} else {
+		gammaSlider.addEventListener("input", function(ev){
+			graph.draw();
+		});
+	}
+
+	function doTransform(state) {
+		let transforms = {};
+		let data = {};
+
+		for (let i = 0; i < rawData.p.length; i++) {
+			let p = rawData.p[i];
+			p.after = graph.conf.flow(p.xyz, noiseSlider.valueAsNumber, gammaSlider.valueAsNumber);
+			rawData.d33d[i] = to3djs(p.after);
+		}
+
+		transforms.point = d33d.points3D()
+			.origin(state.origin)
+			.scale(state.scale)
+			.rotateY(state.rotZ)
+			.rotateX(state.rotY);
+		let projected = transforms.point(rawData.d33d);
+		data.p = [];
+		for (let i = 0; i < rawData.p.length; i++) {
+			let rawp = rawData.p[i];
+			let pj = projected[i];
+
+			let p = rawp;
+			p.projected = pj;
+			data.p.push(p);
+		}
+
+		return {transforms: transforms, data: data};
+	}
+
+	function draw() {
+		let tfm = doTransform(graph.state);
+
+		let points = graph.arena.selectAll("circle.qubitafter").data(tfm.data.p);
+		points.enter().append("circle").attr("class", "d33d qubitafter")
+			.merge(points)
+			.attr("cx", function(d){return d.projected.projected.x})
+			.attr("cy", function(d){return d.projected.projected.y})
+			.attr("r", 3)
+			.attr("fill", function(d){return "rgb("+d.rgb.r+","+d.rgb.g+","+d.rgb.b+")";})
+			.attr("opacity", 1)
+			.attr("stroke", function(d){if(brightness(d.rgb)>0.8*255){return "rgb(0,0,0)";}else{return "rgb("+d.rgb.r+","+d.rgb.g+","+d.rgb.b+")";}});
+		points.exit().remove();
+	}
+
+	let drawer = {};
+	drawer.draw = draw;
+	return drawer;
+}
+
+function newQuantumChannelGraph(conf) {
+	// Setup graph size.
+	let ww = window.innerWidth, wh = window.innerHeight;
+	let contractedWidth = 0.5 * ww, contractedHeight = 0.33 * wh;
+	let graphDiv = document.querySelector(conf.selector).querySelector(".graph");
+	let svgElem = graphDiv.querySelector("svg");
+	svgElem.setAttribute("width", contractedWidth);
+	svgElem.setAttribute("height", contractedHeight);
+
+	// Setup UI state.
+	let graph = {conf: conf};
+	graph.state = {
+		rotY: conf.startAngleY, rotZ: conf.startAngleZ,
+		zoom: {k: 1, x: 0, y: 0},
+	};
+	function updateOriginScale() {
+		let cw = svgElem.clientWidth, ch = svgElem.clientHeight;
+		graph.state.origin = {x: cw/2, y: ch/2};
+		graph.state.scale = Math.min(cw, ch) / (2*Math.max(conf.gridSize.x, conf.gridSize.y, conf.gridSize.z));
+	}
+	updateOriginScale();
+
+	// Draw graph.
+	let grid = newGrid(graph);
+	let qubitBefore = newQubitBefore(graph);
+	let qubitAfter = newQubitAfter(graph);
+	let svg = d3.select(conf.selector+" > .graph > svg");
+	graph.arena = svg.append("g");
+	graph.draw = function() {
+		grid.draw();
+		qubitBefore.draw();
+		qubitAfter.draw();
+	}
+	graph.draw();
+
+	// Handle mouse drags.
+	var mx, my, mouseX, mouseY;
+	function dragStart(e) {
+	  mx = e.x;
+	  my = e.y;
+	}
+	function dragged(e) {
+	  mouseX = mouseX || 0;
+	  mouseY = mouseY || 0;
+		// Since X is protuding, Y is right, and Z is up,
+		// mouseX means rotating around the Z axis pointing upwards.
+	  let rotY = (((e.y - my + mouseY) * Math.PI) / 230) * -1;
+	  let rotZ = ((e.x - mx + mouseX) * Math.PI) / 230;
+
+		graph.state.rotY = conf.startAngleY + rotY;
+		graph.state.rotZ = conf.startAngleZ + rotZ;
+
+	  graph.draw();
+	}
+	function dragEnd(e) {
+	  mouseX = e.x - mx + mouseX;
+	  mouseY = e.y - my + mouseY;
+	  graph.draw();
+	}
+	svg.call(d3.drag().on("drag", dragged).on("start", dragStart).on("end", dragEnd));
+
+	// Handle zoom.
+	function onZoom(event) {
+		graph.state.zoom.k = event.transform.k;
+		graph.state.zoom.x = event.transform.x;
+		graph.state.zoom.y = event.transform.y;
+
+		graph.arena.attr("transform", event.transform);
+	}
+	svg.call(d3.zoom().on("zoom", onZoom).on("end", onZoom));
+
+	// Handle expand button.
+	let expandedWidth = 0.98 * ww, expandedHeight = 0.85 * wh;
+	let ctepRatioX = contractedWidth / expandedWidth;
+	let ctepRatioY = contractedHeight / expandedHeight;
+	function contract() {
+		svgElem.setAttribute("width", contractedWidth);
+		svgElem.setAttribute("height", contractedHeight);
+
+		// Update state.
+		updateOriginScale();
+		graph.state.zoom.x *= ctepRatioX;
+		graph.state.zoom.y *= ctepRatioY;
+
+		graph.draw();
+	}
+	function expand() {
+		svgElem.setAttribute("width", expandedWidth);
+		svgElem.setAttribute("height", expandedHeight);
+
+		// Update state.
+		updateOriginScale();
+		graph.state.zoom.x *= 1.0/ctepRatioX;
+		graph.state.zoom.y *= 1.0/ctepRatioY;
+
+		graph.draw();
+	}
+	let expandBtn = document.querySelector(conf.selector).querySelector(".expand-btn");
+	expandBtn.expanded = false;
+	expandBtn.addEventListener("click", function(ev){
+		ev.preventDefault();
+		if (expandBtn.expanded) {
+			contract();
+			expandBtn.expanded = false;
+			expandBtn.textContent = "expand";
+		} else {
+			expand();
+			expandBtn.expanded = true;
+			expandBtn.textContent = "contract";
+		}
+	});
+}
+
+function main() {
+	let phaseDampingConf = {}
+	phaseDampingConf.selector = "#phase-damping-graph";
+	phaseDampingConf.startAngleZ = -Math.PI / 8;
+	phaseDampingConf.startAngleY = -Math.PI / 8;
+	phaseDampingConf.gridSize = {x: 1.5, y: 1, z: 1, incr: 0.1};
+	phaseDampingConf.flow = function(q, p){return {x: Math.sqrt(1-p)*q.x, y: Math.sqrt(1-p)*q.y, z: q.z};};
+	newQuantumChannelGraph(phaseDampingConf);
+
+	let depolarizingConf = {}
+	depolarizingConf.selector = "#depolarizing-graph";
+	depolarizingConf.startAngleZ = -Math.PI / 8;
+	depolarizingConf.startAngleY = -Math.PI / 8;
+	depolarizingConf.gridSize = {x: 1.5, y: 1, z: 1, incr: 0.1};
+	depolarizingConf.flow = function(q, p){return {x: (1-4/3*p)*q.x, y: (1-4/3*p)*q.y, z: (1-4/3*p)*q.z};};
+	newQuantumChannelGraph(depolarizingConf);
+
+	let amplitudeConf = {}
+	amplitudeConf.selector = "#amplitude-graph";
+	amplitudeConf.startAngleZ = -Math.PI / 8;
+	amplitudeConf.startAngleY = -Math.PI / 8;
+	amplitudeConf.gridSize = {x: 1.5, y: 1, z: 1, incr: 0.1};
+	amplitudeConf.flow = function(q, p, gamma){return {x: Math.sqrt(1-p)*q.x, y: Math.sqrt(1-p)*q.y, z: p*(2*gamma-1)+(1-p)*q.z};};
+	newQuantumChannelGraph(amplitudeConf);
+
+}
+main();
+    </script>
+  </body>
+</html>
