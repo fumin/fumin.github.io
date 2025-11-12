@@ -4,6 +4,15 @@ google.com##.f0FBcf
 
 ! Google maps suggestions
 www.google.com###assistive-chips
+# Google maps weather reminder
+www.google.com###passive-assist
+! Google maps earthquakes
+www.google.com##.D1LMTd.Hk4XGb.vasquette-margin-enabled
+! Google maps restaurant hotel suggestions
+www.google.com##.tBgtgb
+
+! gmail upgrade button
+mail.google.com##.I6agWe
 
 ! Dec 23, 2024 https://github.com
 github.com##.copilotPreview__container
