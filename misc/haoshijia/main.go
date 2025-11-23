@@ -6,6 +6,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"slices"
 	"strconv"
 	"time"
@@ -84,9 +86,13 @@ func parse(price map[string]string) ([]Datum, error) {
 }
 
 func query() (map[string]string, error) {
+	userDataDir := filepath.Join(os.Getenv("HOME") + "snap/chromium/common/chromium")
+	// chrome --window-size="1620,960" "https://www.houseplus.com.tw/reportIndex"
 	eopts := append(chromedp.DefaultExecAllocatorOptions[:],
-		chromedp.WindowSize(1920, 1080),
-		chromedp.Flag("headless", true))
+		chromedp.WindowSize(1620, 920),
+		chromedp.UserDataDir(userDataDir),
+		chromedp.Flag("disable-extensions", false),
+		chromedp.Flag("headless", "new"))
 	actx, acancel := chromedp.NewExecAllocator(context.Background(), eopts...)
 	defer acancel()
 	opts := []chromedp.ContextOption{chromedp.WithLogf(func(string, ...any) {})}
@@ -98,7 +104,7 @@ func query() (map[string]string, error) {
 		chromedp.Navigate(`https://www.houseplus.com.tw/reportIndex`),
 		chromedp.Evaluate(`document.querySelector('[class^="indexChart"] canvas').scrollIntoView()`, nil),
 		chromedp.ActionFunc(func(ctx context.Context) error {
-			for x := 1292; x >= 415; x-- {
+			for x := 1110; x >= 415; x-- {
 				if err := chromedp.MouseEvent(input.MouseMoved, float64(x), 150).Do(ctx); err != nil {
 					return errors.Wrap(err, "")
 				}
