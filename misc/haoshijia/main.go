@@ -6,8 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
 	"slices"
 	"strconv"
 	"time"
@@ -86,13 +84,19 @@ func parse(price map[string]string) ([]Datum, error) {
 }
 
 func query() (map[string]string, error) {
-	userDataDir := filepath.Join(os.Getenv("HOME") + "snap/chromium/common/chromium")
-	// chrome --window-size="1620,960" "https://www.houseplus.com.tw/reportIndex"
+	// google-chrome --window-size="1620,960" "https://www.houseplus.com.tw/reportIndex"
+	//
+	// To debug where the mouse is, type the below code in browser console:
+	//
+	// document.onmousemove = function(e){e.target.title = "X is "+e.pageX+" and Y is "+e.pageY;};
+	//
+	// This will show a tooltip of the mouse location on top of the mouse.
 	eopts := append(chromedp.DefaultExecAllocatorOptions[:],
+		chromedp.ExecPath("google-chrome"),
 		chromedp.WindowSize(1620, 920),
-		chromedp.UserDataDir(userDataDir),
 		chromedp.Flag("disable-extensions", false),
-		chromedp.Flag("headless", "new"))
+		chromedp.Flag("headless", false),
+	)
 	actx, acancel := chromedp.NewExecAllocator(context.Background(), eopts...)
 	defer acancel()
 	opts := []chromedp.ContextOption{chromedp.WithLogf(func(string, ...any) {})}
@@ -103,9 +107,13 @@ func query() (map[string]string, error) {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(`https://www.houseplus.com.tw/reportIndex`),
 		chromedp.Evaluate(`document.querySelector('[class^="indexChart"] canvas').scrollIntoView()`, nil),
+
 		chromedp.ActionFunc(func(ctx context.Context) error {
-			for x := 1110; x >= 415; x-- {
+			for x := 1095; x >= 415; x-- {
 				if err := chromedp.MouseEvent(input.MouseMoved, float64(x), 150).Do(ctx); err != nil {
+					return errors.Wrap(err, "")
+				}
+				if err := chromedp.Sleep(1 * time.Millisecond).Do(ctx); err != nil {
 					return errors.Wrap(err, "")
 				}
 				var dt, v string
@@ -119,7 +127,6 @@ func query() (map[string]string, error) {
 			}
 			return nil
 		}),
-		chromedp.Sleep(1*time.Millisecond),
 	)
 	if err != nil {
 		return nil, errors.Wrap(err, "")
