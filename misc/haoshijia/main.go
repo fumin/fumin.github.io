@@ -84,7 +84,7 @@ func parse(price map[string]string) ([]Datum, error) {
 }
 
 func query() (map[string]string, error) {
-	// google-chrome --window-size="1620,960" "https://www.houseplus.com.tw/reportIndex"
+	// google-chrome --user-data-dir="/tmp/haoshijia" --window-size="1620,960" "https://www.houseplus.com.tw/reportIndex"
 	//
 	// To debug where the mouse is, type the below code in browser console:
 	//
@@ -93,6 +93,7 @@ func query() (map[string]string, error) {
 	// This will show a tooltip of the mouse location on top of the mouse.
 	eopts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.ExecPath("google-chrome"),
+		chromedp.UserDataDir("/tmp/haoshijia"),
 		chromedp.WindowSize(1620, 920),
 		chromedp.Flag("disable-extensions", false),
 		chromedp.Flag("headless", false),
