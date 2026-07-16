@@ -5,139 +5,260 @@
   </head>
   <body>
 		<div>
-			<h3>Phase damping channel</h3>
+			<h2>Questions</h2>
 			<div>
-			$$
-\begin{multline}\shoveleft
-\text{Kraus operators:}\space
-K_{0}=\begin{bmatrix}
-	1 & 0\\
-	0 & \sqrt{1-p}
-\end{bmatrix}
-,\space
-K_{1}=\begin{bmatrix}
-	0 & 0\\
-	0 & \sqrt{p}
-\end{bmatrix}
-,\space
-\text{Bloch vector:}\space
-\displaylines{
-	\begin{aligned}
-	& x = x\sqrt{1-p}\\
-	& y = y\sqrt{1-p}\\
-	& z = z\\
-	\end{aligned}
-}
-\end{multline}
-			$$
-			</div>
-			<div id="phase-damping-graph">
+				<h3>Phase operator \(\hat{\phi}\) is not Hermitian</h3>
 				<div>
-					<span>p</span>
-					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.98">
+				The phase operator \(\hat{\phi}\) described in Section 6.3.1 Laflamme<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup> follows the equation \(e^{\pm i\hat{\phi}}|n\rangle=|n\mp 1\rangle\).
+				Assuming \(e^{i\hat{\phi}}\) is unitary \(e^{i\hat{\phi}}(e^{i\hat{\phi}})^{\dagger}=1\), and combined with the fact \(e^{i\hat{\phi}}e^{-i\hat{\phi}}=1\), we get \((e^{i\hat{\phi}})^{\dagger}=e^{-i\hat{\phi}}\).
+				This means
+				$$\displaylines{
+				\begin{aligned}
+				\langle n|e^{i\hat{\phi}} = & \space \left( (e^{i\hat{\phi}})^{\dagger} \langle n|^{\dagger} \right)^{\dagger} \\
+				= & \space\left( e^{-i\hat{\phi}}|n\rangle \right)^{\dagger} \\
+				= & \space \left( |n+1\rangle \right)^{\dagger} \\
+				= & \space \langle n+1| \\
+				\end{aligned}
+				}$$
+				With \(\langle n|e^{i\hat{\phi}}=\langle n+1|\), we have
+				$$\displaylines{
+				\begin{aligned}
+				\langle m|\space [e^{i\hat{\phi}}, \hat{n}] \space |n\rangle = & \space \langle m|\space e^{i\hat{\phi}}\hat{n} \space |n\rangle - \langle m|\space \hat{n}e^{i\hat{\phi}} \space |n\rangle \\
+				= & \space  n\langle m+1|n\rangle - m\langle m|n-1\rangle \\
+				\end{aligned}
+				}$$
+				which has non-zero entries only when \(m=n-1\), \(\langle m|\space [e^{i\hat{\phi}}, \hat{n}] \space |n\rangle = \delta_{m+1, n}\).
+				At the same time, we have \(\langle m|\space e^{i\hat{\phi}} \space |n\rangle = \langle m|n-1\rangle = \delta_{m+1, n}\).
+				Thus,
+				$$
+				[e^{i\hat{\phi}}, \hat{n}] = e^{i\hat{\phi}}
+				$$
+				We show below that \([\hat{n}, \phi]=i\) is the solution to above equation \([e^{i\hat{\phi}}, \hat{n}] = e^{i\hat{\phi}}\):
+				$$\displaylines{
+				\begin{aligned}
+				[\hat{n}, \hat{\phi}^{n}] = & \space \hat{n}\hat{\phi}^{n} - \hat{\phi}^{n}\hat{n} \\
+				= & \space \hat{n}\hat{\phi}^{n} - \hat{\phi}^{n-1}(\hat{n}\hat{\phi}-i) \\
+				= & \space \hat{n}\hat{\phi}^{n} + i\hat{\phi}^{n-1} - \hat{\phi}^{n-1}\hat{n}\hat{\phi} \\
+				= & \space \hat{n}\hat{\phi}^{n} + i\hat{\phi}^{n-1} - \hat{\phi}^{n-2}(\hat{n}\hat{\phi}-i)\hat{\phi} \\
+				= & \space \hat{n}\hat{\phi}^{n} + 2i\hat{\phi}^{n-1} - \hat{\phi}^{n-2}\hat{n}\hat{\phi}^{2} \\
+				= & \space \hat{n}\hat{\phi}^{n} + 3i\hat{\phi}^{n-1} - \hat{\phi}^{n-3}\hat{n}\hat{\phi}^{3} \\
+				= & \space \vdots \\
+				= & \space \space \hat{n}\hat{\phi}^{n} + n\cdot i\hat{\phi}^{n-1} - \hat{n}\hat{\phi}^{n} \\
+				= & \space i\cdot n\hat{\phi}^{n-1} \\
+				\end{aligned}
+				}$$
+				Thus,
+				$$\displaylines{
+				\begin{aligned}
+				[e^{i\hat{\phi}}, \hat{n}] = & \space [\sum_{n=0}^{\infty }\frac{(i\hat{\phi})^{n}}{n!}, \hat{n}] \\
+				= & \space [\frac{1}{0!}, \hat{n}] + \sum_{n=1}^{\infty }\frac{i^{n}}{n!}[\hat{\phi}^{n}, \hat{n}] \\
+				= & \space 0 + \sum_{n=1}^{\infty }\frac{i^{n}}{n!}(-i\cdot n\hat{\phi}^{n-1}) \\
+				= & \space \sum_{n=1}^{\infty }\frac{i^{n-1}}{(n-1)!}\hat{\phi}^{n-1} \\
+				= & \space e^{i\hat{\phi}} \\
+				\end{aligned}
+				}$$
+				However, \([\hat{n}, \phi]=i\) results in a mathematical conundrum:
+				$$\displaylines{
+				\begin{aligned}
+				\langle m|\space [\hat{n}, \hat{\phi}] \space |n\rangle = & \space \langle m|\space \hat{n}\hat{\phi} - \hat{\phi}\hat{n} \space |n\rangle \\
+				= & \space (m-n)\langle m| \hat{\phi} |n\rangle \\
+				\end{aligned}
+				}$$
+				$$\displaylines{
+				\begin{aligned}
+				\langle m|\space i \space |n\rangle = & \space i\langle m|n\rangle \\
+				= & \space i\delta_{m, n} \\
+				\end{aligned}
+				}$$
+				Thus, \(\langle m| \hat{\phi} |n\rangle = \frac{i}{m-n}\delta_{m, n}\), which is undefined when \(m=n\).
+				This suggests \(e^{i\hat{\phi}}\) is not unitary, which implies \(\hat{\phi}\) is not Hermitian.
+				There are proposed solutions under the names Susskind-Glogower and Pegg-Barnett, but none are satisfactory<sup id="cite_ref-2"><a href="#cite_note-2">[2]</a></sup> as of date.
 				</div>
-				<div class="graph" style="position: relative;">
-					<svg></svg>
-					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+			</div>
+
+			<div>
+				<h3>Quantum perturbative expansion might be divergent</h3>
+				<div>
+				The quantum harmonic oscillator
+				$$
+				-\frac{\hbar^{2}}{2m}\psi''(x) + \frac{1}{2}m\omega^{2}x^{2}\psi(x) = E\psi(x)
+				$$
+				has the well known solution
+				$$
+				E_{n} = (n+\frac{1}{2})\hbar \omega
+				$$
+				We know consider the potential with a small <a href="https://people.uncw.edu/hermanr/qm/WKB.pdf">quartic</a> term:
+				$$
+				-\frac{1}{2}\psi''(x) + \frac{1}{2}x^{2}\psi(x) + gx^{4}\psi(x) = E\psi(x)
+				$$
+				and apply the <a href="https://en.wikipedia.org/wiki/Perturbation_theory_(quantum_mechanics)">perturbative expansion</a>:
+				$$
+				E_{0} = \frac{1}{2} + \frac{3}{4}g - \frac{21}{8}g^{2} + \frac{333}{16}g^{3} - \frac{30885}{128}g^{4} + \frac{916731}{256}g^{5} + \mathcal{O}(g^{6})
+				$$
+				Writing \(E_{0}=\frac{1}{2}+\sum_{n=1}^{\infty}A_{n}g^{n}\), Bender and Wu<sup id="cite_ref-3"><a href="#cite_note-3">[3]</a></sup> found that for large n,
+				$$\displaylines{
+        \begin{aligned}
+				A_{n} \sim & \space (-1)^{n+1}\sqrt{\frac{6}{\pi^{3}}}3^{n}\Gamma(n+\frac{1}{2}) \\
+				= & \space -\sqrt{\frac{6}{\pi^{3}}}\left( -\frac{3}{2} \right)^{n}(2n-1)!! \\
+				\end{aligned}
+				}$$
+				which means the series for the ground energy \(E_{0}\) is divergent with factorial growth.
+				Such quartic purterbative expansions are used to model the <a href="https://en.wikipedia.org/wiki/Transmon">Transmon</a> superconducting qubit described in Section 6.3.2 Laflamme<sup id="cite_ref-1"><a href="#cite_note-1">[1]</a></sup>.
+				As discussed above, truncating these purterbative expansions is mathematically unsound.
 				</div>
 			</div>
 		</div>
 
 		<div>
-			<h3>Depolarizing channel</h3>
+			<h2>Quantum noise channels</h2>
 			<div>
-			$$
-\begin{multline}\shoveleft
-\text{Kraus operators:}\space
-K_{0}=\sqrt{1-p}\hat{\mathbb{1}}
-,\space
-K_{1}=\sqrt{\frac{p}{3}}\hat{\sigma_{x}}
-,\space
-K_{2}=\sqrt{\frac{p}{3}}\hat{\sigma_{y}}
-,\space
-K_{3}=\sqrt{\frac{p}{3}}\hat{\sigma_{z}}
-,\space
-\text{Bloch vector:}\space
-\displaylines{
-	\begin{aligned}
-	& x = (1-\frac{4}{3}p)x\\
-	& y = (1-\frac{4}{3}p)y\\
-	& z = (1-\frac{4}{3}p)z\\
-	\end{aligned}
-}
-
-\end{multline}
-			$$
-			</div>
-			<div id="depolarizing-graph">
+				<h3>Phase damping channel</h3>
 				<div>
-					<span>p</span>
-					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.5">
+				$$
+				\begin{multline}\shoveleft
+				\text{Kraus operators:}\space
+				K_{0}=\begin{bmatrix}
+					1 & 0\\
+					0 & \sqrt{1-p}
+				\end{bmatrix}
+				,\space
+				K_{1}=\begin{bmatrix}
+					0 & 0\\
+					0 & \sqrt{p}
+				\end{bmatrix}
+				,\space
+				\text{Bloch vector:}\space
+				\displaylines{
+					\begin{aligned}
+					& x = x\sqrt{1-p}\\
+					& y = y\sqrt{1-p}\\
+					& z = z\\
+					\end{aligned}
+				}
+				\end{multline}
+				$$
 				</div>
-				<div class="graph" style="position: relative;">
-					<svg></svg>
-					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+				<div id="phase-damping-graph">
+					<div>
+						<span>p</span>
+						<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.98">
+					</div>
+					<div class="graph" style="position: relative;">
+						<svg></svg>
+						<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h3>Depolarizing channel</h3>
+				<div>
+				$$
+				\begin{multline}\shoveleft
+				\text{Kraus operators:}\space
+				K_{0}=\sqrt{1-p}\hat{\mathbb{1}}
+				,\space
+				K_{1}=\sqrt{\frac{p}{3}}\hat{\sigma_{x}}
+				,\space
+				K_{2}=\sqrt{\frac{p}{3}}\hat{\sigma_{y}}
+				,\space
+				K_{3}=\sqrt{\frac{p}{3}}\hat{\sigma_{z}}
+				,\space
+				\text{Bloch vector:}\space
+				\displaylines{
+					\begin{aligned}
+					& x = (1-\frac{4}{3}p)x\\
+					& y = (1-\frac{4}{3}p)y\\
+					& z = (1-\frac{4}{3}p)z\\
+					\end{aligned}
+				}
+				\end{multline}
+				$$
+				</div>
+				<div id="depolarizing-graph">
+					<div>
+						<span>p</span>
+						<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.5">
+					</div>
+					<div class="graph" style="position: relative;">
+						<svg></svg>
+						<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h3>Amplitude damping channel</h3>
+				<div>
+				$$
+				\begin{multline}\shoveleft
+				\text{Kraus operators:}\space
+				K_{0}=\sqrt{p}\begin{bmatrix}
+					1 & 0\\
+					0 & \sqrt{1-\gamma}
+				\end{bmatrix}
+				,\space
+				K_{1}=\sqrt{p}\begin{bmatrix}
+					0 & \sqrt{\gamma}\\
+					0 & 0
+				\end{bmatrix}
+				,\space
+				K_{2}=\sqrt{1-p}\begin{bmatrix}
+					\sqrt{1-\gamma} & 0\\
+					0 & 1
+				\end{bmatrix}
+				,\space
+				K_{3}=\sqrt{1-p}\begin{bmatrix}
+					0 & 0\\
+					\sqrt{\gamma} & 0
+				\end{bmatrix}
+				,\space
+				\text{Bloch vector:}\space
+				\displaylines{
+					\begin{aligned}
+					& x = x\sqrt{1-\gamma}\\
+					& y = y\sqrt{1-\gamma}\\
+					& z = \gamma(2p-1)+(1-\gamma)z\\
+					\end{aligned}
+				}
+				\end{multline}
+				$$
+				</div>
+				<div id="amplitude-graph">
+					<div>
+						<span>p</span>
+						<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.75">
+					</div>
+					<div>
+						<span>γ</span>
+						<input class="gamma-slider" type="range" min="0" max="1" step="0.01" value="0.75">
+					</div>
+					<div class="graph" style="position: relative;">
+						<svg></svg>
+						<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div>
-			<h3>Amplitude damping channel</h3>
-			<div>
-			$$
-\begin{multline}\shoveleft
-\text{Kraus operators:}\space
-K_{0}=\sqrt{p}\begin{bmatrix}
-	1 & 0\\
-	0 & \sqrt{1-\gamma}
-\end{bmatrix}
-,\space
-K_{1}=\sqrt{p}\begin{bmatrix}
-	0 & \sqrt{\gamma}\\
-	0 & 0
-\end{bmatrix}
-,\space
-K_{2}=\sqrt{1-p}\begin{bmatrix}
-	\sqrt{1-\gamma} & 0\\
-	0 & 1
-\end{bmatrix}
-,\space
-K_{3}=\sqrt{1-p}\begin{bmatrix}
-	0 & 0\\
-	\sqrt{\gamma} & 0
-\end{bmatrix}
-,\space
-\text{Bloch vector:}\space
-\displaylines{
-	\begin{aligned}
-	& x = x\sqrt{1-\gamma}\\
-	& y = y\sqrt{1-\gamma}\\
-	& z = \gamma(2p-1)+(1-\gamma)z\\
-	\end{aligned}
-}
-\end{multline}
-			$$
-			</div>
-			<div id="amplitude-graph">
-				<div>
-					<span>p</span>
-					<input class="noise-slider" type="range" min="0" max="1" step="0.01" value="0.75">
-				</div>
-				<div>
-					<span>γ</span>
-					<input class="gamma-slider" type="range" min="0" max="1" step="0.01" value="0.75">
-				</div>
-				<div class="graph" style="position: relative;">
-					<svg></svg>
-					<button class="expand-btn" style="position: absolute; top: 1em; left: 1em;">expand</button>
-				</div>
-			</div>
-		</div>
+		<h2>Reference</h2>
+    <ol style="text-align: left;">
+      <li id="cite_note-1">
+        <b><a href="#cite_ref-1">^</a></b>
+				Building Quantum Computers, A Practical Introduction, Shayan Majidy, Christopher Wilson, Raymond Laflamme. <a href="https://doi.org/10.1017/9781009417020">doi:10.1017/9781009417020</a>
+      </li>
+      <li id="cite_note-2">
+        <b><a href="#cite_ref-2">^</a></b>
+				Quantum Phase Operator and Phase States, Xin Ma, William Rhodes. <a href="https://arxiv.org/pdf/1511.02847">arXiv:1511.02847</a>
+      </li>
+      <li id="cite_note-3">
+        <b><a href="#cite_ref-3">^</a></b>
+				Bender, C. M. and Wu, T. T., Anharmonic Oscillator, Phys Rev 184(5) (1969) 1231-1260. <a href="https://sci-hub.ru/storage/twin/6545/fe49cb5610e3c2a7e4622e1b667cc616/bender1969.pdf">doi:10.1103/PhysRev.184.1231</a>
+      </li>
+		</ol>
 
-    <script type="module">
-import * as d3 from "https://cdn.skypack.dev/d3@7.9.0";
-import * as d33d from "https://cdn.skypack.dev/d3-3d@1.0.0";
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
+    <script>
 // h, s, and l are contained in the set [0, 1] and returns r, g, and b in the set [0, 255].
 function hslToRgb(h, s, l) {
   var r, g, b;
@@ -618,7 +739,12 @@ function main() {
 	newQuantumChannelGraph(amplitudeConf);
 
 }
+
+require(["/notes/third_party/d3.js"], function(d3){window.d3 = d3;
+require(["/notes/third_party/d3-3d.js"], function(d33d){window.d33d = d33d;
 main();
+});
+});
     </script>
   </body>
 </html>
